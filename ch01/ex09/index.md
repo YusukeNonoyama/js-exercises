@@ -1,4 +1,4 @@
-## matchAll(/\w+|\$[\d.]+|\S+/g)
+## 正規表現： /\w+|\$[\d.]+|\S+/g
 
 コマンド： `cat .\ch01\ex09\hamlet.txt | node .\ch01\ex09\index.js`
 >
@@ -37,7 +37,7 @@
        him: ##### 0.51%
 
 
-## matchAll(/\w+/g)
+## 正規表現： /\w+/g
 
 コマンド： `cat .\ch01\ex09\hamlet.txt | node .\ch01\ex09\index.js`
 >
