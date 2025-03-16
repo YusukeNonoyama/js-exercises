@@ -20,6 +20,8 @@
     "prettier": "^3.0.3",
     "serve": "^14.2.3"
   },
-  "type": "module"
-
+  "type": "module",
+  "dependencies": {
+    "node": "^20.19.0"
+  }
 }

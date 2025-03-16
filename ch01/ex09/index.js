@@ -1,14 +1,3 @@
-/**
- * This Node program reads text from standard input, computes the frequency
- * of each letter in that text, and displays a histogram of the most
- * frequently used characters. It requires Node 12 or higher to run.
- *
- * In a Unix-type environment you can invoke the program like this:
- *    node charfreq.js < corpus.txt
- */
-
-// This class extends Map so that the get() method returns the specified
-// value instead of null when the key is not in the map
 class DefaultMap extends Map {
     constructor(defaultValue) {
         super();                          // Invoke superclass constructor
@@ -28,27 +17,31 @@ class DefaultMap extends Map {
 // This class computes and displays letter frequency histograms
 class Histogram {
     constructor() {
-        this.letterCounts = new DefaultMap(0);  // Map from letters to counts
-        this.totalLetters = 0;                  // How many letters in all
+        this.wordCounts = new DefaultMap(0);  // Map from WORDS to counts
+        this.totalWords = 0;                  // How many WORDS in all
     }
 
-    // This function updates the histogram with the letters of text.
+    // This function updates the histogram with the WORDS of text.
     add(text) {
         // Remove whitespace from the text, and convert to upper case
-        text = text.replace(/\s/g, "").toUpperCase();
+        // text = text.replace(/\s/g, "").toUpperCase();
+        const matches = text.toLowerCase().matchAll(/\w+|\$[\d.]+|\S+/g);
+        // const matches = text.toLowerCase().matchAll(/\w+/g);
+        const words = [...matches].map((r) => r[0]);
 
-        // Now loop through the characters of the text
-        for (let character of text) {
-            let count = this.letterCounts.get(character); // Get old count
-            this.letterCounts.set(character, count + 1);    // Increment it
-            this.totalLetters++;
+
+        // Now loop through the WORDS of the WORD LIST
+        for (let word of words) {
+            let count = this.wordCounts.get(word); // Get old count
+            this.wordCounts.set(word, count + 1);    // Increment it
+            this.totalWords++;
         }
     }
 
     // Convert the histogram to a string that displays an ASCII graphic
     toString() {
         // Convert the Map to an array of [key,value] arrays
-        let entries = [...this.letterCounts];
+        let entries = [...this.wordCounts];
 
         // Sort the array by count, then alphabetically
         entries.sort((a, b) => {              // A function to define sort order.
@@ -61,15 +54,16 @@ class Histogram {
 
         // Convert the counts to percentages
         for (let entry of entries) {
-            entry[1] = entry[1] / this.totalLetters * 100;
+            entry[1] = entry[1] / this.totalWords * 100;
         }
 
-        // Drop any entries less than 1%
-        entries = entries.filter(entry => entry[1] >= 1);
+        // 出現頻度 0.5% 以上を取得
+        entries = entries.filter((entry) => entry[1] >= 0.5);
 
-        // Now convert each entry to a line of text
-        let lines = entries.map(
-            ([l, n]) => `${l}: ${"#".repeat(Math.round(n))} ${n.toFixed(2)}%`
+        // padStart で表示幅を揃える / # の数を n ではなく 10 * n に変更
+        const lines = entries.map(
+            ([l, n]) =>
+                `${l.padStart(10)}: ${"#".repeat(Math.round(10 * n))} ${n.toFixed(2)}%`
         );
 
         // And return the concatenated lines, separated by newline characters.
