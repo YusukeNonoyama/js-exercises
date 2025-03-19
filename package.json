@@ -22,6 +22,7 @@
   },
   "type": "module",
   "dependencies": {
+    "acorn": "^8.14.1",
     "node": "^20.19.0"
   }
 }
