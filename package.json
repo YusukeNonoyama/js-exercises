@@ -23,6 +23,7 @@
   "type": "module",
   "dependencies": {
     "acorn": "^8.14.1",
+    "escodegen": "^2.1.0",
     "node": "^20.19.0"
   }
 }
