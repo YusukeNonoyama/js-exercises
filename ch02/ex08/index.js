@@ -10,32 +10,12 @@ export function removeSemicolon(input_string) {
         return input_string;
     }
 
-    // semicolonの中で行の中間にあるものを抽出
-    let intermediate_colons_index = [];
-    let total_colon_count = 0;
-    let input_lines = input_string.split('\n');
-    for (let line of input_lines) {
-        let colon_count = line.split(";").length - 1;
-        console.log("colon count: " ,colon_count);
-        console.log("total_colon_count", total_colon_count);
-        if (colon_count >= 2) {
-            for (let i = 0 ; i < colon_count-1; i++) {
-                intermediate_colons_index.push(i + total_colon_count);
-                console.log(i + total_colon_count);
-            }
-        }
-        total_colon_count += colon_count;
-        console.log("total colon count for line ", line, ": ",total_colon_count)
-    }
-
-    console.log("intermediate_colons_index: ", intermediate_colons_index)
-
-    // Get tokens
+    // acornでトークンを取得
     let tokens = [...acorn.tokenizer(input_string, { ecmaVersion: 2025 })];
-    console.log("token analysis start...");
+    console.log("token get done");
     console.log("======================");
 
-    // Get semicolon index array from tokens
+    // トークンからsemicolon_index_arrayを取得
     let semicolon_index_array = [];
     let semicolon_index = 0;
     for (let token of tokens) {
@@ -50,40 +30,51 @@ export function removeSemicolon(input_string) {
         }
         semicolon_index++;
     }
+    console.log("semicolon_index_array:", semicolon_index_array)
 
-    console.log("======================");
+    // semicolon_index_arrayのうち、各lineの中間にあるもののindexを抽出
+    let intermediate_semicolons_index = [];
+    let total_semicolon_count = 0;
+    let input_lines = input_string.split('\n');
+    for (let line of input_lines) {
+        let colon_count = line.split(";").length - 1; 
+        // console.log("colon count: " ,colon_count);
+        // console.log("total_semicolon_count", total_semicolon_count);
+        if (colon_count >= 2) {
+            for (let i = 0 ; i < colon_count-1; i++) {
+                intermediate_semicolons_index.push(i + total_semicolon_count);
+                // console.log(i + total_semicolon_count);
+            }
+        }
+        total_semicolon_count += colon_count;
+        // console.log("total colon count for line ", line, ": ",total_semicolon_count)
+    }
+    console.log("intermediate_semicolons_index:", intermediate_semicolons_index)
 
-    console.log("all semicolon index:")
-    console.log(semicolon_index_array);
 
-    console.log("======================");
-
-    // 行の最後のsemicolonのみを削除対象にする
-    for (let i of intermediate_colons_index.reverse()) {
+    // 行の中間のsemicolonを削除対象から除外
+    for (let i of intermediate_semicolons_index.reverse()) {
         semicolon_index_array.splice(i, 1);
     }
-
-    console.log("remove semicolon index:")
-    console.log(semicolon_index_array);
+    console.log("exclude intermediate semicolons from semicolon_index_array:", semicolon_index_array)
 
     // 次の行の始めが"("の場合は削除対象から除外
-    let element_index = 1;
-    semicolon_index_array = semicolon_index_array.reverse()
+    let element_index = 1;  //scriptの最後の;は次のtokenが存在しないため検索から除外
+    semicolon_index_array.reverse()
     for (let i of semicolon_index_array.slice(1, semicolon_index_array.length)) {
-        console.log("i: ", i);
+        // console.log("i: ", i);
         if (tokens[i + 1].type.label === '(') {
-            console.log("i before (: ", i);
+            // console.log("i before (: ", i);
             semicolon_index_array.splice(element_index, 1);
         }
         element_index++;
     }
-
-    console.log("remove semicolon index2:")
-    console.log(semicolon_index_array);
+    semicolon_index_array.reverse()
+    console.log("exclude semicolons before '(' sign from semicolon_index_array:", semicolon_index_array)
 
     console.log("======================");
 
-    // Regenerate Javascript code
+    // semicolonを除外したスクリプトの生成
     let regenerate_script = "";
     let last_index = 0;
     let token_id = 0;
@@ -101,19 +92,12 @@ export function removeSemicolon(input_string) {
         last_index = token.end;
         token_id++;
     }
-
+    // 最後の改行を除外
     if (regenerate_script.endsWith("\n")) {
         regenerate_script = regenerate_script.slice(0, -1);
     }
-
     console.log('Regenerated Script:');
     console.log(regenerate_script);
-
-    // let ast = acorn.parse(input_string, { ecmaVersion: 2025})
-    // console.log("ast line number:")
-    // console.log(Object.keys(ast['body']).length)
-    // console.log("ast output:")
-    // console.log(ast)
 
     return regenerate_script;
 }
@@ -129,33 +113,17 @@ let y = x + f;
 let not_JS = "This is not JavaScript;"
 
 let multi_semicolons = `let x = 1; let y = 2;
+let z = x + y;
+console.log(z);`
+
+let multi_semicolons_added = `let x = 1; let y = 2;
 let z = x + y; let a = 1; let b = 3;
 console.log(z);`
 
-// let multi_semicolons = `let x = 1; let y = 2;
-// let z = x + y;
-// console.log(z);`
+removeSemicolon(multi_semicolons_added);
 
 
-removeSemicolon(cannot_omit);
-
-
-// Related Script
-
-// let tokens = acorn.tokenizer(input_string, { ecmaVersion: 2025 });
-// for (let token of tokens) {
-//     if (token['type']['label'] === ';') {
-//         semicolon_index_array.push(semicolon_index);
-//         console.log(semicolon_index, ": ", ";");
-//     } else {
-//         console.log(semicolon_index, ": ", token['value']);
-//     }
-//     // console.log("======================")
-//     semicolon_index++;
-// }
-// console.log("======================");
-
-// let ast = acorn.parse(input_string, { ecmaVersion: 2025})
+// 関連コード
 // let ast = acorn.parse(input_string, { ecmaVersion: 2025}, {onToken: true} )
 // console.log("ast line number:")
 // console.log(Object.keys(ast['body']).length)
