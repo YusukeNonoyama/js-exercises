@@ -1,12 +1,8 @@
 module.exports = {
-  extends: [
-    "eslint:recommended",
-    "plugin:@typescript-eslint/recommended",
-    "prettier",
-  ],
-  parser: "@typescript-eslint/parser",
-  plugins: ["@typescript-eslint"],
-  root: true,
+  parserOptions: {
+    sourceType: "module",
+  },
+  extends: ["eslint:recommended", "prettier"],
   env: {
     es2022: true,
     node: true,
@@ -18,4 +14,5 @@ module.exports = {
     // 通常業務ではほぼ確実に採用されるルールのため、offにはしない。
     "prefer-const": "warn",
   },
+  root: true,
 };
