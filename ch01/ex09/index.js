@@ -1,5 +1,3 @@
-// 一章で既にフォーマッター使っていた
-
 class DefaultMap extends Map {
     constructor(defaultValue) {
         super();                          // Invoke superclass constructor

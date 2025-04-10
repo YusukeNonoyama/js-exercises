@@ -1,3 +1,6 @@
+// 一章で既にフォーマッター使っていた
+
+
 /**
  * This Node program reads text from standard input, computes the frequency
  * of each letter in that text, and displays a histogram of the most
