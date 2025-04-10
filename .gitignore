@@ -2,3 +2,5 @@ node_modules
 *.js
 test-results
 *.tsbuildinfo
+
+memo.md
