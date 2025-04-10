@@ -3,4 +3,4 @@ node_modules
 test-results
 *.tsbuildinfo
 
-memo.md
+memo*.md
