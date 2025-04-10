@@ -7,6 +7,7 @@ describe("math", () => {
       point.add(2,3);
       expect(point.x).toBe(3);
       expect(point.y).toBe(4);
+      // Pointクラスの状態での比較は同一参照のオブジェクトの判定となってしますため比較ができない。要素同士を比較する。
     });
     it("add coordinates to Point", () => {
       let point = new Point(100, 100)
