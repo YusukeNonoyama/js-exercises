@@ -17,3 +17,11 @@ test("ch03-ex07", () => {
   });
 
 // lengthが定義されていない者同士を引数にすると全てtrueとなる
+
+// console.log(equalArrays(8, 888))    // 数値に.lengthは定義されていないからundefinedが返る
+// console.log(equalArrays(true, false))    // 論理型に.lengthは定義されていないからundefinedが返る
+// console.log(equalArrays({x: 2}, {x: 888, y: 8888}))    // オブジェクトに.lengthは定義されていないからundefinedが返る
+// console.log(equalArrays(8, {x: 888, y: 8888}))
+// console.log(equalArrays(true, {x: 2}))
+// console.log(equalArrays([1, 0], [1, -0]))   // 明らかに違う値ではないけど一応
+// console.log(equalArrays([1, " "], [1, ` `]))    // 明らかに違う値ではないけど一応
