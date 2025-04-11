@@ -15,7 +15,6 @@ console.log("NaN, Infinity: ", c + a);
 console.log("NaN, -Infinity: ", c + b);
 console.log("NaN, NaN: ", c + c);
 
-
 console.log("minus=======================")
 console.log("Infinity, Infinity: ", a - a);
 console.log("Infinity, -Infinity: ", a - b);
