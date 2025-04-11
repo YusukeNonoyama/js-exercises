@@ -1,3 +1,4 @@
+// 
 class DefaultMap extends Map {
     constructor(defaultValue) {
         super();                          // Invoke superclass constructor
@@ -14,23 +15,21 @@ class DefaultMap extends Map {
     }
 }
 
-// This class computes and displays letter frequency histograms
-class Histogram {
+// 単語頻度を計算するクラス
+class WordHistogram {
     constructor() {
-        this.wordCounts = new DefaultMap(0);  // Map from WORDS to counts
-        this.totalWords = 0;                  // How many WORDS in all
+        this.wordCounts = new DefaultMap(0);  // MAPオブジェクト作成
+        this.totalWords = 0;
     }
 
-    // This function updates the histogram with the WORDS of text.
+    // histogram
     add(text) {
         // Remove whitespace from the text, and convert to upper case
-        // text = text.replace(/\s/g, "").toUpperCase();
+        // word([単語, カウント数])の配列を正規表現で抽出
         const matches = text.toLowerCase().matchAll(/\w+|\$[\d.]+|\S+/g);
-        // const matches = text.toLowerCase().matchAll(/\w+/g);
+        // matchesから単語のみを抽出した配列を作成
         const words = [...matches].map((r) => r[0]);
-
-
-        // Now loop through the WORDS of the WORD LIST
+        // 単語配列をループ
         for (let word of words) {
             let count = this.wordCounts.get(word); // Get old count
             this.wordCounts.set(word, count + 1);    // Increment it
@@ -38,45 +37,43 @@ class Histogram {
         }
     }
 
-    // Convert the histogram to a string that displays an ASCII graphic
+    // histogramをソートして文字列形式に変換
     toString() {
         // Convert the Map to an array of [key,value] arrays
         let entries = [...this.wordCounts];
 
-        // Sort the array by count, then alphabetically
-        entries.sort((a, b) => {              // A function to define sort order.
-            if (a[1] === b[1]) {             // If the counts are the same
-                return a[0] < b[0] ? -1 : 1; // sort alphabetically.
-            } else {                         // If the counts differ
-                return b[1] - a[1];          // sort by largest count.
+        // wordのカウント数順にソート、カウント数が同じならアルファベット順
+        entries.sort((a, b) => {
+            if (a[1] === b[1]) {
+                return a[0] < b[0] ? -1 : 1; // trueだとa → b（-1）、falseだとb → a（1）
+            } else {
+                return b[1] - a[1];          // カウントが大きい方が先
             }
         });
-
         // Convert the counts to percentages
         for (let entry of entries) {
             entry[1] = entry[1] / this.totalWords * 100;
         }
-
+        //// ch01/ex09の変更箇所
         // 出現頻度 0.5% 以上を取得
         entries = entries.filter((entry) => entry[1] >= 0.5);
-
         // padStart で表示幅を揃える / # の数を n ではなく 10 * n に変更
         const lines = entries.map(
             ([l, n]) =>
                 `${l.padStart(10)}: ${"#".repeat(Math.round(10 * n))} ${n.toFixed(2)}%`
         );
-
+        ////
         // And return the concatenated lines, separated by newline characters.
         return lines.join("\n");
     }
 }
 
-// This async (Promise-returning) function creates a Histogram object,  
-// asynchronously reads chunks of text from standard input, and adds those chunks to
-// the histogram. When it reaches the end of the stream, it returns this histogram
+
+// ターミナルの入力を一行ずつ読んでMAP(histogram)を返す
 async function histogramFromStdin() {
-    process.stdin.setEncoding("utf-8"); // Read Unicode strings, not bytes
-    let histogram = new Histogram();
+    process.stdin.setEncoding("utf-8"); // ターミナルの入力を取得
+    let histogram = new WordHistogram();
+    // ターミナルの入力を一行ずつhistogram.add()で処理
     for await (let chunk of process.stdin) {
         histogram.add(chunk);
     }
@@ -84,6 +81,9 @@ async function histogramFromStdin() {
 }
 
 
-// This one final line of code is the main body of the program.
-// It makes a Histogram object from standard input, then prints the histogram.
+// histogramFromStdin()を呼び出し、そのreturnの値(histogram)をコンソールに文字列形式変換して出力
 histogramFromStdin().then(histogram => { console.log(histogram.toString()); });
+
+
+// ターミナル上の実行コマンド
+// `cat ch01\ex09\hamlet.txt | node ch01/ex09/index.js`
