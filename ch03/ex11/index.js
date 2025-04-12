@@ -1,28 +1,46 @@
-// obj1とobj2を別々に作って===で比較
-let obj1 = { "x": 100 };
-console.log(obj1);
-obj1["y"] = "dollars";
+const obj1 = { x: 1 };
+obj1["y"] = 2;
 console.log(obj1);
 
-let obj2 = { "x": 100, "y": "dollars" };
-console.log(obj2);
-
-console.log("// obj1とobj2の`===`比較");
+const obj2 = { x: 1, y: 2 };
+// 別のobjectのためfalseの予想　=> false
 console.log(obj1 === obj2);
 
-// obj1とobj2を別々に作って要素同士で比較
-console.log("// obj1とobj2の要素同士を比較");
+
+// equals()
 export function equals(a, b) {
-    // if (Object.values(a).length !== Object.values(b).length) return false;
-    // return true;
-    for (let property in a) {
-        if (a[property] !== b[property]) return false;
+  // 厳密に一致
+  if (a === b) return true;
+  // object以外とnullはfalse
+  if (typeof (a) !== "object" || typeof (b) !== "object") return false;
+  if (a === null || b === null) return false;
+
+  // プロパティの数が異なるとfalse
+  if (Object.values(a).length !== Object.values(b).length) return false;
+
+  // objectの中身が同一かどうかを再帰的に調べる
+  for (let property in a) {
+    if (typeof (a[property]) === "object") {
+      return equals(a[property], b[property]);  // 最後のループのreturnがそのまま元の比較の結果
+    } else if (a[property] !== b[property]) {
+      return false;  // propertyが全て同じ値でないとfalseを返す
     }
-    for (let property in b) {
-        if (a[property] !== b[property]) return false;
-    }
-    return true;
+  }
+  return true;
 }
 
-console.log(equals(obj1, obj2));
+console.log("1", equals(obj1, obj1));
+console.log("2", equals(42, 42)); // true
+console.log("3", equals(null, null)); // true
 
+// 厳密等価ではない場合オブジェクト以外が指定されれば false
+console.log("4", equals({ x: 42 }, 42)); // false
+console.log("5", equals(null, { x: 42 })); // false
+
+// プロパティの数・名前が一致しなければ false
+console.log("6", equals({ x: 1 }, { y: 1 })); // false
+console.log("7", equals({ x: 1 }, { x: 1, y: 1 })); // false
+
+// プロパティの各値を equals で再帰的に比較
+console.log("8", equals({ x: { y: { z: 10 } } }, { x: { y: { z: 10 } } })); // true
+console.log("9", equals({ x: { y: { z: 10 } } }, { x: { y: { z: 10, w: 1 } } })); // false
