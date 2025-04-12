@@ -14,4 +14,5 @@ let obj = new Example();
 
 console.log(+obj);  // valueOf()を呼び出す
 console.log(`${obj}`);  // テンプレートリテラルでtoString()を呼び出す
+console.log(obj + "");   // これはなぜかvalueOf()が先に呼ばれる
 // console.log(String(obj));   // これはほぼ直接呼んでいる
