@@ -22,7 +22,7 @@ export function eq(a, b) {
   if (b === null) b = undefined;
   if (a === b) return true;
 
-  // 片方がオブジェクトで片方が数値の場合(文字列がテストケースにないのでとりあえず除外)
+  // 片方がオブジェクトで片方が数値の場合
   if (typeof(a) === "object" && typeof(b) === "number") [a, b] = [b, a];  // bがobjectになるようにスワップ
   if (typeof(a) === "number" && typeof(b) === "object") b = Number(b);  // bを数値型へ変換
   if (a === b) return true;
