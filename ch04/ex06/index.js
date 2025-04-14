@@ -23,7 +23,9 @@ function resize1(params) {
     let maxWidth = 600;
     let maxHeight = 480;
 
-    // paramsがundefinedでなければparamsのプロパティを呼び出す。paramsがundefinedの場合は最後のmaxWidth/maxHeightとなる。
+    // paramsがundefinedの場合はparams.maxWidthは評価されずにparamsのundefinedが返る
+    // 次にundefined || maxWidthによりmaxWidthが代入される
+    // paramsがオブジェクトの場合は戻り値がparams.maxWidthになりそれ以降が評価されない
     maxWidth = params && params.maxWidth || maxWidth;
     maxHeight = params && params.maxHeight || maxHeight;
 
