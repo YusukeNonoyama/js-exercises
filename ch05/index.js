@@ -12,3 +12,5 @@ const fetchData = () => {
     });
   };
 
+let c;
+
