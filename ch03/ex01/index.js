@@ -48,3 +48,44 @@ console.log("NaN, Infinity: ", c / a);
 console.log("NaN, -Infinity: ", c / b);
 console.log("NaN, NaN: ", c / c);
 
+
+// plus=======================
+// Infinity, Infinity:  Infinity
+// Infinity, -Infinity:  NaN
+// Infinity, NaN:  NaN
+// -Infinity, Infinity:  NaN
+// -Infinity, -Infinity:  -Infinity
+// -Infinity, NaN:  NaN
+// NaN, Infinity:  NaN
+// NaN, -Infinity:  NaN
+// NaN, NaN:  NaN
+// minus=======================
+// Infinity, Infinity:  NaN
+// Infinity, -Infinity:  Infinity
+// Infinity, NaN:  NaN
+// -Infinity, Infinity:  -Infinity
+// -Infinity, -Infinity:  NaN
+// -Infinity, NaN:  NaN
+// NaN, Infinity:  NaN
+// NaN, -Infinity:  NaN
+// NaN, NaN:  NaN
+// multiply=======================
+// Infinity, Infinity:  Infinity
+// Infinity, -Infinity:  -Infinity
+// Infinity, NaN:  NaN
+// -Infinity, Infinity:  -Infinity
+// -Infinity, -Infinity:  Infinity
+// -Infinity, NaN:  NaN
+// NaN, Infinity:  NaN
+// NaN, -Infinity:  NaN
+// NaN, NaN:  NaN
+// devide=======================
+// Infinity, Infinity:  NaN
+// Infinity, -Infinity:  NaN
+// Infinity, NaN:  NaN
+// -Infinity, Infinity:  NaN
+// -Infinity, -Infinity:  NaN
+// -Infinity, NaN:  NaN
+// NaN, Infinity:  NaN
+// NaN, -Infinity:  NaN
+// NaN, NaN:  NaN

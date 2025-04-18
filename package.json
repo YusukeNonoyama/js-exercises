@@ -1,8 +1,7 @@
 {
-  "name": "js-exercises",
+  "name": "preset-js",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
   "scripts": {
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --runInBand",
     "test:browser": "playwright test",
@@ -20,10 +19,5 @@
     "prettier": "^3.0.3",
     "serve": "^14.2.3"
   },
-  "type": "module",
-  "dependencies": {
-    "acorn": "^8.14.1",
-    "escodegen": "^2.1.0",
-    "node": "^20.19.0"
-  }
+  "type": "module"
 }
