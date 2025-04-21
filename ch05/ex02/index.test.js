@@ -20,7 +20,7 @@ let test_array = [
 ]
 
 test.each(test_array)("add backslash with if else conditionals: %s => %s", (input, expected) => {
-  expect(JSON.stringify(AddBackSlach.withIfelse(input))).toBe(JSON.stringify(expected));
+  expect(JSON.stringify(AddBackSlach.withElseif(input))).toBe(JSON.stringify(expected));
 });
 
 test.each(test_array)("add backslash with switch conditionals: %s => %s", (input, expected) => {

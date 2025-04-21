@@ -1,6 +1,6 @@
 export class AddBackSlach {
-    // if elseで条件分岐
-    static withIfelse(inputText) {
+    // else ifで条件分岐
+    static withElseif(inputText) {
         if (typeof inputText !== "string") return inputText;
         let outputText = "";
         for (let letter of inputText) {
@@ -57,6 +57,6 @@ export class AddBackSlach {
     }
 }
 
-AddBackSlach.withIfelse("f")
+AddBackSlach.withElseif("f")
 // AddBackSlach.withSwitch("00ddff")
 // AddBackSlach.withIf("00ddff")
