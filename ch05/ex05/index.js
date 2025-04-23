@@ -1,0 +1,30 @@
+export function omitOddNumber(o){
+    if(!Object.values(o).every(element => typeof element === 'number')) throw new CustomTypeError("Object should have number type in every element.");
+    let newObj = {};
+    for ( let property in o){
+        if(o[property] % 2 === 0) newObj[property] = o[property];
+    }
+    return newObj;
+}
+
+
+class CustomTypeError extends Error {
+    constructor(message) {
+      super(message);
+      this.name = 'CustomTypeError';
+    }
+  }
+
+const o1 = { x: 1, y: 2, z: 3 };
+const o2 = { x: 1, y: 2, z: "3" };
+const o3 = { x: 1, y: 2, z: true };
+const o4 = { x: 1, y: 2, z: 4, a: 11, b:12984 };
+const o5 = { x: 0, y: 2, z: 3 };
+const o6 = { x: -1, y: -2, z: -3 };
+
+try{console.log(omitOddNumber(o1));} catch(error){console.error(error.name, ":", error.message);}
+try{console.log(omitOddNumber(o2));} catch(error){console.error(error.name, ":", error.message);}
+try{console.log(omitOddNumber(o3));} catch(error){console.error(error.name, ":", error.message);}
+try{console.log(omitOddNumber(o4));} catch(error){console.error(error.name, ":", error.message);}
+try{console.log(omitOddNumber(o5));} catch(error){console.error(error.name, ":", error.message);}
+try{console.log(omitOddNumber(o6));} catch(error){console.error(error.name, ":", error.message);}
