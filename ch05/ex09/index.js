@@ -19,5 +19,8 @@ export function parseJson(inputText) {
 
 // console.log(JSON.parse("This is not JSON"));
 
+debugger;
 console.log(JSON.parse(10));
+console.log("debugging");
+debugger;
 console.log(JSON.parse(null));
