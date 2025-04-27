@@ -5,3 +5,6 @@ with (obj) {
     a = b;
 }
 console.log(JSON.stringify({ a, b, obj }));
+
+
+// {"a":1,"b":2,"obj":{"a":4,"b":4}}
