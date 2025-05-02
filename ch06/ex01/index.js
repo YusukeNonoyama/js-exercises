@@ -1,13 +1,7 @@
-function newHashTable(capacity) {
+export function newHashTable(capacity) {
     // capacityのinput確認
-    if (typeof capacity !== "number") {
-        console.log(`Invalid input type: ${typeof capacity}`);
-        return;
-    }
-    if (capacity < 1) {
-        console.log(`Invalid input number (capacity > 0): ${capacity}`);
-        return;
-    }
+    if (typeof capacity !== "number") return `Invalid input type: ${typeof capacity}`;
+    if (capacity < 1) return `Invalid input number (capacity > 0): ${capacity}`;
     return {
         size: 0, // マッピング数を示すプロパティ
         entries: new Array(capacity), // マッピングを格納する固定長の配列
@@ -118,6 +112,7 @@ function removeKeyValuePair(o, targetKey, size, keyExisted) {
     return [o, size ,keyExisted];
 }
 
+
 function sample() {
     const hashTable = newHashTable(10);
     hashTable.put("key1", "value1");
@@ -210,6 +205,8 @@ function test1() {
     console.log(hashTable.get(true));
     console.log(hashTable.get(undefined));
     console.log(hashTable.get(null));
+
+    console.log(JSON.stringify(hashTable.entries));
 }
 
 function test2() {
@@ -246,6 +243,9 @@ function test2() {
     console.log(hashTable.get("key6"));
     console.log(hashTable.get("key7"));
     console.log(hashTable.get("key8"));
+
+    console.log(JSON.stringify(hashTable.entries));
+
 }
 
 function test3() {
@@ -361,17 +361,17 @@ function test5() {
     console.log(JSON.stringify(hashTable_10.entries));
 }
 
-console.log("=sample=================================================")
-sample();
-console.log("=sample2=================================================")
-sample2();
-console.log("=test1:get=================================================")
-test1();
-console.log("=test2:put=================================================")
-test2();
-console.log("=test3:remove=================================================")
-test3();
-console.log("=test4:remove=================================================")
-test4();
-console.log("=test5:array length=================================================")
-test5();
+// console.log("=sample=================================================")
+// sample();
+// console.log("=sample2=================================================")
+// sample2();
+// console.log("=test1:get=================================================")
+// test1();
+// console.log("=test2:put=================================================")
+// test2();
+// console.log("=test3:remove=================================================")
+// test3();
+// console.log("=test4:remove=================================================")
+// test4();
+// console.log("=test5:array length=================================================")
+// test5();
