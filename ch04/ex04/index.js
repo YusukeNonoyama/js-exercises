@@ -16,3 +16,8 @@ export function bitCount(number) {
 }
 
 console.log(bitCount(0b1111111111111111111111111111111));
+
+// 実行コマンド： node ch04/ex04/index.js
+
+// number in 32bit expression:  1111111111111111111111111111111
+// 31
