@@ -10,11 +10,11 @@ function func1 (a, b){
     return a + b;
 }
 
-console.log(typeof undefined);
-console.log(typeof null);
-console.log(typeof {x: 1});
-console.log(typeof NaN);
-console.log(typeof 4);
-console.log(typeof func1);
+console.log(typeof undefined);  // => undefined
+console.log(typeof null);   // => object
+console.log(typeof {x: 1}); // => object
+console.log(typeof NaN);    // => number
+console.log(typeof 4);  // => number
+console.log(typeof func1);  // => function
 
-// 予想通り。テキストに書いてあったから。
+// 予想通り。テキストに書いてあった。
