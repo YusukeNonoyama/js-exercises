@@ -10,11 +10,13 @@ let test_array_normal = [
     [{ a: 101, b: 202, c: 303, x: 1, y: 2, z: 3 }, { b: 202, y: 2 }],
 ]
 
+const ERROR_MESSAGE = "Object should have number type in every value.";
+
 let test_array_error = [
-    [{ x: 1, y: 2, z: "3" }, "Object should have number type in every element."],
-    [{ x: 1, y: 2, z: true }, "Object should have number type in every element."],
-    [{ x: 1, y: 2, z: null }, "Object should have number type in every element."],
-    [{ x: 1, y: 2, z: undefined }, "Object should have number type in every element."],
+    [{ x: 1, y: 2, z: "3" }, ERROR_MESSAGE],
+    [{ x: 1, y: 2, z: true }, ERROR_MESSAGE],
+    [{ x: 1, y: 2, z: null }, ERROR_MESSAGE],
+    [{ x: 1, y: 2, z: undefined }, ERROR_MESSAGE],
 ]
 
 describe("Omit odd number from object", () => {
