@@ -2,7 +2,7 @@ function f() { throw new Error("") }
 
 try {
     console.log("try");
-    f();
+    f();    // 必ずerrorを投げる関数
 } catch (e) {
     console.log("catch");
 } finally {
