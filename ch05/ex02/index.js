@@ -1,4 +1,4 @@
-export class AddBackSlach {
+export class AddBackslash {
     // else ifで条件分岐
     static withElseif(inputText) {
         if (typeof inputText !== "string") return inputText;
@@ -57,6 +57,6 @@ export class AddBackSlach {
     }
 }
 
-AddBackSlach.withElseif("f")
+AddBackslash.withElseif("f")
 // AddBackSlach.withSwitch("00ddff")
 // AddBackSlach.withIf("00ddff")

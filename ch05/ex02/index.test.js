@@ -1,4 +1,4 @@
-import { AddBackSlach } from "./index.js";
+import { AddBackslash } from "./index.js";
 
 let test_array = [
   ["0", "\\0"],
@@ -20,13 +20,13 @@ let test_array = [
 ]
 
 test.each(test_array)("add backslash with if else conditionals: %s => %s", (input, expected) => {
-  expect(JSON.stringify(AddBackSlach.withElseif(input))).toBe(JSON.stringify(expected));
+  expect(JSON.stringify(AddBackslash.withElseif(input))).toBe(JSON.stringify(expected));
 });
 
 test.each(test_array)("add backslash with switch conditionals: %s => %s", (input, expected) => {
-  expect(JSON.stringify(AddBackSlach.withSwitch(input))).toBe(JSON.stringify(expected));
+  expect(JSON.stringify(AddBackslash.withSwitch(input))).toBe(JSON.stringify(expected));
 });
 
 test.each(test_array)("add backslash with if conditionals: %s => %s", (input, expected) => {
-  expect(JSON.stringify(AddBackSlach.withIf(input))).toBe(JSON.stringify(expected));
+  expect(JSON.stringify(AddBackslash.withIf(input))).toBe(JSON.stringify(expected));
 });
