@@ -21,3 +21,8 @@ console.log(JSON.stringify({ a, b, obj }));
 //     at ModuleLoader.loadAndTranslate (node:internal/modules/esm/loader:478:27)
 //     at async ModuleJob._link (node:internal/modules/esm/module_job:110:19)
 // Node.js v20.19.0
+
+
+// ブラウザで実行
+// 実行結果
+// {"a":1,"b":2,"obj":{"a":4,"b":4}}
