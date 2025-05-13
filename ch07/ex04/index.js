@@ -25,25 +25,30 @@ console.log(chemSum / data.length);   // 49.44444444444444
 // 3.科目合計点のクラスC内での平均点
 const arrayC = data.filter(x => x["class"] === "C");
 let sumTotalC = 0;
-arrayC.forEach(x => sumTotalC = sumTotalC + x["math"] + x["chemistry"] + x["geography"]);
+arrayC.forEach(x => {
+    const xTotal = x["math"] + x["chemistry"] + x["geography"];
+    return sumTotalC += xTotal;
+});
 console.log(sumTotalC / (arrayC.length * 3));   // 58.888888888888886
 
 
 // 4.科目合計点が最も高い人のname
-let nameAndTotal = [];
-data.forEach(x => {
-    nameAndTotal.push({"name": x["name"], "total": x["math"] + x["chemistry"] + x["geography"]})
-})
-// console.log(nameAndTotal);
-let maxTotal = 0;
-let champion = "";
-nameAndTotal.forEach(x => {
-    if(x["total"] > maxTotal) {
-        maxTotal = x["total"];
-        champion = x["name"];    
-    }
-});
-console.log(champion);  // frank
+let champ_object = data.reduce((x, y) => {
+    const xTotal = x["math"] + x["chemistry"] + x["geography"];
+    const yTotal = y["math"] + y["chemistry"] + y["geography"];
+    return (xTotal > yTotal) ? x : y; 
+}, {});
+console.log(champ_object["name"]);  // frank
 
 
 // 5.全体のgeographyの標準偏差
+let geoSum = 0;
+data.forEach(x => geoSum += x["geography"]);
+let geoAvg = geoSum / data.length;   // 49.44444444444444 (geographyの平均点)
+
+let geoDiffSqSum = 0;
+data.forEach(x => {
+    geoDiffSqSum += (x["geography"] - geoAvg) ** 2  // 平均との差分の二乗の和をforEachで求める
+});
+
+console.log((geoDiffSqSum / (data.length - 1)) ** (1/2)); // 23.687784005919827
