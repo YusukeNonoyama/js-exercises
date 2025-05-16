@@ -27,7 +27,7 @@ describe('check get() method', () => {
     hashTable.put("key7", "value7");
     hashTable.put("key8", "value8");
     test.each(testArrayGet)("get(): %s => %s", (input, expected) => {
-        expect(JSON.stringify(hashTable.get(input))).toBe(JSON.stringify(expected));
+        expect(hashTable.get(input)).toEqual(expected);
     });
 });
 
@@ -42,12 +42,14 @@ describe('check put() method add key-value pair', () => {
     hashTable.put("key7", "value7");
     hashTable.put("key8", "value8");
 
-    const expected = JSON.stringify([{ "key": "key1", "value": "value1", "next": { "key": "key4", "value": "value4", "next": { "key": "key7", "value": "value7" } } },
-    { "key": "key2", "value": "value2", "next": { "key": "key5", "value": "value5", "next": { "key": "key8", "value": "value8" } } },
-    { "key": "key3", "value": "value3", "next": { "key": "key6", "value": "value6" } }]);
+    const expected = [
+        { "key": "key1", "value": "value1", "next": { "key": "key4", "value": "value4", "next": { "key": "key7", "value": "value7" } } },
+        { "key": "key2", "value": "value2", "next": { "key": "key5", "value": "value5", "next": { "key": "key8", "value": "value8" } } },
+        { "key": "key3", "value": "value3", "next": { "key": "key6", "value": "value6" } }
+    ];
 
     it("hashTable.entries: ", () => {
-        expect(JSON.stringify(hashTable.entries)).toBe(expected);
+        expect(hashTable.entries).toEqual(expected);
     });
 });
 
@@ -62,12 +64,14 @@ describe('check put() method update key', () => {
     hashTable.put("key7", "value7");
     hashTable.put("key8", "value8");
 
-    const expected = JSON.stringify([{ "key": "key1", "value": "value1", "next": { "key": "key4", "value": "value4", "next": { "key": "key7", "value": "value7" } } },
-    { "key": "key2", "value": "value2", "next": { "key": "key5", "value": "value5", "next": { "key": "key8", "value": "value8" } } },
-    { "key": "key3", "value": "value3", "next": { "key": "key6", "value": "value6" } }]);
+    const expected = [
+        { "key": "key1", "value": "value1", "next": { "key": "key4", "value": "value4", "next": { "key": "key7", "value": "value7" } } },
+        { "key": "key2", "value": "value2", "next": { "key": "key5", "value": "value5", "next": { "key": "key8", "value": "value8" } } },
+        { "key": "key3", "value": "value3", "next": { "key": "key6", "value": "value6" } }
+    ];
 
     it("hashTable.entries: ", () => {
-        expect(JSON.stringify(hashTable.entries)).toBe(expected);
+        expect(hashTable.entries).toEqual(expected);
     });
 });
 
@@ -100,10 +104,10 @@ describe('check remove() method', () => {
     hashTable.remove(undefined, "undefined");
     hashTable.remove(null, "null");
 
-    const expected = JSON.stringify([null, null, null]);
+    const expected = [undefined, undefined, undefined];
 
     it("hashTable.entries: ", () => {
-        expect(JSON.stringify(hashTable.entries)).toBe(expected);
+        expect(hashTable.entries).toEqual(expected);
     });
 });
 
@@ -139,10 +143,10 @@ describe('check remove() method (remove in reverse order)', () => {
     hashTable.remove(undefined, "undefined");
     hashTable.remove(null, "null");
 
-    const expected = JSON.stringify([null, null, null]);
+    const expected = [undefined, undefined, undefined];
 
     it("hashTable.entries: ", () => {
-        expect(JSON.stringify(hashTable.entries)).toBe(expected);
+        expect(hashTable.entries).toEqual(expected);
     });
 });
 
@@ -158,7 +162,7 @@ describe('check hashTable input', () => {
     ]
 
     test.each(testArrayHashTable)("newHashTable(): %s => %s", (input, expected) => {
-        expect(JSON.stringify(newHashTable(input))).toBe(JSON.stringify(expected));
+        expect(newHashTable(input)).toEqual(expected);
     });
 
     it("check hashTable size 1", () => {
@@ -174,13 +178,33 @@ describe('check hashTable input', () => {
         hashTable_01.put("key9", "value9");
         hashTable_01.put("key10", "value10");
 
-        const expected = JSON.stringify([{"key":"key1","value":"value1","next":
-            {"key":"key2","value":"value2","next":{"key":"key3","value":"value3","next":
-            {"key":"key4","value":"value4","next":{"key":"key5","value":"value5","next":
-            {"key":"key6","value":"value6","next":{"key":"key7","value":"value6","next":
-            {"key":"key8","value":"value8","next":{"key":"key9","value":"value9","next":
-            {"key":"key10","value":"value10"}}}}}}}}}}]);
-        expect(JSON.stringify(hashTable_01.entries)).toBe(expected);
+        const expected = [
+            {
+                "key": "key1", "value": "value1", "next":
+                {
+                    "key": "key2", "value": "value2", "next": {
+                        "key": "key3", "value": "value3", "next":
+                        {
+                            "key": "key4", "value": "value4", "next": {
+                                "key": "key5", "value": "value5", "next":
+                                {
+                                    "key": "key6", "value": "value6", "next": {
+                                        "key": "key7", "value": "value6", "next":
+                                        {
+                                            "key": "key8", "value": "value8", "next": {
+                                                "key": "key9", "value": "value9", "next":
+                                                    { "key": "key10", "value": "value10" }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        ];
+        expect(hashTable_01.entries).toEqual(expected);
     });
 
     it("check hashTable size 100", () => {
@@ -197,12 +221,14 @@ describe('check hashTable input', () => {
         hashTable_10.put("key10", "value10");
         hashTable_10.put("key11", "value11");
 
-        const expected = JSON.stringify([{"key":"key1","value":"value1","next":{"key":"key11","value":"value11"}},
-            {"key":"key2","value":"value2"},{"key":"key3","value":"value3"},{"key":"key4","value":"value4"},
-            {"key":"key5","value":"value5"},{"key":"key6","value":"value6"},{"key":"key7","value":"value6"},
-            {"key":"key8","value":"value8"},{"key":"key9","value":"value9"},{"key":"key10","value":"value10"}]);
-        expect(JSON.stringify(hashTable_10.entries)).toBe(expected);
+        const expected = [
+            { "key": "key1", "value": "value1", "next": { "key": "key11", "value": "value11" } },
+            { "key": "key2", "value": "value2" }, { "key": "key3", "value": "value3" }, { "key": "key4", "value": "value4" },
+            { "key": "key5", "value": "value5" }, { "key": "key6", "value": "value6" }, { "key": "key7", "value": "value6" },
+            { "key": "key8", "value": "value8" }, { "key": "key9", "value": "value9" }, { "key": "key10", "value": "value10" }
+        ];
+        expect(hashTable_10.entries).toEqual(expected);
     });
 
-    
+
 });

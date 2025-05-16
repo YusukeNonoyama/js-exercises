@@ -27,13 +27,28 @@ describe('check showProperties()', () => {
     let s = Symbol("sym");
     o2[s] = "symbol";
     const testArray = [
-        [1, "invalid input: number"],
-        ["object", "invalid input: string"],
-        [null, "invalid input: null"],
-        [undefined, "invalid input: undefined"],
-        [o2, ["10","z","text","unenumerable",null,"x","y","enumerable"]],
+        [o2, [
+            '10',
+            'z',
+            'text',
+            'unenumerable',
+            Symbol("sym"),
+            'x',
+            'y',
+            'enumerable'
+        ]],
+    ]
+    const testArrayError = [
+        [1, Error],
+        ["string", Error],
+        [null, Error],
+        [undefined, Error],
     ]
     test.each(testArray)("showProperties(): %s => %s", (input, expected) => {
-        expect(JSON.stringify(showProperties(input))).toBe(JSON.stringify(expected));
+        expect(showProperties(input).map(String)).toEqual(expected.map(String));
+    });
+
+    test.each(testArrayError)("showProperties(): %s => %s", (input, expected) => {
+        expect(() => showProperties(input)).toThrow(expected);
     });
 });

@@ -1,5 +1,5 @@
 // 継承するオブジェクト
-let o1 = {x : 1, y : 2};
+let o1 = { x: 1, y: 2 };
 Object.defineProperty(o1, "enumerable", {
     value: "enumerable",
     writable: true,
@@ -8,7 +8,7 @@ Object.defineProperty(o1, "enumerable", {
 })
 // プロパティの継承と独自プロパティの追加
 let o2 = Object.create(o1);
-o2.z = 3; 
+o2.z = 3;
 o2["text"] = "text";
 o2[10] = 10;
 
@@ -29,9 +29,15 @@ o2[s] = "symbol";
 // console.log(Object.getPrototypeOf(o2)); // 継承プロパティ： { x: 1, y: 2, enumerable: 'enumerable' }
 
 // オブジェクトのすべての独自プロパティおよび列挙可能な継承プロパティのプロパティ名の配列を返す関数
-export function showProperties(o){
-    if (typeof o !== "object") return `invalid input: ${typeof o}`;
-    if (o === null) return `invalid input: ${o}`;
+export function showProperties(o) {
+    if (typeof o !== "object") {
+        throw new Error(`invalid input: ${o}`);
+    }
+    if (o === null) {
+        throw new Error(`invalid input: ${o}`);
+    }
+    //     throw new Error(`Array index out of range: ${index}`);
+
     return [
         ...Object.getOwnPropertyNames(o),   // Symbol以外の全ての独自プロパティ（列挙不可含む）
         ...Object.getOwnPropertySymbols(o),     // 独自プロパティのSymbol
@@ -39,7 +45,8 @@ export function showProperties(o){
     ]
 }
 
-console.log("============================================");
-console.log(JSON.stringify(showProperties(o2)));
-console.log(showProperties("string"));
-console.log(showProperties(null));
+// console.log("============================================");
+// console.log(JSON.stringify(showProperties(o2)));
+// console.log(showProperties(o2));
+// console.log(showProperties("string"));
+// console.log(showProperties(null));
