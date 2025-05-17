@@ -3,6 +3,7 @@ import { defineConfig } from "@playwright/test";
 export default defineConfig({
   webServer: {
     command: "npm run server",
+    // command: 'npx serve ./dist',
     port: 3000,
   },
   use: {
