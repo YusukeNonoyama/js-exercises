@@ -4,7 +4,7 @@
   "description": "",
   "scripts": {
     "exec": "npx node --loader ts-node/esm",
-    "test:ts": "jest --runInBand",
+    "test:ts": "jest --runInBand --coverage",
     "test:js": "node --experimental-vm-modules node_modules/jest/bin/jest.js --runInBand",
     "test:browser": "playwright test",
     "server": "tsc -b tsconfig.front.json && serve",
