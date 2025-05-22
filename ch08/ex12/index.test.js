@@ -1,4 +1,4 @@
-import { f } from "./index.js";
+import { f } from "./index.ts";
 
 describe("f", () => {
   it("returns function with no args", () => {
