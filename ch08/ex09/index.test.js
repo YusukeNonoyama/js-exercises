@@ -1,4 +1,4 @@
-import { withResource } from "./index.js";
+import { withResource } from "./index.ts";
 
 describe("withResource", () => {
   it("should do process and call close finally", () => {
