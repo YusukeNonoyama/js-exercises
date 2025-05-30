@@ -5,3 +5,11 @@ Number.prototype.times = function (f, context) {
 
 let n = 3;
 n.times(i => { console.log(`hello ${i}`); });
+
+
+const { vpc } = new NetworkStack(
+  app,
+  `InspectionNetworkStack${suffix}`,
+  { suffix, stage, },
+  { env: { account: process.env.ACCOUNT, region: process.env.REGION, }, }
+);
