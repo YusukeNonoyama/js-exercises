@@ -1,15 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1748901854437" clover="3.2.0">
-  <project timestamp="1748901854437" name="All files">
-    <metrics statements="6" coveredstatements="6" conditionals="1" coveredconditionals="1" methods="3" coveredmethods="3" elements="10" coveredelements="10" complexity="0" loc="6" ncloc="6" packages="1" files="1" classes="1"/>
-    <file name="index.ts" path="/home/nonoyama/js/js-exercises/ch11/ex01/index.ts">
-      <metrics statements="6" coveredstatements="6" conditionals="1" coveredconditionals="1" methods="3" coveredmethods="3"/>
-      <line num="6" count="1" type="stmt"/>
-      <line num="9" count="3" type="stmt"/>
-      <line num="12" count="7" type="cond" truecount="1" falsecount="0"/>
-      <line num="13" count="3" type="stmt"/>
-      <line num="15" count="4" type="stmt"/>
-      <line num="18" count="8" type="stmt"/>
+<coverage generated="1748947166690" clover="3.2.0">
+  <project timestamp="1748947166690" name="All files">
+    <metrics statements="14" coveredstatements="14" conditionals="1" coveredconditionals="1" methods="3" coveredmethods="3" elements="18" coveredelements="18" complexity="0" loc="14" ncloc="14" packages="1" files="1" classes="1"/>
+    <file name="index.ts" path="/home/nonoyama/js/js-exercises/ch11/ex02/index.ts">
+      <metrics statements="14" coveredstatements="14" conditionals="1" coveredconditionals="1" methods="3" coveredmethods="3"/>
+      <line num="1" count="1" type="stmt"/>
+      <line num="2" count="2" type="stmt"/>
+      <line num="4" count="2" type="stmt"/>
+      <line num="6" count="6" type="cond" truecount="1" falsecount="0"/>
+      <line num="7" count="2" type="stmt"/>
+      <line num="10" count="4" type="stmt"/>
+      <line num="11" count="4" type="stmt"/>
+      <line num="12" count="4" type="stmt"/>
+      <line num="17" count="1" type="stmt"/>
+      <line num="18" count="4" type="stmt"/>
+      <line num="19" count="4" type="stmt"/>
+      <line num="20" count="1129900996" type="stmt"/>
+      <line num="22" count="4" type="stmt"/>
+      <line num="23" count="4" type="stmt"/>
     </file>
   </project>
 </coverage>
