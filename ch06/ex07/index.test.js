@@ -1,4 +1,4 @@
-import { assign } from "./index.js";
+import { assign } from "./index.ts";
 
 function testCase(target, sameTarget, sources) {
   try {
@@ -82,7 +82,7 @@ test.each([
   "test case $#: expected: $expected, exception: $exception",
   ({ target, sources, expected, exception }) => {
     if (exception) {
-      expect(() => assign(target, ...sources)).toThrowError(exception);
+      expect(() => assign(target, ...sources)).toThrow(exception);
     } else {
       expect(assign(target, ...sources)).toEqual(expected);
     }

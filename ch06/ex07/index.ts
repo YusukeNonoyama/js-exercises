@@ -1,4 +1,4 @@
-export function assign(input, ...output){
+export function assign(input: any, ...output: any){
     // inputがnullはエラー
     Object.keys(input);
     // NumberのWrapperオブジェクトを作成
@@ -20,7 +20,6 @@ export function assign(input, ...output){
         }
     }
     return result_o;
-    // return JSON.stringify(result_o);
 }
 
 // let input = { foo: "foo", hello: "world" }
@@ -44,8 +43,8 @@ export function assign(input, ...output){
 // let input = true
 // let output = [{ foo: "foo", bar: "bar" }]
 
-let input = null
-let output = [{ foo: "foo", bar: "bar" }]
+// let input = null
+// let output = [{ foo: "foo", bar: "bar" }]
 
 
 // console.log(assign(input, ...output));
