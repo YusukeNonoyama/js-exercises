@@ -1,4 +1,4 @@
-import { showProperties } from "./index.js";
+import { showProperties } from "./index.ts";
 
 describe('check showProperties()', () => {
     // 継承するオブジェクト
@@ -38,7 +38,7 @@ describe('check showProperties()', () => {
             'enumerable'
         ]],
     ]
-    const testArrayError = [
+    const testArrayError: [any, ErrorConstructor][] = [
         [1, Error],
         ["string", Error],
         [null, Error],
