@@ -1,6 +1,12 @@
 function createDate(stringDate: string) {
     const arr = stringDate.split("-").map((s) => Number(s));
-    return new Date(arr[0], arr[1] - 1, arr[2]);
+    const date = new Date(arr[0], arr[1] - 1, arr[2]);
+    if(isNaN(date.getTime())){
+        throw Error(`invalid input: ${stringDate}`)
+    }
+    // console.log(date);
+    // console.log(typeof date);
+    return date;
 }
 
 // 特定の年と月(1-12)を数値の引数で受け取り、その月の日数を返す関数
@@ -20,8 +26,12 @@ export function getDaysExcludeWeekend(start: string, end: string) {
         return count;
     }
 
-    const startDate = createDate(start)
-    const endDate = createDate(end)
+    let startDate = createDate(start)
+    let endDate = createDate(end)
+    if (startDate > endDate) {
+        [startDate, endDate] = [endDate, startDate];
+    }
+    console.log(startDate);
 
     // 日曜が0、土曜が6
     let targetDay = startDate;
@@ -69,27 +79,6 @@ export function getFirstDayOfLastMonth() {
     const now = new Date();
     const monthString = now.toString().split(" ")[1];
     const monthNumber = monthMap[monthString];
-    return new Date(now.getFullYear(), monthNumber -2, 1, 0, 0, 0);
+    return new Date(now.getFullYear(), monthNumber - 2, 1, 0, 0, 0);
 }
 
-console.log(getFirstDayOfLastMonth());
-console.log(getFirstDayOfLastMonth().toString());
-
-// console.log(getDayOfWeek("2025-06-11", "en-US"));
-// console.log(getDayOfWeek("2025-06-11", "fr-FR"));
-// console.log(getDayOfWeek("2025-06-11", "ja-JP"));
-
-// console.log(getDaysOfMonth(2025, 1));
-// console.log(getDaysOfMonth(2025, 2));
-// console.log(getDaysOfMonth(2025, 3));
-// console.log(getDaysOfMonth(2025, 4));
-// console.log(getDaysOfMonth(2025, 5));
-// console.log(getDaysOfMonth(2025, 6));
-// console.log(getDaysOfMonth(2025, 7));
-// console.log(getDaysOfMonth(2025, 8));
-// console.log(getDaysOfMonth(2025, 9));
-// console.log(getDaysOfMonth(2025, 10));
-// console.log(getDaysOfMonth(2025, 11));
-// console.log(getDaysOfMonth(2025, 12));
-
-// console.log(getDaysExcludeWeekend("2025-06-05", "2025-06-12"));
