@@ -1,5 +1,5 @@
-let o = {};
-o.x = 1;
+let o  = {};
+(o as any).x = 1;
 let p = Object.create(o);
 p.y = 2;
 let q = Object.create(p);
