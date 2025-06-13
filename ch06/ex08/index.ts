@@ -1,4 +1,4 @@
-export function restrict(target, template) {
+export function restrict(target: any, template: any) {
     // templateのプロパティを配列化
     const template_array = Object.keys(template);
     console.log(template_array);
@@ -10,7 +10,7 @@ export function restrict(target, template) {
     return target;
 }
 
-export function substract(target, ...sources) {
+export function substract(target: any, ...sources: any) {
     // sourcesのオブジェクトのkeyのみの配列を作成
     let source_array = [];
     for (const source of sources) {
@@ -25,19 +25,19 @@ export function substract(target, ...sources) {
 }
 
 
-const symbol = Symbol("test");
-const parent = { parent: "parent" };
+// const symbol = Symbol("test");
+// const parent = { parent: "parent" };
+// // let target = { a: {}, 1: [], [symbol]: 3 };
+// // let template = {};
+
 // let target = { a: {}, 1: [], [symbol]: 3 };
-// let template = {};
+// let sources = [{ a: {} }, { 1: [] }];
 
-let target = { a: {}, 1: [], [symbol]: 3 };
-let sources = [{ a: {} }, { 1: [] }];
+// console.log(substract(target, ...sources));
 
-console.log(substract(target, ...sources));
-
-console.log(sources);
-let source_array = [];
-for (const source of sources) {
-    source_array.push(...Object.keys(source));
-    console.log(source_array);
-}
+// console.log(sources);
+// let source_array = [];
+// for (const source of sources) {
+//     source_array.push(...Object.keys(source));
+//     console.log(source_array);
+// }
