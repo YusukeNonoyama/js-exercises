@@ -1,8 +1,7 @@
-import { addMatrix, multiplyMatrix } from "./index.js";
+import { addMatrix, multiplyMatrix } from "./index.ts";
 
 describe('addMatrix()', () => {
-
-    const testArrayAddMatrix = [
+    const testArrayAddMatrix: (string | number[][])[][] = [
         [
             "case 1",
             [
@@ -35,6 +34,9 @@ describe('addMatrix()', () => {
                 [10, 12, 14, 16],
             ],
         ],
+    ]
+
+    const testArrayAddMatrixError: (string | number[][] | ErrorConstructor)[][] = [
         [
             "case 3",
             [
@@ -45,9 +47,9 @@ describe('addMatrix()', () => {
                 [2, 3, 4],
                 [5, 6, 7],
             ],
-            "NaN element found"
+            Error
         ],
-                [
+        [
             "case 4",
             [
                 [1, 2, 3],
@@ -57,17 +59,44 @@ describe('addMatrix()', () => {
                 [2, 3, 4],
                 [5, 6, 7],
             ],
-            "ununiform matrix cols"
+            Error
+        ],
+        [
+            "case 5",
+            [
+                [1, 2, 3],
+                [4, 5, 6],
+                [7, 8, 9],
+            ],
+            [
+                [2, 3, 4],
+                [5, 6, 7],
+            ],
+            Error
+        ],
+        [
+            "case 6",
+            [
+                [1, 2, 3, 4],
+                [4, 5, 6, 6],
+            ],
+            [
+                [2, 3, 4],
+                [5, 6, 7],
+            ],
+            Error
         ],
     ]
-    test.each(testArrayAddMatrix)("addMatrix(): %s", (_, inputA, inputB, expected) => {
 
-        expect(JSON.stringify(addMatrix(inputA, inputB))).toBe(JSON.stringify(expected));
+    test.each(testArrayAddMatrix)("addMatrix(): %s", (_, inputA, inputB, expected) => {
+        expect(JSON.stringify(addMatrix(inputA as number[][], inputB as number[][]))).toBe(JSON.stringify(expected));
+    });
+    test.each(testArrayAddMatrixError)("addMatrix() Error: %s", (_, inputA, inputB, expected) => {
+        expect(() => addMatrix(inputA as number[][], inputB as number[][])).toThrow(expected as ErrorConstructor);
     });
 });
 
 describe('multiplyMatrix()', () => {
-
     const testArrayMultiplyMatrix = [
         [
             "case 1",
@@ -86,6 +115,8 @@ describe('multiplyMatrix()', () => {
                 [7, 17, 17],
             ]
         ],
+    ]
+    const testArrayMultiplyMatrixError = [
         [
             "case 2",
             [
@@ -95,7 +126,7 @@ describe('multiplyMatrix()', () => {
             [
                 [1, 3, 5],
             ],
-            "matrix size unmatched for multiplicaion",
+            Error,
         ],
         [
             "case 3",
@@ -108,11 +139,13 @@ describe('multiplyMatrix()', () => {
                 [1, 3, 5],
                 [2, 4, 1],
             ],
-            "ununiform matrix cols"
+            Error
         ],
     ]
     test.each(testArrayMultiplyMatrix)("multiplyMatrix(): %s", (_, inputA, inputB, expected) => {
-
-        expect(JSON.stringify(multiplyMatrix(inputA, inputB))).toBe(JSON.stringify(expected));
+        expect(JSON.stringify(multiplyMatrix(inputA as number[][], inputB as number[][]))).toBe(JSON.stringify(expected));
+    });
+    test.each(testArrayMultiplyMatrixError)("multiplyMatrix() Error: %s", (_, inputA, inputB, expected) => {
+        expect(() => (multiplyMatrix(inputA as number[][], inputB as number[][]))).toThrow(expected as ErrorConstructor);
     });
 });
