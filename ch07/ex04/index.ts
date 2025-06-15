@@ -1,4 +1,12 @@
-const data = [
+type Data = {
+    name: string,
+    class: string,
+    math: number,
+    chemistry: number,
+    geography: number
+}
+
+const data: Data[] = [
     { name: "Alice", class: "A", math: 10, chemistry: 30, geography: 20 },
     { name: "Bob", class: "A", math: 50, chemistry: 50, geography: 60 },
     { name: "Carol", class: "A", math: 70, chemistry: 55, geography: 30 },
@@ -33,11 +41,11 @@ console.log(sumTotalC / (arrayC.length * 3));   // 58.888888888888886
 
 
 // 4.科目合計点が最も高い人のname
-let champ_object = data.reduce((x, y) => {
+let champ_object = data.reduce((x:Data, y:Data) => {
     const xTotal = x["math"] + x["chemistry"] + x["geography"];
     const yTotal = y["math"] + y["chemistry"] + y["geography"];
     return (xTotal > yTotal) ? x : y; 
-}, {});
+}, {} as Data);
 console.log(champ_object["name"]);  // frank
 
 
