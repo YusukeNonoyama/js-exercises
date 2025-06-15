@@ -1,17 +1,17 @@
-import { DynamicSizeArray } from "./index.js";
+import { DynamicSizeArray } from "./index.ts";
 
 describe("DynamicSizeArray get()", () => {
     let a = new DynamicSizeArray();
     a.set(0, 10);
     a.set(2, 20);
     a.set(3, 30);
-    const testArray = [
+    const testArray: [number, number|undefined][] = [
         [0, 10],
         [1, undefined],
         [2, 20],
         [3, 30],
     ];
-    const testArrayError = [
+    const testArrayError: [any, ErrorConstructor][] = [
         [-1, Error],
         [4, Error],
         ["one", Error],
@@ -28,21 +28,21 @@ describe("DynamicSizeArray get()", () => {
 
 describe("DynamicSizeArray set()", () => {
     let a = new DynamicSizeArray();
-    const testArray = [
+    const testArray: [number,number, number|undefined][] = [
         [0, 10, undefined],
         [1, 20, undefined],
     ];
-    const testArrayError = [
-        [-1, Error],
-        [4, Error],
-        ["one", Error],
-        [NaN, Error],
+    const testArrayError: any[]  = [
+        [-1,10,  Error],
+        [4,10,  Error],
+        ["one",10,  Error],
+        [NaN,10,  Error],
     ];
     test.each(testArray)("set(%s): %s", (index, value, expected) => {
         expect(a.set(index, value)).toEqual(expected);
     });
-    test.each(testArrayError)("set(%s) error: %s", (input, expected) => {
-        expect(() => a.set(input)).toThrow(expected);
+    test.each(testArrayError)("set(%s) error: %s", (index, value, expected) => {
+        expect(() => a.set(index, value)).toThrow(expected);
     });
     test.each(testArray)("set() value check", (index, value) => {
         expect(a.get(index)).toEqual(value);

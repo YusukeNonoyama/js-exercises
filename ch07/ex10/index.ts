@@ -1,13 +1,13 @@
-function makeFixedSizeArray(size) {
+function makeFixedSizeArray(size: number) {
   const array = new Array(size);
   return {
-    get(index) {
+    get(index: number) {
       if (index < 0 || array.length <= index) {
         throw new Error(`Array index out of range: ${index}`);
       }
       return array[index];
     },
-    set(index, value) {
+    set(index: number, value: number) {
       if (index < 0 || array.length <= index) {
         throw new Error(`Array index out of range: ${index}`);
       }
@@ -21,18 +21,20 @@ function makeFixedSizeArray(size) {
 
 export class DynamicSizeArray {
   static INITIAL_SIZE = 4; // 初期サイズ
+  len: number;
+  array: any;
   constructor() {
     this.len = 0;
     this.array = makeFixedSizeArray(DynamicSizeArray.INITIAL_SIZE);
   }
-  get(index) {
+  get(index: number) {
     this.validateIndex(index);
     if (index < 0 || this.length() <= index) {
       throw new Error(`Array index out of range: ${index}`);
     }
     return this.array[index];
   }
-  set(index, value) {
+  set(index: number, value: number) {
     this.validateIndex(index);
     if (index < 0 || this.length() <= index) {
       throw new Error(`Array index out of range: ${index}`);
@@ -47,7 +49,7 @@ export class DynamicSizeArray {
   length() {
     return this.array.length();
   }
-  push(value) {
+  push(value: number) {
     if (this.len < this.array.length()) {
       // 空きがある場合は空いている始めのindexに代入
       for (let i = 0; i < this.array.length(); i++) {
@@ -69,7 +71,7 @@ export class DynamicSizeArray {
       this.len++;
     }
   }
-  validateIndex(index) {
+  validateIndex(index: number) {
     if (typeof index !== "number" || isNaN(index)) {
       throw new Error(`Invalid input`);
     }
