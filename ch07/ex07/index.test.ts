@@ -1,7 +1,6 @@
-import { bubbleSort } from "./index.js";
+import { bubbleSort } from "./index.ts";
 
 describe('bubbleSort()', () => {
-
     const testArrayAddMatrix = [
         [
             [8, 4, 7, 2, 1, 3, 5, 6, 9, 10, 5],
@@ -11,21 +10,25 @@ describe('bubbleSort()', () => {
             [],
             [],
         ],
+    ]
+    const testArrayAddMatrixError: any[][] = [
         [
             null,
-            "invalid input",
+            Error,
         ],
         [
             10,
-            "invalid input",
+            Error,
         ],
         [
             [5, "a", 3],
-            "invalid array element",
+            Error,
         ],
     ]
     test.each(testArrayAddMatrix)("bubbleSOrt(): ", (input, expected) => {
-
-        expect(JSON.stringify(bubbleSort(input))).toBe(JSON.stringify(expected));
+        expect(bubbleSort(input)).toEqual(expected);
+    });
+    test.each(testArrayAddMatrixError)("bubbleSOrt() Error: ", (input, expected) => {
+        expect(()=>bubbleSort(input)).toThrow(expected);
     });
 });

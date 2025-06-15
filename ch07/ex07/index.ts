@@ -1,8 +1,13 @@
 // バブルソート
-export function bubbleSort(arr) {
-    if(!Array.isArray(arr)) return "invalid input";
-    if(!arr.every(x => typeof x === "number")) return "invalid array element";
-
+export function bubbleSort(arr: number[]) {
+    if(!Array.isArray(arr)) {
+        throw Error(`invalid input: ${arr}`)
+    }
+    // return "invalid input";
+    if(!arr.every(x => typeof x === "number")){
+        throw Error(`invalid array element: ${arr}`)
+    }
+        // return "invalid array element";
     const n = arr.length;
     for (let i = 0; i < n - 1; i++) {
         // n-1-i番目以降はソート済みなので、未ソート箇所を対象に繰り返す

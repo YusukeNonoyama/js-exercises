@@ -1,4 +1,4 @@
-import { pop, push, shift, unshift, sort } from "./index.js";
+import { pop, push, shift, unshift, sort } from "./index.ts";
 
 test("pop()", () => {
     const seq = [1, 2, 3, 4, 5];
