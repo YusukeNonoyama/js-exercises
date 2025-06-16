@@ -59,6 +59,7 @@ describe("DynamicSizeArray length()", () => {
     it("length(): 4", () => {
         let a = new DynamicSizeArray();
         a.set(0, 10);
+        a.set(0, 100);
         a.set(1, 20);
         a.set(2, 30);
         a.set(3, 40);
