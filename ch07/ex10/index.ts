@@ -29,22 +29,14 @@ export class DynamicSizeArray {
   }
   get(index: number) {
     this.validateIndex(index);
-    if (index < 0 || this.length() <= index) {
-      throw new Error(`Array index out of range: ${index}`);
-    }
-    return this.array[index];
+    return this.array.get(index);
   }
   set(index: number, value: number) {
     this.validateIndex(index);
-    if (index < 0 || this.length() <= index) {
-      throw new Error(`Array index out of range: ${index}`);
-    }
     if (!this.array[index]) {
-      this.array[index] = value;
       this.len++;
-    } else {
-      this.array[index] = value;
-    }
+    } 
+      this.array.set(index, value);
   }
   length() {
     return this.array.length();
@@ -53,8 +45,8 @@ export class DynamicSizeArray {
     if (this.len < this.array.length()) {
       // 空きがある場合は空いている始めのindexに代入
       for (let i = 0; i < this.array.length(); i++) {
-        if (!this.array[i]) {
-          this.array[i] = value;
+        if (!this.array.get(i)) {
+          this.array.set(i, value);
           this.len++;
           break;
         }
@@ -65,9 +57,9 @@ export class DynamicSizeArray {
       this.array = makeFixedSizeArray(old.length() * 2);
       // 古い配列 (old) の要素を新しい配列にコピー
       for (let i = 0; i < old.length(); i++) {
-        this.array[i] = old[i];
+        this.array.set(i, old.get(i));
       }
-      this.array[old.length()] = value;
+      this.array.set(old.length(), value);
       this.len++;
     }
   }
@@ -77,21 +69,3 @@ export class DynamicSizeArray {
     }
   }
 }
-
-
-// let a = new DynamicSizeArray();
-
-// console.log(a.array.length(), a.len);
-// a.set(0, 20);
-// a.set(3, 5);
-// a.push(100);
-// a.push(100);
-// a.push(100);
-// console.log(a.array.length(), a.len);
-
-
-// console.log("========================================");
-// for (let i = 0; i < a.array.length(); i++) {
-//   console.log(a.get(i));
-// }
-

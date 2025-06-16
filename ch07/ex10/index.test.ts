@@ -5,7 +5,7 @@ describe("DynamicSizeArray get()", () => {
     a.set(0, 10);
     a.set(2, 20);
     a.set(3, 30);
-    const testArray: [number, number|undefined][] = [
+    const testArray: [number, number | undefined][] = [
         [0, 10],
         [1, undefined],
         [2, 20],
@@ -28,15 +28,17 @@ describe("DynamicSizeArray get()", () => {
 
 describe("DynamicSizeArray set()", () => {
     let a = new DynamicSizeArray();
-    const testArray: [number,number, number|undefined][] = [
+    a.set(2, 10);
+    const testArray: [number, number, number | undefined][] = [
         [0, 10, undefined],
         [1, 20, undefined],
+        [2, 30, undefined],
     ];
-    const testArrayError: any[]  = [
-        [-1,10,  Error],
-        [4,10,  Error],
-        ["one",10,  Error],
-        [NaN,10,  Error],
+    const testArrayError: [any, number, ErrorConstructor][] = [
+        [-1, 10, Error],
+        [4, 10, Error],
+        ["one", 10, Error],
+        [NaN, 10, Error],
     ];
     test.each(testArray)("set(%s): %s", (index, value, expected) => {
         expect(a.set(index, value)).toEqual(expected);
@@ -74,12 +76,13 @@ describe("DynamicSizeArray length()", () => {
 });
 
 describe("DynamicSizeArray push()", () => {
-    it("put(): 1", () => {
+    it("push(): 1", () => {
         let a = new DynamicSizeArray();
         expect(a.push(10)).toEqual(undefined);
         expect(a.get(0)).toBe(10);
+        expect(a.get(3)).toEqual(undefined);
     });
-    it("put(): 4", () => {
+    it("push(): 4", () => {
         let a = new DynamicSizeArray();
         expect(a.push(10)).toEqual(undefined);
         expect(a.push(20)).toEqual(undefined);
@@ -88,15 +91,14 @@ describe("DynamicSizeArray push()", () => {
         expect(a.get(0)).toBe(10);
         expect(a.get(3)).toBe(40);
     });
-        it("put(): 5", () => {
+    it("push(): 5", () => {
         let a = new DynamicSizeArray();
         expect(a.push(10)).toEqual(undefined);
         expect(a.push(20)).toEqual(undefined);
         expect(a.push(30)).toEqual(undefined);
         expect(a.push(40)).toEqual(undefined);
         expect(a.push(50)).toEqual(undefined);
+        expect(a.get(0)).toBe(10);
         expect(a.get(4)).toBe(50);
     });
-
-
 });
