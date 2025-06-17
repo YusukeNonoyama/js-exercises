@@ -1,10 +1,10 @@
-let o1: any = {};
+let o1: {[i: string]: number|string} = {};
 
 Object.defineProperty(o1, "enumerable", {
     value: "enumerable",
     writable: true,
-    enumerable: true,    // enumerableだけtrue
-    configurable: false,
+    enumerable: true,    // 列挙可能
+    configurable: true,
 })
 o1["text"] = "text";
 o1[10] = 10;
@@ -24,36 +24,34 @@ for(const p in o1){
 
 console.log("==============================")
 
-let o2: any = Object.create(o1);
+let o2: {[i: string]: number|string}  = Object.create(o1);
 // o2.x = 5;
 o2[10] = 1000;
 o2[11] = 1001;
 o2["text"] = "inherited_text";
-o2["textO2"] = "textO2";
+o2["text2"] = "text2";
 
-console.log(o2["enumerable"]);
+// console.log(o2["enumerable"]);
 
 Object.defineProperty(o2, "enumerable", {
     value: "unenumerable",
     writable:true,
-    enumerable: false,  // 同名にするため名前と異なるが列挙不可
-    configurable: false,
+    enumerable: false,  // 列挙不可
+    configurable: true,
 })
 
 for(const p in o2){
     console.log(p, ":", o2[p]);
 }
 
-console.log(o2["enumerable"]);
+// console.log(o2["enumerable"]);
 
-// 順番の結果： (10 or 11) => text => textO2
+// 順番の結果： (10 or 11) => text => text2
 // ※数値プロパティはの数値の大きさで順番が変わる
-// ※enumerableはforループで出力されない。しかしプロパティで直接アクセスしても出力されない（なぜ？）。writableがtrue/falseどちらも同様。
+// ※enumerableはforループで出力されない。列挙不可に上書きされたと考えられる。
 // ※継承した文字列プロパティの方が先に出力される。アルファベット順問わず。
 
-// enumerable
 // 10 : 1000
 // 11 : 1001
 // text : inherited_text
-// textO2 : textO2
-// unenumerable
+// text2 : text2
