@@ -29,20 +29,19 @@ const dataA = data.filter(x => x["class"] === "A");
 dataA.forEach(x => chemSum += x["chemistry"]);
 console.log(chemSum / dataA.length);   // 45
 
-// 3.科目合計点のクラスC内での平均点
+// 3.3科目合計点のクラスC内での平均点
 const dataC = data.filter(x => x["class"] === "C");
 let sumTotalC = 0;
 dataC.forEach(x => {
-    const xTotal = x["math"] + x["chemistry"] + x["geography"];
-    return sumTotalC += xTotal;
+    sumTotalC += x["math"] + x["chemistry"] + x["geography"];
 });
 console.log(sumTotalC / (dataC.length * 3));   // 58.888888888888886
 
-// 4.科目合計点が最も高い人のname
-let champ_object = data.reduce((x:Data, y:Data) => {
+// 4.3科目合計点が最も高い人のname
+let champ_object = data.reduce((x: Data, y: Data) => {
     const xTotal = x["math"] + x["chemistry"] + x["geography"];
     const yTotal = y["math"] + y["chemistry"] + y["geography"];
-    return (xTotal > yTotal) ? x : y; 
+    return (xTotal > yTotal) ? x : y;
 }, {} as Data);
 console.log(champ_object["name"]);  // frank
 
@@ -54,4 +53,4 @@ let geoDiffSqSum = 0;
 data.forEach(x => {
     geoDiffSqSum += (x["geography"] - geoAvg) ** 2  // 平均との差分の二乗の和をforEachで求める
 });
-console.log((geoDiffSqSum / (data.length - 1)) ** (1/2)); // 23.687784005919827
+console.log((geoDiffSqSum / (data.length - 1)) ** (1 / 2)); // 23.687784005919827
