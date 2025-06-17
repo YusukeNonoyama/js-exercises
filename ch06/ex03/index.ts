@@ -1,5 +1,6 @@
-let o  = {};
-(o as any).x = 1;
+// p.149 冒頭のコード
+let o: { [prop: string]: number } = {};    // メモ：Index Signature (Typescriptの仕様)
+o.x = 1;
 let p = Object.create(o);
 p.y = 2;
 let q = Object.create(p);
@@ -10,12 +11,10 @@ console.log(o.isPrototypeOf(p));    // true
 console.log(o.isPrototypeOf(q));    // true
 console.log(p.isPrototypeOf(o));    // false
 console.log(q.isPrototypeOf(o));    // false
-console.log("======================");
 
 // p が q のプロトタイプチェーン上に存在する
 console.log(p.isPrototypeOf(q));    // true
 console.log(q.isPrototypeOf(p));    // false
-console.log("======================");
 
 // Object, Array, Date, Map のプロトタイプチェーンの継承関係
 // Objectはいずれからも継承されるがその他は継承関係はない
