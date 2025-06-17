@@ -1,4 +1,4 @@
-let o: any = {};
+let o: {[i: string]: number} = {};
 
 Object.defineProperty(o, "unwritable", {
     value: 1,
@@ -21,7 +21,7 @@ Object.defineProperty(o, "unconfigurable", {
     configurable: false,     // configurableだけfalse
 })
 
-o.normal = 4;
+o.normal = 4;   // 普通のプロパティ
 
 console.log(o.unwritable);    // => 1
 console.log(o.unenumerable);  // => 2
@@ -32,7 +32,7 @@ console.log(o.normal);    // => 4
 // プロパティの変更、削除、hasOwnProperty と propertyIsEnumerable
 function unwritableProperty() {
     o.unwritable = 100; // => エラー： TypeError: Cannot assign to read only property 'unwritable' of object '#<Object>'
-    console.log(o.unwritable);
+    console.log(o.unwritable);  // => 検証不可
     console.log(o.hasOwnProperty("unwritable")); // => true
     console.log(o.propertyIsEnumerable("unwritable")); // => true   
     delete o.unwritable;    // 削除可能
@@ -52,9 +52,9 @@ function unconfigurableProperty() {
     o.unconfigurable = 100;   // 代入可能
     console.log(o.unconfigurable);  // => 100
     console.log(o.hasOwnProperty("unconfigurable")); // => true
-    console.log(o.propertyIsEnumerable("unconfigurable")); // => false
-    delete o.unconfigurable;    // 削除可能
-    console.log(o.unconfigurable);  // => undefined 
+    console.log(o.propertyIsEnumerable("unconfigurable")); // => true
+    delete o.unconfigurable;    // => エラー： TypeError: Cannot delete property 'unconfigurable' of #<Object
+    console.log(o.unconfigurable);  // => 検証不可
 }
 
 function normalProperty() {
@@ -70,11 +70,7 @@ function normalProperty() {
 // unconfigurableProperty();   // 代入はできるが削除はできない
 // normalProperty();   // 代入も削除もできる
 
-// forループ１
-for (const p in o) {
-    console.log(p);
-}
-// forループ２
+// プロパティの巡回
 for (const p in o) {
     console.log(p);
 }
