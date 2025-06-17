@@ -16,9 +16,11 @@ export function newHashTable(capacity: number) {
             }
             for (let element of this.entries) {
                 while (element) {
+                    // 入力のkeyが存在する場合は対応するvalueを返す
                     if (element["key"] === key) {
                         return element["value"];
                     }
+                    // 入力のkeyが存在しなければ次の要素へ移動
                     element = element["next"];
                 }
             }
@@ -30,33 +32,30 @@ export function newHashTable(capacity: number) {
             if (typeof key !== "string" || typeof value !== "string") {
                 throw TypeError(`Invalid input type: ${typeof key}, ${typeof value}`);
             }
-            // keyが存在する場合はvalueを更新
             for (let element of this.entries) {
                 while (element) {
+                    // keyが存在する場合はvalueを更新
                     if (element["key"] === key) {
-                        // console.log(`value updated to ${value} for ${key} `)
                         element["value"] = value;
-                        return true;
+                        return;
                     }
+                    // 入力のkeyが存在しなければ次の要素へ移動
                     element = element["next"];
                 }
             }
-
-            // ハッシュテーブル作成
-            let hashValue = (this.size) % this.entries.length;
-
+            // ハッシュ値を算出（マッピング数を固定長で割った余り）
+            let hashValue = this.size % this.entries.length;
             // ハッシュテーブルに文字列が存在していなければ新しく登録
             // ハッシュ値が衝突していなければペアを登録
             if (!this.entries[hashValue]) {
-                // console.log(`key-value pair added: ${key}, ${value}`);
                 this.entries[hashValue] = { key: key, value: value, next: undefined };
                 this.size++;
             } else {
                 let element = this.entries[hashValue];
+                // undefinedのnextプロパティを持つ要素までループしてペアを登録
                 while (element["next"]) {
                     element = element["next"];
                 }
-                // console.log(`key-value pair added: ${key}, ${value}`);
                 element["next"] = { key: key, value: value, next: undefined };
                 this.size++;
             }
@@ -71,7 +70,6 @@ export function newHashTable(capacity: number) {
                 let prevElement = undefined;
                 while (currElement) {
                     if (currElement["key"] === key) {
-                        // console.log(`key-value pair removed: ${key}`);
                         if (prevElement === undefined) {
                             // 始めのループで見つかる場合
                             this.entries[i] = currElement["next"];
