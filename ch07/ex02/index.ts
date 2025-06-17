@@ -1,14 +1,13 @@
 /////////////////////////////////////////////////////////////////////////////////////////////////
 function fizzbuzz(n: number) {
-    let output = new Array(n);
+    const output = new Array(n);
     output.fill(0); // 要素がemptyだとループできないので0で埋める
     output.forEach((_, i, a) => a[i] = i + 1);  // ループして1～nまでの要素の配列にする
 
     // Fizz, Buzz, Fizzbuzzのそれぞれのケースになるindexの配列を抽出する
-    let fizzIndex = [], buzzIndex = [], fizzbuzzIndex = [];
-    fizzIndex = output.filter(x => x % 3 === 0);
-    buzzIndex = output.filter(x => x % 5 === 0);
-    fizzbuzzIndex = output.filter(x => x % 15 === 0);
+    const fizzIndex = output.filter(x => x % 3 === 0);
+    const buzzIndex = output.filter(x => x % 5 === 0);
+    const fizzbuzzIndex = output.filter(x => x % 15 === 0);
 
     // それぞれを部分配列から、元の配列へ文字列を代入する。FizzBuzzは最後。
     fizzIndex.forEach(v => { output[v - 1] = "Fizz" });
@@ -48,8 +47,8 @@ function sumOfSquaredDifference(f: number[], g: number[]) {
     return result;
 }
 
-let arrayA = [1, 2, 3, 4];
-let arrayB = [2, 2, 3, 6];
+const arrayA = [1, 2, 3, 4];
+const arrayB = [2, 2, 3, 6];
 
 const result1 = sumOfSquaredDifference(arrayA, arrayB);
 console.log(result1);
@@ -60,12 +59,10 @@ console.log(result1);
 /////////////////////////////////////////////////////////////////////////////////////////////////
 function sumOfEvensIsLargerThan42(array: number[]) {
     let sum = 0;
-    let evenNumbers = [];
-    evenNumbers = array.filter(v => v % 2 === 0);  // 偶数の値を持つ要素を抽出
+    const evenNumbers = array.filter(v => v % 2 === 0);  // 偶数の値を持つ要素を抽出
     evenNumbers.forEach(v => sum += v); // sumに加える
     return sum >= 42;
 }
-
 
 let arrayC = [2, 40];
 
