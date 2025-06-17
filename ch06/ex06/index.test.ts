@@ -14,7 +14,6 @@ describe('check showProperties()', () => {
     o2.z = 3;
     o2["text"] = "text";
     o2[10] = 10;
-
     // 列挙不可な独自プロパティ
     Object.defineProperty(o2, "unenumerable", {
         value: "unenumerable",
@@ -22,7 +21,6 @@ describe('check showProperties()', () => {
         enumerable: false,
         configurable: true,
     })
-
     // Symbolの独自プロパティ
     let s = Symbol("sym");
     o2[s] = "symbol";
@@ -48,7 +46,7 @@ describe('check showProperties()', () => {
         expect(showProperties(input).map(String)).toEqual(expected.map(String));
     });
 
-    test.each(testArrayError)("showProperties(): %s => %s", (input, expected) => {
+    test.each(testArrayError)("showProperties() Error: %s => %s", (input, expected) => {
         expect(() => showProperties(input)).toThrow(expected);
     });
 });
