@@ -7,11 +7,15 @@ describe('bubbleSort()', () => {
             [1, 2, 3, 4, 5, 5, 6, 7, 8, 9, 10],
         ],
         [
+            [8, 4, 7, 2.5, 1, 3, 5, 6, 0, 10, -10],
+            [-10, 0, 1, 2.5, 3, 4, 5, 6, 7, 8, 10],
+        ],
+        [
             [],
             [],
         ],
     ]
-    const testArrayAddMatrixError: any[][] = [
+    const testArrayAddMatrixError: [any, ErrorConstructor][] = [
         [
             null,
             Error,
@@ -29,6 +33,6 @@ describe('bubbleSort()', () => {
         expect(bubbleSort(input)).toEqual(expected);
     });
     test.each(testArrayAddMatrixError)("bubbleSOrt() Error: ", (input, expected) => {
-        expect(()=>bubbleSort(input)).toThrow(expected);
+        expect(() => bubbleSort(input)).toThrow(expected);
     });
 });
