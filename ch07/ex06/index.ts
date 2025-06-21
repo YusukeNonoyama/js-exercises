@@ -1,4 +1,12 @@
-const data = [
+type Data = {
+    name: string,
+    class: string,
+    math: number,
+    chemistry: number,
+    geography: number
+}
+
+const data: Data[] = [
     { name: "Alice", class: "A", math: 10, chemistry: 30, geography: 20 },
     { name: "Bob", class: "A", math: 50, chemistry: 50, geography: 60 },
     { name: "Carol", class: "A", math: 70, chemistry: 55, geography: 30 },
@@ -10,10 +18,28 @@ const data = [
     { name: "Mallet", class: "C", math: 60, chemistry: 70, geography: 90 },
 ];
 
+const data2: Data[] = [...data];
+
 data.sort((a, b) => b["geography"] - a["geography"]);
 data.sort((a, b) => b["chemistry"] - a["chemistry"]);
 data.sort((a, b) => b["math"] - a["math"]);
 console.log(data);
+
+
+
+const dataSorted = data2.sort((a, b) => {
+    if (a.math !== b.math) {
+        return b.math - a.math;
+    } else if (a.chemistry !== b.chemistry) {
+        return b.chemistry - a.chemistry;
+    } else {
+        return b.geography - a.geography;
+    }
+});
+
+console.log(dataSorted);
+
+
 
 // 実行コマンド： node ch07/ex06/index.js
 // 結果：
