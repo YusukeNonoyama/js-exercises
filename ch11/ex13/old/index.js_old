@@ -154,10 +154,10 @@ function $json(input) {
 }
 
 const $beginArray = concat($ws, string("["), $ws);
-const $beginObject = $TODO;
+const $beginObject = concat($ws, string("{"), $ws);
 const $endArray = concat($ws, string("]"), $ws);
-const $endObject = $TODO;
-const $nameSeparator = $TODO;
+const $endObject = concat($ws, string("}"), $ws);
+const $nameSeparator = concat($ws, string(":"), $ws);
 const $valueSeparator = concat($ws, string(","), $ws);
 function $ws(input) {
   return repeat(
@@ -181,7 +181,22 @@ const $false = map(string("false"), () => false);
 const $null = map(string("null"), () => null);
 const $true = map(string("true"), () => true);
 
-const $object = $TODO;
+// const $object = $TODO;
+function $object(input) {
+  return map(
+    concat(
+      $beginObject,
+      $endObject
+    ),
+    ([_begin, values, _end]) => {
+      if (values === null) {
+        return {};
+      }
+      return {};
+    }
+  )(input)
+}
+
 const $member = $TODO;
 
 function $array(input) {
@@ -200,16 +215,19 @@ function $array(input) {
   )(input);
 }
 
-const $number = $TODO;
+const $number = $int;
 const $decimalPoint = $TODO;
 const $digit19 = $TODO;
 const $e = $TODO;
 const $exp = $TODO;
 const $frac = $TODO;
-const $int = $TODO;
-const $minus = $TODO;
-const $plus = $TODO;
-const $zero = $TODO;
+// const $int = $TODO;
+function $int(input) {
+  return repeat(alternate(1, 2, 3, 4, 5, 6, 7, 8, 9))(input);
+};
+const $minus = map(string("-"), () => +1);
+const $plus = map(string("+"), () => +1);
+const $zero = map(string("0"), () => 0);
 
 function $string(input) {
   return map(concat($quotationMark, repeat($char), $quotationMark), (result) =>
@@ -265,7 +283,7 @@ function $HEXDIG(input) {
 }
 const $DIGIT = range(0x30, 0x39);
 
-function parseJSON(s) {
+export function parseJSON(s) {
   const result = $json({ source: s, index: 0 });
   if (!result.ok || result.next.index !== s.length) {
     throw new Error("Failed to parse");
@@ -274,5 +292,5 @@ function parseJSON(s) {
 }
 
 // 以下を実際に動かしてみると良い (ちゃんと動きます)
-// const result = parseJSON('[true, false, null, [], ["HELLO"]]');
-// console.log(JSON.stringify(result, null, 2));
+const result = parseJSON('[true, false, null, [], ["HELLO"]]');
+console.log(JSON.stringify(result, null, 2));
