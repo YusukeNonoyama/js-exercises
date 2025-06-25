@@ -1,13 +1,4 @@
 export function stringifyJSON(input: any) {
-  const strMap = new Map([
-    ["\"", "\\\""],
-    ["\\", "\\\\"],
-    ["\b", "\\b"],
-    ["\f", "\\f"],
-    ["\n", "\\n"],
-    ["\r", "\\r"],
-    ["\t", "\\t"],
-  ])
   let json;
   let resultStr = "";
   // 配列の場合
@@ -19,34 +10,53 @@ export function stringifyJSON(input: any) {
       } else if (Array.isArray(json[i]) || typeof json[i] === "object") {  // 配列 or オブジェクトを再帰的に変換
         json[i] = stringifyJSON(json[i]);
       } else if (typeof json[i] === "string") { // 文字列にクォーテーションを追加
+        if (/\\/g.test(json[i])) { // 正規表現でエスケープシーケンスを含む文字を置換
+          json[i] = json[i].replace(/\\/g, "\\\\");
+        }
         if (/\n/g.test(json[i])) { // 正規表現でエスケープシーケンスを含む文字を置換
           json[i] = json[i].replace(/\n/g, "\\n");
-        } else if (/\t/g.test(json[i])) { // 正規表現でエスケープシーケンスを含む文字を置換
+        }
+        if (/\t/g.test(json[i])) { // 正規表現でエスケープシーケンスを含む文字を置換
           json[i] = json[i].replace(/\t/g, "\\t");
-        } else if (/\r/g.test(json[i])) { // 正規表現でエスケープシーケンスを含む文字を置換
+        }
+        if (/\f/g.test(json[i])) { // 正規表現でエスケープシーケンスを含む文字を置換
+          json[i] = json[i].replace(/\f/g, "\\f");
+        }
+        if (/\r/g.test(json[i])) { // 正規表現でエスケープシーケンスを含む文字を置換
           json[i] = json[i].replace(/\r/g, "\\r");
-        } else if (/\\/g.test(json[i])) { // 正規表現でエスケープシーケンスを含む文字を置換
-          json[i] = json[i].replace(/\\/g, "\\\\");
-        } else if ([...strMap.keys()].includes(json[i])) { // エスケープシーケンスを含む文字
-          json[i] = strMap.get(json[i]);
+        }
+        if (/.*\b.*/g.test(json[i])) { // 正規表現でエスケープシーケンスを含む文字を置換
+          // json[i] = json[i].replace(/.*\b.*/g, "\\b");
+        }
+        if (/\u000A/g.test(json[i])) { // 正規表現でエスケープシーケンスを含む文字を置換
+          json[i] = json[i].replace(/\u000A/g, "\\u000A");
+        }
+        if (/\u0012/g.test(json[i])) { // 正規表現でエスケープシーケンスを含む文字を置換
+          json[i] = json[i].replace(/\u0012/g, "\\u0012");
+        }
+        if (/\u0000/g.test(json[i])) { // 正規表現でエスケープシーケンスを含む文字を置換
+          json[i] = json[i].replace(/\u0000/g, "\\u0000");
+        }
+        if (/\u0022/g.test(json[i])) { // 正規表現でエスケープシーケンスを含む文字を置換
+          json[i] = json[i].replace(/\u0022/g, '\\"');  // ' " '
         }
         json[i] = ['\"', json[i], '\"'].join("");
       }
       resultStr = [resultStr, json[i], ","].join("")
     }
-    // オブジェクトの場合
-  } else if (typeof input === "object" && input !== null) {
+  } else if (typeof input === "object" && input !== null) { // オブジェクトの場合
     json = { ...input };
     for (let [key, value] of Object.entries(json)) {
-      if (typeof value === "boolean" || value === null) {
+      if (/\u0000/g.test(key)) {
+        key = key.replace(/\u0000/g, "\\u0000");
+      }
+      if (typeof value === "boolean" || typeof value === "number" || value === null) {
         resultStr = [resultStr, `"${key}":${value},`].join("");
       } else if (Array.isArray(value) || typeof value === "object") {
-        console.log("I am here");
-        value = stringifyJSON(value);
-      } else {
+        resultStr = [resultStr, `"${key}":${stringifyJSON(value)},`].join("");
+      } else if (typeof value === "string") {
         resultStr = [resultStr, `"${key}":"${value}",`].join("");
       }
-      console.log(key, value);
     }
   }
   resultStr = resultStr.slice(0, -1);
@@ -62,10 +72,9 @@ function addBrackets(input: any, valueStr: string) {
   }
 }
 
-
-const s = '{"A": false, "B": null, "C": true, "D": {"X": {}}, "E": [[]], "F": 2.71828, "G": "HELLO"}'
+const s = '["\\"\\\\\\/\\b\\f\\n\\r\\t"]'
 const json = JSON.parse(s);
-console.log("type: ", typeof json);
+console.log("type: ", json);
 
 console.log(JSON.stringify(json));
 console.log(stringifyJSON(json));
