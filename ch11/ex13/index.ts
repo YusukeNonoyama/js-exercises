@@ -1,85 +1,64 @@
-export function stringifyJSON(input: any) {
-  let json;
+export function stringifyJSON(input: any[] | {}) {
   let resultStr = "";
-  // 配列の場合
-  if (Array.isArray(input)) {
-    json = [...input];
+  if (Array.isArray(input)) { // inputが配列の場合
+    const json = [...input];  // そのまま使うと呼び出し元の配列に影響を与えるのでコピー
     for (let i = 0; i < json.length; i++) {
       if (json[i] === null) { // nullを文字列化
         json[i] = "null";
+      } else if (typeof json[i] === "string") { // 文字列にクォーテーションを追加
+        json[i] = addEscapeSequence(json[i]);
+        json[i] = ['\"', json[i], '\"'].join("");
       } else if (Array.isArray(json[i]) || typeof json[i] === "object") {  // 配列 or オブジェクトを再帰的に変換
         json[i] = stringifyJSON(json[i]);
-      } else if (typeof json[i] === "string") { // 文字列にクォーテーションを追加
-        if (/\\/g.test(json[i])) { // 正規表現でエスケープシーケンスを含む文字を置換
-          json[i] = json[i].replace(/\\/g, "\\\\");
-        }
-        if (/\n/g.test(json[i])) { // 正規表現でエスケープシーケンスを含む文字を置換
-          json[i] = json[i].replace(/\n/g, "\\n");
-        }
-        if (/\t/g.test(json[i])) { // 正規表現でエスケープシーケンスを含む文字を置換
-          json[i] = json[i].replace(/\t/g, "\\t");
-        }
-        if (/\f/g.test(json[i])) { // 正規表現でエスケープシーケンスを含む文字を置換
-          json[i] = json[i].replace(/\f/g, "\\f");
-        }
-        if (/\r/g.test(json[i])) { // 正規表現でエスケープシーケンスを含む文字を置換
-          json[i] = json[i].replace(/\r/g, "\\r");
-        }
-        if (/.*\b.*/g.test(json[i])) { // 正規表現でエスケープシーケンスを含む文字を置換
-          // json[i] = json[i].replace(/.*\b.*/g, "\\b");
-        }
-        if (/\u000A/g.test(json[i])) { // 正規表現でエスケープシーケンスを含む文字を置換
-          json[i] = json[i].replace(/\u000A/g, "\\u000A");
-        }
-        if (/\u0012/g.test(json[i])) { // 正規表現でエスケープシーケンスを含む文字を置換
-          json[i] = json[i].replace(/\u0012/g, "\\u0012");
-        }
-        if (/\u0000/g.test(json[i])) { // 正規表現でエスケープシーケンスを含む文字を置換
-          json[i] = json[i].replace(/\u0000/g, "\\u0000");
-        }
-        if (/\u0022/g.test(json[i])) { // 正規表現でエスケープシーケンスを含む文字を置換
-          json[i] = json[i].replace(/\u0022/g, '\\"');  // ' " '
-        }
-        json[i] = ['\"', json[i], '\"'].join("");
       }
       resultStr = [resultStr, json[i], ","].join("")
     }
-  } else if (typeof input === "object" && input !== null) { // オブジェクトの場合
-    json = { ...input };
+    resultStr = resultStr.slice(0, -1);
+    resultStr = addBrackets(json, resultStr);
+  } else if (typeof input === "object" && input !== null) { // inputがオブジェクトの場合
+    const json = { ...input };  // そのまま使うと呼び出し元の配列に影響を与えるのでコピー
     for (let [key, value] of Object.entries(json)) {
-      if (/\u0000/g.test(key)) {
-        key = key.replace(/\u0000/g, "\\u0000");
+      if (typeof key === "string") {
+        key = addEscapeSequence(key);
+      }
+      if (typeof value === "string") {
+        value = addEscapeSequence(value);
       }
       if (typeof value === "boolean" || typeof value === "number" || value === null) {
         resultStr = [resultStr, `"${key}":${value},`].join("");
-      } else if (Array.isArray(value) || typeof value === "object") {
-        resultStr = [resultStr, `"${key}":${stringifyJSON(value)},`].join("");
       } else if (typeof value === "string") {
         resultStr = [resultStr, `"${key}":"${value}",`].join("");
+      } else if (Array.isArray(value) || typeof value === "object") {
+        resultStr = [resultStr, `"${key}":${stringifyJSON(value)},`].join("");
       }
     }
+    resultStr = resultStr.slice(0, -1);
+    resultStr = addBrackets(json, resultStr);
   }
-  resultStr = resultStr.slice(0, -1);
-  return addBrackets(json, resultStr);
+  return resultStr;
+}
+
+function addEscapeSequence(input: string) {
+  input = input.replace(/\\/g, "\\\\"); // これを始めにやらないと途中で増えたbackslashをさらに増やしてしまう
+  input = input.replace(/\n/g, "\\n");
+  input = input.replace(/\t/g, "\\t");
+  input = input.replace(/\f/g, "\\f");
+  input = input.replace(/\r/g, "\\r");
+  input = input.replace(/\x08/g, "\\b");  // /\b/g だとword boundaryにマッチしてしまう。backspace charactorとマッチうsるためにASCII codeの\x08を使う。
+  input = input.replace(/\u0000/g, "\\u0000");
+  input = input.replace(/\u000A/g, "\\u000A");
+  input = input.replace(/\u0012/g, "\\u0012");
+  input = input.replace(/\u0000/g, "\\u0000");
+  input = input.replace(/\u0022/g, '\\"');  // ' " '
+  return input;
 }
 
 // 対象がvalueかarrayかobjectかを判定して必要なら括弧を加える関数
-function addBrackets(input: any, valueStr: string) {
+function addBrackets(input: any[] | {} | undefined, valueStr: string) {
   if (Array.isArray(input)) {
-    return ["[", valueStr, "]"].join("");
+    valueStr = ["[", valueStr, "]"].join("");
   } else if (typeof input === "object") {
-    return ["{", valueStr, "}"].join("");
+    valueStr = ["{", valueStr, "}"].join("");
   }
+  return valueStr;
 }
-
-const s = '["\\"\\\\\\/\\b\\f\\n\\r\\t"]'
-const json = JSON.parse(s);
-console.log("type: ", json);
-
-console.log(JSON.stringify(json));
-console.log(stringifyJSON(json));
-
-// for (const [key, value] of Object.entries(json)) {
-//   console.log(key, value);
-//   console.log("hey");
-// }
