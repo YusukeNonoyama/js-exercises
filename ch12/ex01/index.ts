@@ -274,6 +274,12 @@ console.log("========================");
     console.log(Object.getOwnPropertyNames(proto));
     const proto2 = Object.getPrototypeOf(proto);
     console.log(Object.getOwnPropertyNames(proto2));
+    const proto3 = Object.getPrototypeOf(proto2);
+    console.log(Object.getOwnPropertyNames(proto3));
+    const proto4 = Object.getPrototypeOf(proto3);
+    console.log(Object.getOwnPropertyNames(proto4));
+    const proto5 = Object.getPrototypeOf(proto4);
+    console.log(Object.getOwnPropertyNames(proto5));
 }
 // 結果
 // イテレータインターフェースを満たしている。2階層下のプロトタイプに存在する。
