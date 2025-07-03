@@ -1,16 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1751458968671" clover="3.2.0">
-  <project timestamp="1751458968672" name="All files">
-    <metrics statements="7" coveredstatements="7" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1" elements="8" coveredelements="8" complexity="0" loc="7" ncloc="7" packages="1" files="1" classes="1"/>
-    <file name="index.ts" path="/home/nonoyama/js/js-exercises/ch12/ex03/index.ts">
-      <metrics statements="7" coveredstatements="7" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
-      <line num="1" count="1" type="stmt"/>
-      <line num="3" count="2" type="stmt"/>
-      <line num="4" count="11" type="stmt"/>
-      <line num="5" count="11" type="stmt"/>
-      <line num="7" count="1" type="stmt"/>
+<coverage generated="1751544320428" clover="3.2.0">
+  <project timestamp="1751544320428" name="All files">
+    <metrics statements="15" coveredstatements="15" conditionals="3" coveredconditionals="3" methods="7" coveredmethods="7" elements="25" coveredelements="25" complexity="0" loc="15" ncloc="15" packages="1" files="1" classes="1"/>
+    <file name="index.ts" path="/home/nonoyama/js/js-exercises/ch12/ex04/index.ts">
+      <metrics statements="15" coveredstatements="15" conditionals="3" coveredconditionals="3" methods="7" coveredmethods="7"/>
+      <line num="2" count="1" type="stmt"/>
+      <line num="3" count="1" type="stmt"/>
+      <line num="4" count="36" type="stmt"/>
       <line num="8" count="1" type="stmt"/>
-      <line num="11" count="2" type="stmt"/>
+      <line num="10" count="12" type="stmt"/>
+      <line num="12" count="12" type="stmt"/>
+      <line num="15" count="99" type="stmt"/>
+      <line num="23" count="1" type="stmt"/>
+      <line num="31" count="11" type="stmt"/>
+      <line num="32" count="11" type="stmt"/>
+      <line num="33" count="10" type="stmt"/>
+      <line num="35" count="75" type="stmt"/>
+      <line num="36" count="99" type="stmt"/>
+      <line num="37" count="99" type="cond" truecount="3" falsecount="0"/>
+      <line num="38" count="75" type="stmt"/>
     </file>
   </project>
 </coverage>
