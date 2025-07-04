@@ -2,8 +2,6 @@
 name: Backlog
 about: 新しいバックログアイテムを追加するためのテンプレート
 title: ""
-labels: [backlog]
-assignees: ''
 ---
 ## 背景・経緯
 * 
