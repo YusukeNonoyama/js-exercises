@@ -1,7 +1,7 @@
 ---
 name: Backlog
 about: 新しいバックログアイテムを追加するためのテンプレート
-title: "[Backlog] "
+title: ""
 labels: [backlog]
 assignees: ''
 ---

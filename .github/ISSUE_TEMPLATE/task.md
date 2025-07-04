@@ -1,7 +1,7 @@
 ---
 name: Task
 about: 新しいタスクアイテムを追加するためのテンプレート
-title: "[Task] "
+title: ""
 labels: [task]
 assignees: ''
 ---
