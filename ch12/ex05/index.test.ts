@@ -6,6 +6,9 @@ const TEST_FILE = './test_input.txt';
 jest.spyOn(fs, 'closeSync');
 
 describe('readLines()', () => {
+    beforeEach(() => {
+        (fs.closeSync as jest.Mock).mockClear();
+    });
     afterEach(() => {
         if (existsSync(TEST_FILE)) unlinkSync(TEST_FILE);
     });
