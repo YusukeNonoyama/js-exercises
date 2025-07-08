@@ -1,7 +1,6 @@
 node_modules
 test-results
 coverage
-.github
 
 memo*.md
 chxx
