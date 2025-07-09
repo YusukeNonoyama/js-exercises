@@ -1,10 +1,11 @@
 import { sequenceToObject } from "./index.ts";
 
 describe("create object from a sequence", () => {
-
-    const testArray: [any[], object][] = [
-        [["a", 1], { a: 1}],
+    const testArray: [any[], Record<string, any>][] = [
+        [["a", 1], { a: 1 }],
         [["a", 1, "b", 2, "c", 3, "d", 4], { a: 1, b: 2, c: 3, d: 4 }],
+        [["a", true], { a: true }],
+        [["a", "1"], { a: "1" }],
     ];
     const testArrayError: [any, ErrorConstructor][] = [
         [2, Error],
