@@ -25,8 +25,6 @@ export function calcExponentialRecursive(x: number, n: number): number {
 }
 
 
-
-
 // ループ削減バージョン
 export function calcExponentialLoop(x: number, n: number): number {
     if (!Number.isFinite(x) || !Number.isInteger(n) || n < 0) {

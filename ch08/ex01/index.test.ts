@@ -1,27 +1,40 @@
 import { showStringsRepeatedly, calcSquaredNumber, createObjectWithDate } from "./index.ts";
 
-describe("Return an array of strings and output the strings for a specified number of times", () =>{
-    it("showStringsRepeatedly()", () => {
-        const logSpy = jest.spyOn(console, 'log').mockImplementation(() => {});
-        const result = showStringsRepeatedly(3, "hi")
-        expect(result).toEqual(["hi", "hi", "hi"]);
-        expect(logSpy).toHaveBeenCalledTimes(3);
-        expect(logSpy).toHaveBeenNthCalledWith(1, "hi");
-        expect(logSpy).toHaveBeenNthCalledWith(2, "hi");
-        expect(logSpy).toHaveBeenNthCalledWith(3, "hi");
+describe("showStringsRepeatedly()のテスト", () => {
+    it("showStringsRepeatedly()の正常動作", () => {
+        const logSpy = jest.spyOn(console, 'log').mockImplementation(() => { });
+        const inputStr = "Hello";
+        const inputNumber = 10;
+        const expectResult = [];
+        const result = showStringsRepeatedly(inputNumber, inputStr)
+        for (let i = 0; i < inputNumber; i++) {
+            expectResult.push(inputStr);
+            expect(logSpy).toHaveBeenNthCalledWith(i + 1, inputStr);
+        }
+        expect(result).toEqual(expectResult);
+        expect(logSpy).toHaveBeenCalledTimes(inputNumber);
     });
-}) 
+    it("showStringsRepeatedly()の繰り返し回数0回", () => {
+        const result = showStringsRepeatedly(0, "Hello")
+        expect(result).toEqual([]);
+    });
+    it("showStringsRepeatedly()の繰り返し回数NaN: Error", () => {
+        expect(() => showStringsRepeatedly(NaN, "Hello")).toThrow(Error);
+    });
+    it("showStringsRepeatedly()の繰り返し回数が整数でない: Error", () => {
+        expect(() => showStringsRepeatedly(5.4, "Hello")).toThrow(Error);
+    });
+})
 
-describe("Return the squared number for an input", () =>{
+describe("calcSquaredNumber()のテスト", () => {
     it("calcSquaredNumber()", () => {
-        const result = calcSquaredNumber(3)
-        expect(result).toEqual(9);
+        const x = 3;
+        expect(calcSquaredNumber(x)).toEqual(x ** 2);
     });
-}) 
+})
 
-describe("Return an object includes Date", () =>{
+describe("createObjectWithDate()のテスト", () => {
     it("createObjectWithDate()", () => {
-        const result = createObjectWithDate()
-        expect(result).toEqual({"now": expect.any(Date)});
+        expect(createObjectWithDate()).toEqual({ "now": expect.any(Date) });
     });
 }) 
