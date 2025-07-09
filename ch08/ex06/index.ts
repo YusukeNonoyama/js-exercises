@@ -1,17 +1,10 @@
-// スプレッド演算子で配列を受け取れるようにした
-{
-    const m = function (...arg: any[]) {
-        console.log(arg[1]);
-    };
-    m("a", "b");
+const args: any[] = [];
+function call(...elements: any[]) {
+    args.push(Array.from(elements));
 }
 
-// アロー関数
-{
-    const m = (...arg: any[]) => {
-        console.log(arg[1]);
-    };
-    m("a", "b");
-}
+call(1, 2, 3);
+call("A", "B");
 
-
+console.log(args[0]); // [1, 2, 3]
+console.log(args[1]); // ["A", "B"]
