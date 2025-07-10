@@ -4,6 +4,10 @@ on:
   push: 
     paths:
       - ".github/**/index.ts"
+
+env:
+  VALUE_A: "I am A"
+
 jobs:
   command:
     name: Use Linux commands 2
@@ -15,4 +19,5 @@ jobs:
         run: ls -la
       - name: show current directory before checkout
         run: pwd
-  
+      - name: show a
+        run: echo ${{env.VALUE_A}}
