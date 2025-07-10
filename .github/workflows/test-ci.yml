@@ -3,7 +3,7 @@ on: [push]
 jobs:
   command:
     name: Use Linux commands 2
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
       - name: Show ubuntu details
         run: lsb_release -a
