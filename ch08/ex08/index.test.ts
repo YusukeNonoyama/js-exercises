@@ -62,7 +62,7 @@ describe("counterGroup", () => {
   describe("#average", () => {
     test("It returns average amount of all counters in CounterGroup", () => {
       const cg = counterGroup();
-      expect(() => cg.average()).toThrowError(TypeError);
+      expect(() => cg.average()).toThrow(TypeError);
       const c1 = cg.newCounter();
       c1.count();
       c1.count();
@@ -83,12 +83,12 @@ describe("counterGroup", () => {
   describe("#variance", () => {
     test("It returns variance of all counters in CounterGroup", () => {
       const cg = counterGroup();
-      expect(() => cg.variance()).toThrowError(TypeError);
+      expect(() => cg.variance()).toThrow(TypeError);
       const c1 = cg.newCounter();
       c1.count();
       c1.count();
       c1.count();
-      expect(() => cg.variance()).toThrowError(TypeError);
+      expect(() => cg.variance()).toThrow(TypeError);
       const c2 = cg.newCounter();
       c2.count();
       c2.count();

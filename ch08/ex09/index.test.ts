@@ -1,9 +1,14 @@
 import { withResource } from "./index.ts";
 
+type Res = {
+  doA: () => void;
+  doB: () => void;
+}
+
 describe("withResource", () => {
   it("should do process and call close finally", () => {
     const resource = {
-      called: [],
+      called: [] as string[],
       doA() {
         this.called.push("doA");
       },
@@ -14,7 +19,7 @@ describe("withResource", () => {
         this.called.push("close");
       },
     };
-    withResource(resource, (res) => {
+    withResource(resource, (res: Res) => {
       res.doA();
       res.doB();
     });
@@ -24,7 +29,7 @@ describe("withResource", () => {
 
   it("should call close when an error occurs", () => {
     const resource = {
-      called: [],
+      called: [] as string[],
       doA() {
         this.called.push("doA");
         throw new Error("something wrong");
@@ -33,7 +38,7 @@ describe("withResource", () => {
         this.called.push("close");
       },
     };
-    expect(() => withResource(resource, (res) => res.doA())).toThrow(Error);
+    expect(() => withResource(resource, (res: Res) => res.doA())).toThrow(Error);
     expect(resource.called).toEqual(["doA", "close"]);
   });
 });
