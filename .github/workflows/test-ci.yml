@@ -1,5 +1,5 @@
 name: command
-on: [push]
+on: [push, workflow_dispatch]
 jobs:
   command:
     name: Use Linux commands 2
@@ -11,12 +11,4 @@ jobs:
         run: ls -la
       - name: show current directory before checkout
         run: pwd
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Inspect files after checkout
-        run: ls -la
-      - name: show current directory after checkout
-        run: pwd
-      - name: show all branches after checkout
-        run: git branch -a
   
