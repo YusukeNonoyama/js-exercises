@@ -1,8 +1,8 @@
 // any 関数
-export function any(...args: Function[]) {
-    return (a: number) => {
-        for (let f of args) {
-            if (f(a)) {
+export function any(...functions: ((x: number) => boolean)[]) {
+    return (arg: number) => {
+        for (let f of functions) {
+            if (f(arg)) {
                 return true;
             }
         };
@@ -10,13 +10,14 @@ export function any(...args: Function[]) {
     }
 }
 
-
 // catching 関数
 export function catching(f: Function, g: Function) {
     return (a: string) => {
         try {
+            // エラーが発生しなければそのまま返す
             return f(a);
-        } catch(e) {
+        } catch (e) {
+            // エラーを引数にして結果を返す
             return g(e);
         }
     }
