@@ -1,8 +1,9 @@
 export function addMyCall(f: { myCall: Function, bind: Function }) {
-    f.myCall = function (o: {}, ...args: [number]) {
+    f.myCall = function (o: { a: number }, ...args: number[]) {
         return f.bind(o)(...args);
     };
 }
+
 
 // const f = function  () {
 //     return;

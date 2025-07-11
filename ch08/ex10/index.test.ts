@@ -2,7 +2,7 @@ import { addMyCall } from "./index.ts";
 
 describe("addMyCall", () => {
   test("When given function has no arg, then it can call this", () => {
-    const f = function () {
+    const f: any = function (this: any) {
       return this.a;
     };
     addMyCall(f);
@@ -10,7 +10,7 @@ describe("addMyCall", () => {
   });
 
   test("When given function has 1 arg, then it can call this", () => {
-    const f = function (x) {
+    const f: any = function (this: any, x: number) {
       return this.a + x;
     };
     addMyCall(f);
@@ -18,7 +18,7 @@ describe("addMyCall", () => {
   });
 
   test("When given function has multiple args, then it can call this", () => {
-    const f = function (x, y, z, u, v) {
+    const f: any = function (this: any, x: number, y: number, z: number, u: number, v: number) {
       return this.a + x + y + z + u + v;
     };
     addMyCall(f);
