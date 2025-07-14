@@ -20,6 +20,7 @@ export class LinkedList {
 
   pushAll(...items) {
     items.forEach((item) => this.push(item));
+    console.log("this: ", this);  // thisの出力を追加
   }
 
   toString() {
@@ -54,7 +55,6 @@ export class LinkedList {
 //   pushAll(...items) {
 //     super.pushAll(...items);  // このライン終了時点でthis.#pushCountは２。意図せず子クラスのpush()が呼び出されているため。
 //     this.#pushCount += items.length;  // このライン終了時点でthis.#pushCountは４。
-
 //   }
 // }
 
@@ -76,3 +76,17 @@ export class InstrumentedLinkedList {
     this.#pushCount += items.length;
   }
 }
+
+
+// // 親クラスのpusuAll()にthisのコンソール出力を追加して確認すると、呼び出し元のクラスがthisになっている。
+// const list1 = new InstrumentedLinkedList();
+// list1.pushAll("A", "B");
+
+// // 結果
+// // this:  InstrumentedLinkedList {}
+
+// const list2 = new LinkedList();
+// list2.pushAll("A", "B");
+
+// // 結果
+// // this:  LinkedList {}
