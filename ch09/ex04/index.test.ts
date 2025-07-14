@@ -3,23 +3,24 @@ import { WarriorClass, MagicWarriorClass, Warrior, MagicWarrior } from "./index.
 describe("Warriors with class keyword", () => {
     const testArrayWarrior: [number, number][] = [
         [20, 40],
-        [0, 0],
     ]
     const testArrayWarriorError: [number, ErrorConstructor][] = [
+        [0, Error],
         [NaN, Error],
     ]
     test.each(testArrayWarrior)("Warrior(%s) attack(): damage %s", (atk, expected) => {
         let w1 = new WarriorClass(atk);
         expect(w1.attack()).toBe(expected);
     });
-    test.each(testArrayWarriorError)("Warrior(%s) attack(): damage %s", (atk, expected) =>
+    test.each(testArrayWarriorError)("Warrior(%s) attack() Error: damage %s", (atk, expected) =>
         expect(() => new WarriorClass(atk)).toThrow(expected));
 
     const testArrayMagic: [number, number, number][] = [
         [33, 100, 166],
-        [0, 0, 0],
     ]
     const testArrayErrorMagic: [number, number, ErrorConstructor][] = [
+        [0, 1, Error],
+        [1, 0, Error],
         [NaN, 1, Error],
         [1, NaN, Error],
         [NaN, NaN, Error],
@@ -28,16 +29,16 @@ describe("Warriors with class keyword", () => {
         let w1 = new MagicWarriorClass(atk, mgc);
         expect(w1.attack()).toBe(expected);
     });
-    test.each(testArrayErrorMagic)("MagicWarrior(%s, %s) attack(): damage %s", (atk, mgc, expected) =>
+    test.each(testArrayErrorMagic)("MagicWarrior(%s, %s) attack() Error: damage %s", (atk, mgc, expected) =>
         expect(() => new MagicWarriorClass(atk, mgc)).toThrow(expected));
 });
 
 describe("Warriors with prototype", () => {
     const testArrayWarrior: [number, number][] = [
         [20, 40],
-        [0, 0],
     ]
     const testArrayWarriorError: [number, ErrorConstructor][] = [
+        [0, Error],
         [NaN, Error],
     ]
     test.each(testArrayWarrior)("Warrior(%s) attack(): damage %s", (atk, expected) => {
@@ -47,11 +48,12 @@ describe("Warriors with prototype", () => {
     test.each(testArrayWarriorError)("Warrior(%s) attack(): damage %s", (atk, expected) =>
         expect(() => new (Warrior as any)(atk)).toThrow(expected));
 
-        const testArrayMagic: [number, number, number][] = [
+    const testArrayMagic: [number, number, number][] = [
         [33, 100, 166],
-        [0, 0, 0],
     ]
-    const testArrayMagicError: [number, number,ErrorConstructor][] = [
+    const testArrayMagicError: [number, number, ErrorConstructor][] = [
+        [0, 1, Error],
+        [1, 0, Error],
         [NaN, 1, Error],
         [1, NaN, Error],
         [NaN, NaN, Error],

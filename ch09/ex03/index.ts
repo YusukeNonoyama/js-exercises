@@ -15,7 +15,3 @@ export function positiveNumber(x: number) {
     }
 }
 
-// let n = positiveNumber(1)
-// n.setX = NaN;
-// console.log(n.getX);
-
