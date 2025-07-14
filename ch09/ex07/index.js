@@ -33,9 +33,9 @@ export class LinkedList {
   }
 }
 
-/**
- * 要素のpush回数を記録するLinkedList
- */
+// /**
+//  * 要素のpush回数を記録するLinkedList
+//  */
 // export class InstrumentedLinkedList extends LinkedList {
 //   #pushCount = 0;
 //   /**
@@ -52,23 +52,26 @@ export class LinkedList {
 //   }
 
 //   pushAll(...items) {
-//     super.pushAll(...items);  // superのpushAllの中でthis.push()を呼び出していて、呼び出し元のオブジェクトがthisになるためpush()でもカウントしてしまっている？
-//     this.#pushCount += items.length;
+//     super.pushAll(...items);  // このライン終了時点でthis.#pushCountは２。意図せず子クラスのpush()が呼び出されているため。
+//     this.#pushCount += items.length;  // このライン終了時点でthis.#pushCountは４。
+
 //   }
 // }
 
-export class InstrumentedLinkedList{
+
+
+export class InstrumentedLinkedList {
   #pushCount = 0;
   #linkedList = new LinkedList();
-  
-  get pushCount(){
+
+  get pushCount() {
     return this.#pushCount;
   }
   push(item) {
     this.#linkedList.push(item);
     this.#pushCount++;
   }
-  pushAll(...items){
+  pushAll(...items) {
     this.#linkedList.pushAll(...items)
     this.#pushCount += items.length;
   }
