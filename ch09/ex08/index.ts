@@ -11,12 +11,28 @@ interface AlarmState {
     elapseSnoozeTime(): Action;
 }
 
+type State = {
+    normal: AlarmState,
+    alarmSet: AlarmState,
+    alarmSounding: AlarmState,
+    snoozing: AlarmState,
+}
+
+
 // 目覚まし時計クラス
 // インターフェースで定義したメソッドを持ち、各メソッド内で各状態クラスで定義されたメソッドを呼び出す
+// 各状態のインスタンスはこのクラスが保持
 export class AlarmClock {
     private state: AlarmState;
+    private states: State;
     constructor() {
         this.state = new NormalState(this);
+        this.states = {
+            normal: new NormalState(this),
+            alarmSet: new AlarmSetState(this),
+            alarmSounding: new AlarmSoundingState(this),
+            snoozing: new SnoozingState(this),
+        }
     }
     public getState() {
         return this.state;
@@ -24,6 +40,10 @@ export class AlarmClock {
     public setState(state: AlarmState) {
         this.state = state;
     }
+    public getStates() {
+        return this.states;
+    }
+    // 以下インターフェースで定義したメソッド
     public setAlarm(): Action {
         return this.state.setAlarm();
     }
@@ -46,9 +66,10 @@ export class NormalState implements AlarmState {
     setAlarm(): Action {
         // 状態遷移
         // clockを受け取った状態クラスのインスタンスを渡す
-        this.clock.setState(new AlarmSetState(this.clock));
+        this.clock.setState(this.clock.getStates().alarmSet);
         return "none";
     }
+    // インターフェースで定義したメソッド
     cancelAlarm(): Action {
         return "none";
     }
@@ -70,11 +91,11 @@ class AlarmSetState implements AlarmState {
         return "none";
     }
     cancelAlarm(): Action {
-        this.clock.setState(new NormalState(this.clock));
+        this.clock.setState(this.clock.getStates().normal);
         return "none";
     }
     reachedToAlarmTime(): Action {
-        this.clock.setState(new AlarmSoundingState(this.clock));
+        this.clock.setState(this.clock.getStates().alarmSounding);
         return "soundAlarm";
     }
     snooze(): Action {
@@ -91,14 +112,14 @@ class AlarmSoundingState implements AlarmState {
         return "none";
     }
     cancelAlarm(): Action {
-        this.clock.setState(new NormalState(this.clock));
+        this.clock.setState(this.clock.getStates().normal);
         return "stopAlarm";
     }
     reachedToAlarmTime(): Action {
         return "none";
     }
     snooze(): Action {
-        this.clock.setState(new SnoozingState(this.clock));
+        this.clock.setState(this.clock.getStates().snoozing);
         return "stopAlarm";
     }
     elapseSnoozeTime(): Action {
@@ -112,7 +133,7 @@ class SnoozingState implements AlarmState {
         return "none";
     }
     cancelAlarm(): Action {
-        this.clock.setState(new NormalState(this.clock));
+        this.clock.setState(this.clock.getStates().normal);
         return "none";
     }
     reachedToAlarmTime(): Action {
@@ -122,7 +143,8 @@ class SnoozingState implements AlarmState {
         return "none";
     }
     elapseSnoozeTime(): Action {
-        this.clock.setState(new AlarmSoundingState(this.clock));
+        this.clock.setState(this.clock.getStates().alarmSounding);
         return "soundAlarm";
     }
 }
+
