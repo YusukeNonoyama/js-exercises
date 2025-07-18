@@ -1,5 +1,6 @@
 // 組み込み関数のtoString()実行
 console.log(console.log.toString());
+console.log(Math.abs.toString());
 
 // 自作関数
 function checkToString() {
