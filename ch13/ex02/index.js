@@ -143,8 +143,6 @@ function f7() {
         .then(logC);
 }
 
-f7();
-
 function f8() {
     // NOTE: f9, f10 との比較用
     wait1()
@@ -153,6 +151,7 @@ function f8() {
         .catch((e) => log(e.message))
         .finally(logA);
 }
+f8();
 
 function f9() {
     // NOTE: f10 との比較用
