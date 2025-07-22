@@ -82,7 +82,7 @@ wait2
 ### 図解
 wait1
 |-----|
-      errX
+      errXをthrow
       |-|
         errXの表示
         |-|
@@ -92,15 +92,38 @@ wait1
 
 ## f9()
 ### 説明
+1つ目のthenのコールバック関数は何も表示せず、次のthenでerrYをthrowする。catch節までプロミスチェーンを下りエラーを出力。最後にfinally節のAを出力する。
 ### 図解
+wait1
+|-----|
+      errYをthrow
+      |-|
+        errYの表示
+        |-|
+          logA
+          |-|   
 
 ## f10()
 ### 説明
+errYをthrowした後にcatch節がないためエラーで終了する。then(r).then(f, c) と then(r).catch(c)が等しい。
 ### 図解
+wait1
+|-----|
+      errYをthrow
+      |-|
+        logA
+        |-|  
+          errorの表示
+          |-|
 
 ## f11()
 ### 説明
+前のプロミスで発生したエラーはプロミスチェーンを下ってcatchされる。
 ### 図解
+errXをthrow
+|-|  
+  errXを表示
+  |-| 
 
 ## f12()
 ### 説明

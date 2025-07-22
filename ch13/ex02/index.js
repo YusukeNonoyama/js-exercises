@@ -151,7 +151,6 @@ function f8() {
         .catch((e) => log(e.message))
         .finally(logA);
 }
-f8();
 
 function f9() {
     // NOTE: f10 との比較用
@@ -183,3 +182,4 @@ function f12() {
         setTimeout(() => errX(), 0);
     }).catch((e) => log(e.message));
 }
+f12();
