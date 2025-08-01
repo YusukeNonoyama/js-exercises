@@ -64,4 +64,3 @@ async function h4() {
         log(e.message);
     }
 }
-h4();
