@@ -45,7 +45,7 @@ describe('fetchFirstFileSize()', () => {
     });
 });
 
-describe('fetchFirstFileSizes()', () => {
+describe('fetchSumOfFileSizes()', () => {
     const dirPath = "ch13/ex04/tempDir";
     beforeEach(() => {
         if (existsSync(dirPath)) rmSync(dirPath, { recursive: true });
@@ -53,7 +53,7 @@ describe('fetchFirstFileSizes()', () => {
     afterEach(() => {
         if (existsSync(dirPath)) rmSync(dirPath, { recursive: true });
     });
-    it('ファイルがない場合、fetchSumFileSizes()で0が返る', async () => {
+    it('ファイルがない場合、fetchSumOfFileSizes()で0が返る', async () => {
         mkdirSync(dirPath);
         const result = await fetchSumOfFileSizes(dirPath, (statSize: number) => {
             return statSize;
@@ -61,7 +61,7 @@ describe('fetchFirstFileSizes()', () => {
             .catch((e) => { return e });
         expect(result).toEqual(0);
     });
-    it('ファイルが1つの場合、fetchSumFileSizes()でファイルサイズが返る', async () => {
+    it('ファイルが1つの場合、fetchSumOfFileSizes()でファイルサイズが返る', async () => {
         const filesPath = join(dirPath, "index.ts");
         mkdirSync(dirPath);
         closeSync(openSync(filesPath, 'w'));
@@ -73,7 +73,7 @@ describe('fetchFirstFileSizes()', () => {
             .catch((e) => { return e });
         expect(result).toEqual(3);
     });
-    it('ファイルが1つの場合、fetchSumFileSizes()でファイルサイズが返る', async () => {
+    it('ファイルが1つの場合、fetchSumOfFileSizes()でファイルサイズが返る', async () => {
         mkdirSync(dirPath);
         const files = [
             ["index.ts", "123"],
@@ -92,11 +92,11 @@ describe('fetchFirstFileSizes()', () => {
         const totalLetterCount = files.reduce((acc, file) => acc + file[1].length, 0)
         expect(result).toEqual(totalLetterCount);
     });
-    it('fetchSumFileSizes()の入力パスが存在しない場合、プロミスは失敗する', async () => {
+    it('fetchSumOfFileSizes()の入力パスが存在しない場合、プロミスは失敗する', async () => {
         mkdirSync(dirPath);
         function f(statsSize: any) {
             return statsSize;
         }
-        await expect(fetchFirstFileSize("no/existent/path", f)).rejects.toThrow();
+        await expect(fetchSumOfFileSizes("no/existent/path", f)).rejects.toThrow();
     });
 });
