@@ -73,7 +73,7 @@ describe('fetchFirstFileSizes()', () => {
             .catch((e) => { return e });
         expect(result).toEqual(3);
     });
-    it('ファイルが1つの場合、fetchSumFileSizes()でファイルサイズが返る', async () => {
+    it('ファイルが複数の場合、fetchSumFileSizes()でファイルサイズが返る', async () => {
         mkdirSync(dirPath);
         const files = [
             ["index.ts", "123"],
