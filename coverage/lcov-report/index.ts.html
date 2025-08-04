@@ -25,28 +25,28 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>9/9</span>
+                <span class='fraction'>11/11</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/0</span>
+                <span class='fraction'>1/1</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>3/3</span>
+                <span class='fraction'>5/5</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>8/8</span>
+                <span class='fraction'>10/10</span>
             </div>
         
             
@@ -94,79 +94,76 @@
 <a name='L29'></a><a href='#L29'>29</a>
 <a name='L30'></a><a href='#L30'>30</a>
 <a name='L31'></a><a href='#L31'>31</a>
-<a name='L32'></a><a href='#L32'>32</a>
-<a name='L33'></a><a href='#L33'>33</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<a name='L32'></a><a href='#L32'>32</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import * as fsPromises from "node:fs/promises";
-import { join } from 'path';
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">// 11 章の演習問題で作成した retryWithExponentialBackoff に対して Promise を返すように実装を変更しなさい。
+// 引数の func は Promise を返す関数とし、
+// func の返り値が成功した場合は retryWithExponentialBackoff の返り値をその値で解決しなさい。
+// また func の返り値が失敗した場合は一定時間後にリトライしなさい。
+// 一定回数以上 func が失敗した場合は retryWithExponentialBackoff の返り値を失敗させなさい。
 &nbsp;
+// 作成した関数を使えば以下のようなコードで HTTP リクエストのリトライを行える:
+// const resp = await retryWithExponentialBackoff(
+//   () =&gt; fetch("https://example.com"),
+//   5
+// );
 &nbsp;
-export async function fetchSumOfFileSizes(path: string, callback: Function) {
-    const files = await fsPromises.readdir(path)
-    const fileSizes = await Promise.all(
-        files.map(async (file) =&gt; {
-            const stats = await fsPromises.stat(join(path, file))
-            return callback(stats.size);
-        })
-    )
-    return fileSizes.reduce((acc, val) =&gt; acc + val, 0)
-&nbsp;
+export function retryWithExponentialBackoff(func: () =&gt; Promise&lt;any&gt;, maxRetry: number): Promise&lt;any&gt; {
+    let count = 0;
+    function tryFunc(): Promise&lt;any&gt; {
+        return func()
+            .then(result =&gt; {
+                return result; // 成功したらそのまま resolve
+            })
+            .catch(err =&gt; {
+                if (count &gt;= maxRetry) {
+                    return Promise.reject(new Error("failed")); // 最大リトライ回数超え → reject
+                    // return;
+                }
+                const delay = 2 ** count * 1000;
+                count++;
+                return new Promise((resolve) =&gt; setTimeout(resolve, delay)).then(tryFunc);
+            });
+    }
+    return tryFunc();
 }
-&nbsp;
-// export async function fetchSumOfFileSizes(path: string, callback: Function) {
-//     const files = await fsPromises.readdir(path)
-//     let total = 0;
-//     const rest = [...files];
-//     async function iter(): Promise&lt;any&gt; {
-//         if (rest.length === 0) {
-//             console.log("total", total);
-//             console.log("total callback", callback(total));
-//             return callback(total);
-//         }
-//         const next = rest.pop();
-//         const stats = await fsPromises.stat(join(path, next as string))
-//         total += stats.size;
-//         return iter();
-//     }
-//     return iter();
-// }</pre></td></tr></table></pre>
+&nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
             </div><!-- /wrapper -->
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-08-03T00:51:30.165Z
+                at 2025-08-04T12:54:59.936Z
             </div>
         <script src="prettify.js"></script>
         <script>
