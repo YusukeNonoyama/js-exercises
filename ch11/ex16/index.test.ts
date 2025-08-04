@@ -24,13 +24,13 @@ describe('retryWithExponentialBackoff()', () => {
         jest.advanceTimersByTime(2000);
         expect(func).toHaveBeenCalledTimes(3);
 
-        // 3回目の後にcallbackがtrueで呼び出される
+        // 3回目の後にcallbackがtrueを引数にして呼び出される
         expect(callback).toHaveBeenCalledWith(true);
-        // trueを引数にcallbackが呼ばれていること
+        // callbackが呼ばれているのは１度だけであること
         expect(callback).toHaveBeenCalledTimes(1);
     });
 
-    it('should call callback with false after maxRetry', () => {
+    it('maxRetryに到達した後にfuncがfalseを返す', () => {
         // funcは必ずfalseを返す
         const func = jest.fn(() => false);
         const callback = jest.fn();
@@ -48,9 +48,9 @@ describe('retryWithExponentialBackoff()', () => {
         expect(func).toHaveBeenCalledTimes(3);
 
         jest.advanceTimersByTime(4000);
-        expect(func).toHaveBeenCalledTimes(4); // initial + 3 retries
+        expect(func).toHaveBeenCalledTimes(4); // maxRetryを超えた呼び出し
 
-        // 3回目にfalseを引数にcallbackが呼ばれる
+        // 3回目のretry時にfalseを引数にcallbackが呼ばれる
         expect(callback).toHaveBeenCalledWith(false);
         expect(callback).toHaveBeenCalledTimes(1);
     });
