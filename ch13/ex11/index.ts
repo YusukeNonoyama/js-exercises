@@ -10,22 +10,70 @@
 //   5
 // );
 
-export function retryWithExponentialBackoff(func: () => Promise<any>, maxRetry: number): Promise<any> {
+export function retryWithExponentialBackoff(
+    func: () => Promise<any>,
+    maxRetry: number
+): Promise<any> {
     let count = 0;
-    function tryFunc(): Promise<any> {
-        return func()
-            .then(result => {
-                return result; // 成功したらそのまま resolve
-            })
-            .catch(err => {
-                if (count >= maxRetry) {
-                    return Promise.reject(new Error("failed")); // 最大リトライ回数超え → reject
-                    // return;
-                }
-                const delay = 2 ** count * 1000;
+    function wait(msec: number) {
+        return new Promise((resolve) => setTimeout(resolve, msec));
+    }
+    async function tryFunc(): Promise<any> {
+        while (count < maxRetry) {
+            try {
+                return await func();
+            } catch (err) {
                 count++;
-                return new Promise((resolve) => setTimeout(resolve, delay)).then(tryFunc);
-            });
+                if (count >= maxRetry) {
+                    break;
+                }
+                const delay = 2 ** (count - 1) * 1000;
+                await wait(delay);
+            }
+        }
+        throw new Error("failed");
     }
     return tryFunc();
 }
+
+
+// export function retryWithExponentialBackoff(func: () => Promise<any>, maxRetry: number): Promise<any> {
+//     let count = 0;
+//     function wait(msec: number) {
+//         return new Promise((resolve) => setTimeout(resolve, msec));
+//     }
+//     async function tryFunc(): Promise<any> {
+//         while (count < maxRetry) {  // maxRetryを超えるまでループ
+//             // funcを再実行
+//             return func().then(result => {  // 成功したらそのまま resolve
+//                 return result;
+//             }).catch(async () => {
+//                 const delay = 2 ** count * 1000;
+//                 count++;
+//                 await wait(delay);
+//             });
+//         }
+//         return Promise.reject(new Error("failed")); // 最大リトライ回数超え → reject
+//     }
+//     return tryFunc();
+// }
+
+// export function retryWithExponentialBackoff(func: () => Promise<any>, maxRetry: number): Promise<any> {
+//     let count = 0;
+//     function tryFunc(): Promise<any> {
+//         return func()
+//             .then(result => {
+//                 return result; // 成功したらそのまま resolve
+//             })
+//             .catch(err => {
+//                 if (count >= maxRetry) {
+//                     return Promise.reject(new Error("failed")); // 最大リトライ回数超え → reject
+//                     // return;
+//                 }
+//                 const delay = 2 ** count * 1000;
+//                 count++;
+//                 return new Promise((resolve) => setTimeout(resolve, delay)).then(tryFunc);
+//             });
+//     }
+//     return tryFunc();
+// }
