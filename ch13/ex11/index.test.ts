@@ -35,7 +35,7 @@ describe('retryWithExponentialBackoff', () => {
         const promise = retryWithExponentialBackoff(mockFunc, 4);
         await jest.runAllTimersAsync();
 
-        expect(JSON.stringify(promise)).toEqual("{}");  // catchした後に空オブジェクトを返す
+        expect(JSON.stringify(promise)).toEqual("{}");  // 
         expect(mockFunc).toHaveBeenCalledTimes(4); // 初回 + 2回リトライ
         console.log("log:", promise);
     });

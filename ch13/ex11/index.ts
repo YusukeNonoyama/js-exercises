@@ -33,5 +33,5 @@ export function retryWithExponentialBackoff(
         }
         return Promise.reject("failed");
     }
-    return tryFunc().catch(() => { });  // catchして空オブジェクトを返す
+    return tryFunc().catch(() => { });  // catchしてundefinedをreturn
 }
