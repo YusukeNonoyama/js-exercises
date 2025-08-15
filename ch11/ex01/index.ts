@@ -1,14 +1,18 @@
-type Constructor = {
-  new (): any;
-};
+// type Constructor = {
+//     new(): any;
+// };
+
+// valueのタイプをGenericで指定することもできるが、エラーが返せなくなるので問題の要件を満たせない
+type Constructor<T = any> = new (...args: any[]) => T;
+
 class Foo { }
 
-export class TypeMap{
+export class TypeMap {
     map: Map<Constructor, any>;
     constructor(a?: any[]) {
         this.map = new Map(a);
     }
-    set(key: Constructor, value: any) {
+    set<T>(key: Constructor, value: any) {
         if (typeof new key().valueOf() !== typeof value) {
             throw TypeError("Value is not a member of the constructor")
         }
