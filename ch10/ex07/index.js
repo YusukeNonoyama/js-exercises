@@ -16,11 +16,24 @@ console.log(dates);
 const nowFNS = new Date();
 console.log(nowFNS);
 
+// 結果：
+// [
+//   1987-02-10T15:00:00.000Z,
+//   1989-07-09T15:00:00.000Z,
+//   1995-07-01T15:00:00.000Z
+// ]
+// 2025-08-15T10:20:06.603Z
+
 // Luxon
 const nowLuxon = DateTime.now();
 console.log(nowLuxon);
 
+// 結果
+// DateTime { ts: 2025-08-15T19:20:06.603+09:00, zone: Asia/Tokyo, locale: en-US }
 
 // Day.js
 const nowDayjs = dayjs();
-console.log(nowDayjs.format());  // e.g., 2025-06-01T12:34:56+00:00
+console.log(nowDayjs.format());
+
+// 結果
+// 2025-08-15T19:20:06+09:00
