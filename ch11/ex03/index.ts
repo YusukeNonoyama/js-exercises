@@ -1,4 +1,4 @@
-export function little2Big(uint32: any) {
+export function little2Big(uint32: Uint32Array) {
     // バッファに対するViewを作る
     let view = new DataView(uint32.buffer,
         uint32.byteOffset,
@@ -12,7 +12,7 @@ export function little2Big(uint32: any) {
     return new Uint32Array(view.buffer);
 }
 
-export function big2Little(uint32: any) {
+export function big2Little(uint32: Uint32Array) {
     // バッファに対するViewを作る
     let view = new DataView(uint32.buffer,
         uint32.byteOffset,
