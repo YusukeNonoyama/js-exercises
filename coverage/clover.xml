@@ -1,43 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1755416343751" clover="3.2.0">
-  <project timestamp="1755416343751" name="All files">
-    <metrics statements="34" coveredstatements="34" conditionals="8" coveredconditionals="8" methods="6" coveredmethods="6" elements="48" coveredelements="48" complexity="0" loc="34" ncloc="34" packages="1" files="1" classes="1"/>
-    <file name="index.ts" path="/home/nonoyama/js/js-exercises/ch11/ex10/index.ts">
-      <metrics statements="34" coveredstatements="34" conditionals="8" coveredconditionals="8" methods="6" coveredmethods="6"/>
-      <line num="2" count="121" type="stmt"/>
-      <line num="3" count="43" type="stmt"/>
-      <line num="4" count="43" type="cond" truecount="1" falsecount="0"/>
-      <line num="5" count="4" type="stmt"/>
-      <line num="9" count="39" type="stmt"/>
-      <line num="13" count="1" type="stmt"/>
-      <line num="14" count="17" type="stmt"/>
-      <line num="17" count="17" type="stmt"/>
-      <line num="18" count="17" type="stmt"/>
-      <line num="22" count="1" type="stmt"/>
-      <line num="23" count="13" type="stmt"/>
-      <line num="24" count="11" type="stmt"/>
-      <line num="25" count="10" type="cond" truecount="1" falsecount="0"/>
-      <line num="26" count="1" type="stmt"/>
-      <line num="28" count="10" type="stmt"/>
-      <line num="29" count="10" type="stmt"/>
-      <line num="30" count="10" type="stmt"/>
-      <line num="33" count="10" type="stmt"/>
-      <line num="34" count="10" type="stmt"/>
-      <line num="35" count="27" type="cond" truecount="3" falsecount="0"/>
-      <line num="36" count="27" type="stmt"/>
-      <line num="37" count="27" type="stmt"/>
-      <line num="40" count="10" type="cond" truecount="3" falsecount="0"/>
-      <line num="43" count="10" type="stmt"/>
-      <line num="45" count="10" type="stmt"/>
-      <line num="49" count="1" type="stmt"/>
-      <line num="50" count="19" type="stmt"/>
-      <line num="51" count="18" type="stmt"/>
-      <line num="55" count="1" type="stmt"/>
-      <line num="56" count="1" type="stmt"/>
-      <line num="71" count="1" type="stmt"/>
-      <line num="72" count="1" type="stmt"/>
-      <line num="73" count="1" type="stmt"/>
-      <line num="74" count="1" type="stmt"/>
+<coverage generated="1755424645182" clover="3.2.0">
+  <project timestamp="1755424645182" name="All files">
+    <metrics statements="48" coveredstatements="48" conditionals="27" coveredconditionals="27" methods="3" coveredmethods="3" elements="78" coveredelements="78" complexity="0" loc="48" ncloc="48" packages="1" files="1" classes="1"/>
+    <file name="index.ts" path="/home/nonoyama/js/js-exercises/ch11/ex13/index.ts">
+      <metrics statements="48" coveredstatements="48" conditionals="27" coveredconditionals="27" methods="3" coveredmethods="3"/>
+      <line num="1" count="1" type="stmt"/>
+      <line num="4" count="91" type="stmt"/>
+      <line num="5" count="91" type="stmt"/>
+      <line num="6" count="91" type="stmt"/>
+      <line num="7" count="91" type="stmt"/>
+      <line num="8" count="91" type="stmt"/>
+      <line num="9" count="91" type="stmt"/>
+      <line num="10" count="91" type="stmt"/>
+      <line num="11" count="91" type="stmt"/>
+      <line num="12" count="91" type="stmt"/>
+      <line num="13" count="91" type="stmt"/>
+      <line num="14" count="91" type="stmt"/>
+      <line num="15" count="91" type="stmt"/>
+      <line num="19" count="105" type="cond" truecount="2" falsecount="0"/>
+      <line num="20" count="85" type="stmt"/>
+      <line num="21" count="20" type="cond" truecount="1" falsecount="0"/>
+      <line num="22" count="20" type="stmt"/>
+      <line num="24" count="105" type="stmt"/>
+      <line num="26" count="105" type="stmt"/>
+      <line num="27" count="105" type="cond" truecount="2" falsecount="0"/>
+      <line num="28" count="85" type="stmt"/>
+      <line num="29" count="85" type="stmt"/>
+      <line num="30" count="108" type="cond" truecount="2" falsecount="0"/>
+      <line num="31" count="6" type="stmt"/>
+      <line num="32" count="102" type="cond" truecount="2" falsecount="0"/>
+      <line num="33" count="56" type="stmt"/>
+      <line num="34" count="56" type="stmt"/>
+      <line num="35" count="46" type="cond" truecount="3" falsecount="0"/>
+      <line num="36" count="7" type="stmt"/>
+      <line num="38" count="108" type="stmt"/>
+      <line num="40" count="85" type="stmt"/>
+      <line num="41" count="85" type="stmt"/>
+      <line num="42" count="20" type="cond" truecount="3" falsecount="0"/>
+      <line num="43" count="20" type="stmt"/>
+      <line num="44" count="20" type="stmt"/>
+      <line num="45" count="24" type="cond" truecount="1" falsecount="0"/>
+      <line num="46" count="24" type="stmt"/>
+      <line num="48" count="24" type="cond" truecount="1" falsecount="0"/>
+      <line num="49" count="11" type="stmt"/>
+      <line num="51" count="24" type="cond" truecount="5" falsecount="0"/>
+      <line num="52" count="8" type="stmt"/>
+      <line num="53" count="16" type="cond" truecount="2" falsecount="0"/>
+      <line num="54" count="11" type="stmt"/>
+      <line num="55" count="5" type="cond" truecount="3" falsecount="0"/>
+      <line num="56" count="5" type="stmt"/>
+      <line num="59" count="20" type="stmt"/>
+      <line num="60" count="20" type="stmt"/>
+      <line num="62" count="105" type="stmt"/>
     </file>
   </project>
 </coverage>

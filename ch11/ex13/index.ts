@@ -1,4 +1,28 @@
 export function stringifyJSON(input: any[] | {}) {
+  // エスケープシーケンスを文字列に置き換える関数
+  function addEscapeSequence(input: string) {
+    input = input.replace(/\\/g, "\\\\"); // これを始めにやらないと途中で増えたbackslashをさらに増やしてしまう
+    input = input.replace(/\n/g, "\\n");
+    input = input.replace(/\t/g, "\\t");
+    input = input.replace(/\f/g, "\\f");
+    input = input.replace(/\r/g, "\\r");
+    input = input.replace(/\x08/g, "\\b");  // /\b/g だとword boundaryにマッチしてしまう。backspace charactorとマッチうsるためにASCII codeの\x08を使う。
+    input = input.replace(/\u0000/g, "\\u0000");
+    input = input.replace(/\u000A/g, "\\u000A");
+    input = input.replace(/\u0012/g, "\\u0012");
+    input = input.replace(/\u0000/g, "\\u0000");
+    input = input.replace(/\u0022/g, '\\"');  // ' " '
+    return input;
+  }
+  // 対象がvalueかarrayかobjectかを判定して必要なら括弧を加える関数
+  function addBrackets(input: any[] | {} | undefined, valueStr: string) {
+    if (Array.isArray(input)) {
+      valueStr = ["[", valueStr, "]"].join("");
+    } else if (typeof input === "object") {
+      valueStr = ["{", valueStr, "}"].join("");
+    }
+    return valueStr;
+  }
   let resultStr = "";
   if (Array.isArray(input)) { // inputが配列の場合
     const json = [...input];  // そのまま使うと呼び出し元の配列に影響を与えるのでコピー
@@ -38,27 +62,4 @@ export function stringifyJSON(input: any[] | {}) {
   return resultStr;
 }
 
-function addEscapeSequence(input: string) {
-  input = input.replace(/\\/g, "\\\\"); // これを始めにやらないと途中で増えたbackslashをさらに増やしてしまう
-  input = input.replace(/\n/g, "\\n");
-  input = input.replace(/\t/g, "\\t");
-  input = input.replace(/\f/g, "\\f");
-  input = input.replace(/\r/g, "\\r");
-  input = input.replace(/\x08/g, "\\b");  // /\b/g だとword boundaryにマッチしてしまう。backspace charactorとマッチうsるためにASCII codeの\x08を使う。
-  input = input.replace(/\u0000/g, "\\u0000");
-  input = input.replace(/\u000A/g, "\\u000A");
-  input = input.replace(/\u0012/g, "\\u0012");
-  input = input.replace(/\u0000/g, "\\u0000");
-  input = input.replace(/\u0022/g, '\\"');  // ' " '
-  return input;
-}
 
-// 対象がvalueかarrayかobjectかを判定して必要なら括弧を加える関数
-function addBrackets(input: any[] | {} | undefined, valueStr: string) {
-  if (Array.isArray(input)) {
-    valueStr = ["[", valueStr, "]"].join("");
-  } else if (typeof input === "object") {
-    valueStr = ["{", valueStr, "}"].join("");
-  }
-  return valueStr;
-}
