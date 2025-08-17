@@ -25,28 +25,28 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>15/15</span>
+                <span class='fraction'>10/10</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>1/1</span>
+                <span class='fraction'>0/0</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>3/3</span>
+                <span class='fraction'>2/2</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>15/15</span>
+                <span class='fraction'>10/10</span>
             </div>
         
             
@@ -88,55 +88,61 @@
 <a name='L23'></a><a href='#L23'>23</a>
 <a name='L24'></a><a href='#L24'>24</a>
 <a name='L25'></a><a href='#L25'>25</a>
-<a name='L26'></a><a href='#L26'>26</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L26'></a><a href='#L26'>26</a>
+<a name='L27'></a><a href='#L27'>27</a>
+<a name='L28'></a><a href='#L28'>28</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">9x</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">6x</span>
-<span class="cline-any cline-yes">6x</span>
-<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">6x</span>
-<span class="cline-any cline-yes">6x</span>
-<span class="cline-any cline-yes">6x</span>
-<span class="cline-any cline-yes">978123724x</span>
-<span class="cline-any cline-yes">978123724x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">export function cache(f: Function) {
-  const cacheMap = new WeakMap();
-&nbsp;
-  return function (obj: {}) {
-    // objがcacheMapにある場合はcacheMapから値を取得
-    if (cacheMap.has(obj)) {
-      return cacheMap.get(obj);
-    }
-    // objがcacheMapになければ、cacheMapに保存してから値を返す
-    const result = f(obj);
-    cacheMap.set(obj, result);
-    return result;
-  };
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">export function little2Big(uint32: any) {
+    // バッファに対するViewを作る
+    let view = new DataView(uint32.buffer,
+        uint32.byteOffset,
+        uint32.byteLength,
+    )
+    // リトルエンディアンのバイト列として引数のデータを読み込み（true）
+    const littleEndian = view.getUint32(0, true);
+    // ビッグエンディアンのバイト列に変換してbufferに書き込み
+    view.setUint32(0, littleEndian, false)
+    // 符号なし 32 ビット整数の配列にして返す
+    return new Uint32Array(view.buffer);
 }
 &nbsp;
-// loopを一定数まで繰り返すだけの関数
-export function slowFn(obj: { iteration: number }) {
-  let i = 0;
-  let result = 0;
-  while (i &lt; obj.iteration) {
-    result += i;  // iを足し続ける
-    i++;
-  }
-  return result;
+export function big2Little(uint32: any) {
+    // バッファに対するViewを作る
+    let view = new DataView(uint32.buffer,
+        uint32.byteOffset,
+        uint32.byteLength,
+    )
+    // ビッグエンディアンのバイト列として引数のデータを読み込み（false）
+    const bigEndian = view.getUint32(0, false);
+    // リトルエンディアンのバイト列に変換してbufferに書き込み
+    view.setUint32(0, bigEndian, true)
+    // 符号なし 32 ビット整数の配列にして返す
+    return new Uint32Array(view.buffer);
 }
 &nbsp;</pre></td></tr></table></pre>
 
@@ -145,7 +151,7 @@ export function slowFn(obj: { iteration: number }) {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-08-16T12:44:01.784Z
+                at 2025-08-17T01:04:01.130Z
             </div>
         <script src="prettify.js"></script>
         <script>

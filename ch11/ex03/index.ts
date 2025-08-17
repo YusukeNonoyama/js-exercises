@@ -1,41 +1,27 @@
 export function little2Big(uint32: any) {
-    // リトルエンディアンのバイト列として引数を読込み
-    let littleEndian = new Int8Array(uint32.buffer);
-    let view = new DataView(littleEndian.buffer,
-        littleEndian.byteOffset,
-        littleEndian.byteLength,
+    // バッファに対するViewを作る
+    let view = new DataView(uint32.buffer,
+        uint32.byteOffset,
+        uint32.byteLength,
     )
-    // ビッグエンディアンへ変換したのち、符号なし 32 ビット整数の配列にして返す
-    return new Uint32Array([view.getUint32(0, false)]);
+    // リトルエンディアンのバイト列として引数のデータを読み込み（第二引数がtrue）
+    const littleEndian = view.getUint32(0, true);
+    // ビッグエンディアンのバイト列に変換してbufferに書き込み（第二引数がfalse）
+    view.setUint32(0, littleEndian, false)
+    // 符号なし 32 ビット整数の配列にして返す
+    return new Uint32Array(view.buffer);
 }
 
 export function big2Little(uint32: any) {
-    // ビッグエンディアンのバイト列として引数を読込み
-    let bigEndian = new Int8Array(uint32.buffer).reverse();
-    let view = new DataView(bigEndian.buffer,
-        bigEndian.byteOffset,
-        bigEndian.byteLength,
+    // バッファに対するViewを作る
+    let view = new DataView(uint32.buffer,
+        uint32.byteOffset,
+        uint32.byteLength,
     )
-    // ビッグエンディアンへ変換したのち、符号なし 32 ビット整数の配列にして返す
-    return new Uint32Array([view.getUint32(0, true)]);
+    // ビッグエンディアンのバイト列として引数のデータを読み込み（第二引数がfalse）
+    const bigEndian = view.getUint32(0, false);
+    // リトルエンディアンのバイト列に変換してbufferに書き込み（第二引数がtrue）
+    view.setUint32(0, bigEndian, true)
+    // 符号なし 32 ビット整数の配列にして返す
+    return new Uint32Array(view.buffer);
 }
-
-// export function little2Little(uint32: any) {
-//     // リトルエンディアンのバイト列として引数を読込み
-//     let littleEndian = new Int8Array(uint32.buffer);
-//     let view = new DataView(littleEndian.buffer,
-//         littleEndian.byteOffset,
-//         littleEndian.byteLength,
-//     )
-//     // リトルエンディアンで出力したのち、符号なし 32 ビット整数の配列にして返す
-//     return new Uint32Array([view.getUint32(0, true)]);
-// }
-
-// console.log("=== <little to big> ========================");
-// console.log(little2Big(new Uint32Array([1])));
-// console.log("=== <big to little> ========================");
-// console.log(big2Little(new Uint32Array([1])));
-// console.log("=== <little to little> ========================");
-// console.log(little2Little(new Uint32Array([1])));
-
-// console.log(0x01000000);
