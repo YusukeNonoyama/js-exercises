@@ -1,4 +1,4 @@
-export function detectFileType(buffer: any) {
+export function detectFileType(buffer: ArrayBuffer) {
     let view = new DataView(buffer, 0, buffer.byteLength)
     // テストケースの中であれば始めのバイトだけで拡張子を判別可能
     if (view.getUint8(0) === 0x25) {
