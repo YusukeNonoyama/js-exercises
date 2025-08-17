@@ -1,7 +1,7 @@
 function createDate(stringDate: string) {
     const arr = stringDate.split("-").map((s) => Number(s));
     const date = new Date(arr[0], arr[1] - 1, arr[2]);
-    if(isNaN(date.getTime())){
+    if (isNaN(date.getTime())) {
         throw Error(`invalid input: ${stringDate}`)
     }
     // console.log(date);
@@ -12,6 +12,7 @@ function createDate(stringDate: string) {
 // 特定の年と月(1-12)を数値の引数で受け取り、その月の日数を返す関数
 export function getDaysOfMonth(year: number, month: number) {
     let d = new Date();
+    // 次の月の１日より１日前を取得する（３つ目の引数のdayを0にする）
     // 0 => 1月に対応。setFullYearには次の月の１日より１日前という設定をするから、monthは1-1で加減算なし。
     d.setFullYear(year, month, 0);
     return d.getDate();
@@ -19,38 +20,29 @@ export function getDaysOfMonth(year: number, month: number) {
 
 // 期間の開始日と終了日を'YYYY-MM-DD'形式の日付で二つ引数で受け取り、その期間(開始日と終了日を含む)の土日以外の日数を返す関数
 export function getDaysExcludeWeekend(start: string, end: string) {
-    function countWeekDay(targetDayOfWeek: number, count: number) {
-        if (targetDayOfWeek !== 0 && targetDayOfWeek !== 6) {
-            return ++count;
-        }
-        return count;
-    }
-
     let startDate = createDate(start)
     let endDate = createDate(end)
     if (startDate > endDate) {
         [startDate, endDate] = [endDate, startDate];
     }
-    console.log(startDate);
-
-    // 日曜が0、土曜が6
     let targetDay = startDate;
-    let targetDayOfWeek = targetDay.getDay();
-    let endWeekDay = endDate.getDay();
+    let targetDayOfWeek = targetDay.getDay();   // 始まりの日の曜日
+    const endDayOfWeek = endDate.getDay();    // 終わりの日の曜日
 
-    // 最初の日から、最後の日の次の曜日になるまでの土日を除く日数をカウント（端数分のカウント）
-    let count = 0;
-    while (targetDayOfWeek !== endWeekDay) {
-        count = countWeekDay(targetDayOfWeek, count);
+    // 始まりの日から、終わりの日と同じ曜日になるまでの土日を除く日数をカウント（端数分のカウント）
+    let countRemainder = 0;
+    while (targetDayOfWeek !== endDayOfWeek) {
+        if (targetDayOfWeek !== 0 && targetDayOfWeek !== 6) ++countRemainder;   // 日曜が0、土曜が6
         targetDay.setDate(targetDay.getDate() + 1);
         targetDayOfWeek = targetDay.getDay();
     }
-    count = countWeekDay(targetDayOfWeek, count);
+    // 端数としては同じ曜日までカウントするため追加でもう１つカウント
+    if (targetDayOfWeek !== 0 && targetDayOfWeek !== 6) ++countRemainder;
 
-    // 7の倍数で割り切れれば、全日数のうち5/7が土日を除く日と計算できる
+    // targetDayとendDayの差分は、7の倍数で割り切るようになったため、全日数のうち5/7が土日を除く日と計算できる
     const count7daysUnit = (endDate.getTime() - targetDay.getTime()) / (24 * 60 * 60 * 1000) * (5 / 7)
     // 全日数から計算したものと端数カウントを足す
-    return count7daysUnit + count;
+    return count7daysUnit + countRemainder;
 }
 
 // 'YYYY-MM-DD'形式の日付とロケールを引数で受け取り、その日の曜日をロケールの形式の文字列で返す関数
