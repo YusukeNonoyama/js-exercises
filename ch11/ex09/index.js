@@ -13,6 +13,7 @@
 // - 継続: パターンにマッチした後に実行する関数 (引数は文字列とインデックス、返り値は真偽値)
 //
 // パターン関数は引数に対して自身がマッチした場合は引数の継続を実行し、その結果を返す。
+// ※逆にfalseの場合は継続は実行されない
 //
 // 以下の `Pattern` は TypeScript の型でパターン関数を記述したものである:
 //
@@ -66,60 +67,82 @@ export function alt2(lhs, rhs) {
 }
 
 // パターン p が s にマッチするか調べる (マッチ後に全ての文字を消化したか確認する継続を渡している)
-export function match(pat, s) {
-  return pat(s, 0, (nstr, pos) => nstr.length === pos);
+export function match(p, s) {
+  return p(s, 0, (nstr, pos) => nstr.length === pos);
 }
 
-// ここまでの関数だけで /Hello, (world|World)!/ というパターンは以下のような式で表現できる
-//
+// // ここまでの関数だけで /Hello, (world|World)!/ というパターンは以下のような式で表現できる
+// //
 // const hw = seq2(
 //   quote("Hello, "),
 //   seq2(alt2(quote("world"), quote("World")), quote("!"))
 // );
-//
+
 // console.log(match(hw, "Hello, world!")); // true
 // console.log(match(hw, "Hello")); // false
-//
-// たった4つの関数で正規表現らしきものが動作している。もっと複雑なパターンを書くために以下の関数を定義しよう。
-// いずれの関数も数行程度で実装可能である。
+// //
+// // たった4つの関数で正規表現らしきものが動作している。もっと複雑なパターンを書くために以下の関数を定義しよう。
+// // いずれの関数も数行程度で実装可能である。
 
 // seq2 の可変長引数版
 export function seq(...pats) {
+  // if(pats.length ===0) 
   // HINT: seq(p1, p2, p3, p4) = seq2(seq2(seq2(p1, p2), p3), p4)
-  throw new Error("実装してね");
+  if (pats[0] === undefined) {
+    return (str) => str === ""; // 入力値が空文字であればtrue
+  }
+  return pats.reduce(seq2);
 }
 
 // alt2 の可変長引数版
 export function alt(...pats) {
   // HINT: alt(p1, p2, p3, p4) =  alt2(alt2(alt2(p1, p2), p3), p4)
-  throw new Error("実装してね");
+  return pats.reduce(alt2);
 }
 
 // 任意の1文字にマッチ
 export function dot() {
   // HINT: quote の実装を参考にすると良い
-  throw new Error("実装してね");
+  return (str, pos, k) => pos < str.length && k(str, pos + 1);
 }
 
 // [...] に対応 (例: [abc] は charFrom("abc"))
 export function charFrom(s) {
   // HINT: quote の実装を参考にすると良い
-  throw new Error("実装してね");
+  return (str, pos, k) => pos < str.length && s.includes(str[pos]) && k(str, pos + 1);
 }
 
 // [^...] に対応
 export function charNotFrom(s) {
   // HINT: quote の実装を参考にすると良い
-  throw new Error("実装してね");
+  return (str, pos, k) => pos < str.length && !s.includes(str[pos]) && k(str, pos + 1);
 }
 
-// 繰り返し (min 回数以上 max 回数以下)
+// // 繰り返し (min 回数以上 max 回数以下)
+// export function repeat(pat, min = 0, max = Infinity) {
+//   // HINT: 再帰を上手く使うこと
+//   // パターン P の繰り返し `P{min,max}` は min > 0 の時 `(P)(P{min-1,max-1})` と分解できる
+//   // seq2, alt2 を上手く使うと良い
+// }
+
 export function repeat(pat, min = 0, max = Infinity) {
-  // HINT: 再帰を上手く使うこと
-  // パターン P の繰り返し `P{min,max}` は min > 0 の時 `(P)(P{min-1,max-1})` と分解できる
-  // seq2, alt2 を上手く使うと良い
-  throw new Error("実装してね");
+  return (str, pos, k) => { //パターン関数を返す
+    let count = 0;
+    function tryRecursivePat(str2, pos2) {
+      if (count >= max) {
+        return k(str2, pos2); // 繰り返しが最大になるまでマッチすればOKなので継続を返す
+      }
+      // マッチする場合は、継続でcountを増やし次の位置でstep()呼び出し
+      return pat(str2, pos2, (nextStr, nextPos) => {
+        count++;
+        return tryRecursivePat(nextStr, nextPos);
+        //patがマッチしなくなった時点でminよりcountが大きければOKだから継続を返す
+      }) || (count >= min && k(str2, pos2));
+    }
+    return tryRecursivePat(str, pos);
+  };
 }
+
 
 // 正規表現 /([Jj]ava([Ss]cript)?) is fun/ は以下
 // const p = seq(

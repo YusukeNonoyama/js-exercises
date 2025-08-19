@@ -12,7 +12,7 @@ import {
 // NOTE: 配列の各要素の先頭 (正規表現) は説明用の値でありテストには用いない
 const oks = [
   // seq
-  [new RegExp(""), "", seq()],
+  [new RegExp(""), "", seq()],  // _name, input, pattern
   [/HELLO/, "HELLO", seq(quote("HELLO"))],
   [/(HELLO)(WORLD)/, "HELLOWORLD", seq(quote("HELLO"), quote("WORLD"))],
   [
@@ -173,6 +173,6 @@ test.each(oks)("ok: %p accepts %p", (_name, input, pattern) => {
   expect(match(pattern, input)).toStrictEqual(true);
 });
 
-test.each(ngs)("ok: %p doesn't accepts %p", (_name, input, pattern) => {
+test.each(ngs)("ng: %p doesn't accepts %p", (_name, input, pattern) => {
   expect(match(pattern, input)).toStrictEqual(false);
 });
