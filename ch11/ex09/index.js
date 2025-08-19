@@ -143,6 +143,18 @@ export function repeat(pat, min = 0, max = Infinity) {
   };
 }
 
+// export function repeat(pat, min = 0, max = Infinity) {
+//   return (str, pos, k) => {
+//     let count = 0;
+//     if (min > 0) {
+//       count++;
+//       return seq2(pat, repeat(pat, min - 1, max - 1));
+//     }
+//     if (max > count) {
+//       return seq2(pat, repeat(pat, min, max - 1)) || k(str, pos);
+//     }
+//   };
+// }
 
 // 正規表現 /([Jj]ava([Ss]cript)?) is fun/ は以下
 // const p = seq(
