@@ -14,7 +14,7 @@ const dates = [
 dates.sort(compareAsc);
 console.log(dates);
 const nowFNS = new Date();
-console.log(nowFNS);
+console.log("date-fns: ", nowFNS);
 
 // 結果：
 // [
@@ -26,14 +26,14 @@ console.log(nowFNS);
 
 // Luxon
 const nowLuxon = DateTime.now();
-console.log(nowLuxon);
+console.log("Luxon: ", nowLuxon);
 
 // 結果
 // DateTime { ts: 2025-08-15T19:20:06.603+09:00, zone: Asia/Tokyo, locale: en-US }
 
 // Day.js
 const nowDayjs = dayjs();
-console.log(nowDayjs.format());
+console.log("Dayjs: ", nowDayjs.format());
 
 // 結果
 // 2025-08-15T19:20:06+09:00
