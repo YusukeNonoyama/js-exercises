@@ -10,8 +10,11 @@ export function modifyUrl(obj: URLObj) {
         url.pathname = obj.path;
     }
     if (obj.addQuery) {
-        for (const query of obj.addQuery) {
-            url.searchParams.append(query[0], query[1]);
+        // for (const query of obj.addQuery) {
+        //     url.searchParams.append(query[0], query[1]);
+        // }
+        for (const [key, value] of obj.addQuery) {
+            url.searchParams.append(key, value);
         }
     }
     return url.toString();

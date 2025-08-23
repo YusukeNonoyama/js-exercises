@@ -14,6 +14,9 @@ export class TypeMap {
     }
     set<T>(key: Constructor, value: any) {
         if (typeof new key().valueOf() !== typeof value) {
+            // if (!(value instanceof key)) {
+            //     console.log(typeof new key().valueOf());
+            //     console.log(typeof value);
             throw TypeError("Value is not a member of the constructor")
         }
         return this.map.set(key, value);

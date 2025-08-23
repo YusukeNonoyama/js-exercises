@@ -63,3 +63,5 @@ export function stringifyJSON(input: any[] | {}) {
 }
 
 
+const a = stringifyJSON(["test\n"]);
+console.log(a);

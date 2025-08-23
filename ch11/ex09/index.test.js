@@ -7,7 +7,7 @@ import {
   quote,
   repeat,
   seq,
-} from "./index.js";
+} from "./index_shimode.js";
 
 // NOTE: 配列の各要素の先頭 (正規表現) は説明用の値でありテストには用いない
 const oks = [
