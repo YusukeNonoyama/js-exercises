@@ -1,6 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1755867084950" clover="3.2.0">
-  <project timestamp="1755867084951" name="All files">
-    <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0" elements="0" coveredelements="0" complexity="0" loc="0" ncloc="0" packages="0" files="0" classes="0"/>
+<coverage generated="1756126937121" clover="3.2.0">
+  <project timestamp="1756126937121" name="All files">
+    <metrics statements="13" coveredstatements="13" conditionals="2" coveredconditionals="2" methods="4" coveredmethods="4" elements="19" coveredelements="19" complexity="0" loc="13" ncloc="13" packages="1" files="1" classes="1"/>
+    <file name="index.ts" path="/home/nonoyama/js/js-exercises/ch14/ex03/index.ts">
+      <metrics statements="13" coveredstatements="13" conditionals="2" coveredconditionals="2" methods="4" coveredmethods="4"/>
+      <line num="1" count="1" type="stmt"/>
+      <line num="3" count="11" type="stmt"/>
+      <line num="7" count="11" type="cond" truecount="2" falsecount="0"/>
+      <line num="8" count="5" type="stmt"/>
+      <line num="10" count="6" type="stmt"/>
+      <line num="11" count="6" type="stmt"/>
+      <line num="14" count="11" type="stmt"/>
+      <line num="15" count="11" type="stmt"/>
+      <line num="19" count="5" type="stmt"/>
+      <line num="20" count="5" type="stmt"/>
+      <line num="24" count="6" type="stmt"/>
+      <line num="25" count="6" type="stmt"/>
+      <line num="29" count="22" type="stmt"/>
+    </file>
   </project>
 </coverage>
