@@ -1,22 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1756126937121" clover="3.2.0">
-  <project timestamp="1756126937121" name="All files">
-    <metrics statements="13" coveredstatements="13" conditionals="2" coveredconditionals="2" methods="4" coveredmethods="4" elements="19" coveredelements="19" complexity="0" loc="13" ncloc="13" packages="1" files="1" classes="1"/>
-    <file name="index.ts" path="/home/nonoyama/js/js-exercises/ch14/ex03/index.ts">
-      <metrics statements="13" coveredstatements="13" conditionals="2" coveredconditionals="2" methods="4" coveredmethods="4"/>
+<coverage generated="1756205223390" clover="3.2.0">
+  <project timestamp="1756205223390" name="All files">
+    <metrics statements="11" coveredstatements="11" conditionals="3" coveredconditionals="3" methods="2" coveredmethods="2" elements="16" coveredelements="16" complexity="0" loc="11" ncloc="11" packages="1" files="1" classes="1"/>
+    <file name="index.ts" path="/home/nonoyama/js/js-exercises/ch14/ex04/index.ts">
+      <metrics statements="11" coveredstatements="11" conditionals="3" coveredconditionals="3" methods="2" coveredmethods="2"/>
       <line num="1" count="1" type="stmt"/>
-      <line num="3" count="11" type="stmt"/>
-      <line num="7" count="11" type="cond" truecount="2" falsecount="0"/>
-      <line num="8" count="5" type="stmt"/>
-      <line num="10" count="6" type="stmt"/>
-      <line num="11" count="6" type="stmt"/>
-      <line num="14" count="11" type="stmt"/>
-      <line num="15" count="11" type="stmt"/>
-      <line num="19" count="5" type="stmt"/>
-      <line num="20" count="5" type="stmt"/>
-      <line num="24" count="6" type="stmt"/>
-      <line num="25" count="6" type="stmt"/>
-      <line num="29" count="22" type="stmt"/>
+      <line num="5" count="14" type="cond" truecount="1" falsecount="0"/>
+      <line num="6" count="1" type="stmt"/>
+      <line num="8" count="13" type="cond" truecount="1" falsecount="0"/>
+      <line num="9" count="1" type="stmt"/>
+      <line num="11" count="12" type="stmt"/>
+      <line num="12" count="12" type="stmt"/>
+      <line num="15" count="26" type="stmt"/>
+      <line num="16" count="26" type="cond" truecount="1" falsecount="0"/>
+      <line num="17" count="19" type="stmt"/>
+      <line num="20" count="7" type="stmt"/>
     </file>
   </project>
 </coverage>
