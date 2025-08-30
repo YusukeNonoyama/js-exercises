@@ -12,7 +12,7 @@ export default defineConfig({
     launchOptions: { ignoreDefaultArgs: ["--disable-extensions"] },
   },
   testDir: ".",
-  testMatch: /(.+\.)?spec\.[jt]s/,
+  testMatch: /(.+\.)?[(spec)(test)]\.[jt]s/,
   workers: 1,
   maxFailures: 1,
 });
