@@ -6,6 +6,7 @@
 https://web.havincoffee.com/html/tag/script/integrity.html
 
 * ブラウザのコンソールで
+
 """
 Failed to find a valid digest in the 'integrity' attribute for resource 'http://localhost:5500/ch15.1-3/ex03/js/index.js' with computed SHA-384 integrity 'BsH/BM7MxFPWZclMYkyYiU330XnIJhbsiJiIcvmMSEOIobSg5WNy7LIifdcqfQdL'. The resource has been blocked.
 """
