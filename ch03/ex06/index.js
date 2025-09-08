@@ -1,4 +1,4 @@
-export function slice(str, indexStart=0, indexEnd=str.length) {
+export function slice(str, indexStart = 0, indexEnd = str.length) {
   let substr = "";
   // NaNは0として扱われる
   if (isNaN(indexStart)) indexStart = 0;
@@ -11,7 +11,7 @@ export function slice(str, indexStart=0, indexEnd=str.length) {
   //  文字数分をループ
   for (let i = 0; i < str.length; i++) {
     // indexStartとindexEndの間を出力、Math.floorは小数点への対応
-    if (i >= Math.floor(indexStart) && i < Math.floor(indexEnd)){
+    if (i >= Math.floor(indexStart) && i < Math.floor(indexEnd)) {
       substr += str[i];
     }
   }

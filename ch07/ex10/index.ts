@@ -20,10 +20,10 @@ function makeFixedSizeArray(size: number) {
 }
 
 type fixedSizeArray = {
-  get: (index: number) => number,
-  set: (index: number, value: number) => void,
-  length: () => number,
-}
+  get: (index: number) => number;
+  set: (index: number, value: number) => void;
+  length: () => number;
+};
 
 export class DynamicSizeArray {
   static INITIAL_SIZE = 4; // 初期サイズ

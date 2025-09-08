@@ -1,49 +1,82 @@
 export class Has31Days {
-    // if文で書いた場合
-    static withElseif(month){
-        if(month === "Jan") return true;
-        else if(month === "Jan") return true;
-        else if(month === "Mar") return true;
-        else if(month === "May") return true;
-        else if(month === "Jul") return true;
-        else if(month === "Aug") return true;
-        else if(month === "Oct") return true;
-        else if(month === "Dec") return true;
-        else if(month === "Feb") return false;
-        else if(month === "Apr") return false;
-        else if(month === "Jun") return false;
-        else if(month === "Sep") return false;
-        else if(month === "Nov") return false;
-        else throw new Error("Invalid Input");
-    }
+  // if文で書いた場合
+  static withElseif(month) {
+    if (month === "Jan") return true;
+    else if (month === "Jan") return true;
+    else if (month === "Mar") return true;
+    else if (month === "May") return true;
+    else if (month === "Jul") return true;
+    else if (month === "Aug") return true;
+    else if (month === "Oct") return true;
+    else if (month === "Dec") return true;
+    else if (month === "Feb") return false;
+    else if (month === "Apr") return false;
+    else if (month === "Jun") return false;
+    else if (month === "Sep") return false;
+    else if (month === "Nov") return false;
+    else throw new Error("Invalid Input");
+  }
 
-    // switch文で書いた場合
-    static withSwitch(month){
-        switch(month){
-            case "Jan": return true; break;
-            case "Mar": return true; break;
-            case "May": return true; break;
-            case "Jul": return true; break;
-            case "Aug": return true; break;
-            case "Oct": return true; break;
-            case "Dec": return true; break;
-            case "Feb": return false; break;
-            case "Apr": return false; break;
-            case "Jun": return false; break;
-            case "Sep": return false; break;
-            case "Nov": return false; break;
-            default: throw new Error("Invalid Input");
-        }
+  // switch文で書いた場合
+  static withSwitch(month) {
+    switch (month) {
+      case "Jan":
+        return true;
+        break;
+      case "Mar":
+        return true;
+        break;
+      case "May":
+        return true;
+        break;
+      case "Jul":
+        return true;
+        break;
+      case "Aug":
+        return true;
+        break;
+      case "Oct":
+        return true;
+        break;
+      case "Dec":
+        return true;
+        break;
+      case "Feb":
+        return false;
+        break;
+      case "Apr":
+        return false;
+        break;
+      case "Jun":
+        return false;
+        break;
+      case "Sep":
+        return false;
+        break;
+      case "Nov":
+        return false;
+        break;
+      default:
+        throw new Error("Invalid Input");
     }
+  }
 
-    // if文で読みやすく書いた場合
-    static withElseif2(month){
-        const monthsHave31DaysArray = ["Jan","Mar","May","Jul","Aug","Oct","Dec"];
-        const monthsNotHave31DaysArray = ["Feb","Apr","Jun","Sep","Nov"];        
-        if(monthsHave31DaysArray.includes(month)) return true;
-        else if(monthsNotHave31DaysArray.includes(month)) return false;
-        else throw new Error("Invalid Input");
-    }
+  // if文で読みやすく書いた場合
+  static withElseif2(month) {
+    const monthsHave31DaysArray = [
+      "Jan",
+      "Mar",
+      "May",
+      "Jul",
+      "Aug",
+      "Oct",
+      "Dec",
+    ];
+    const monthsNotHave31DaysArray = ["Feb", "Apr", "Jun", "Sep", "Nov"];
+    if (monthsHave31DaysArray.includes(month)) return true;
+    else if (monthsNotHave31DaysArray.includes(month)) return false;
+    else throw new Error("Invalid Input");
+  }
 }
 
 // テスト作成前の確認

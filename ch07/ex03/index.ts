@@ -7,7 +7,7 @@ export function join(array: (number | string)[], separator = ",") {
   if (array.length === 0) return "";
   if (separator === null) separator = "null";
   // arrayの中がnullの場合は空文字に置き換える
-  array = array.map(x => x === null ? "" : x);
+  array = array.map((x) => (x === null ? "" : x));
   return array.reduce((x, y) => x + separator + y);
 }
 
@@ -16,7 +16,10 @@ export function reverse(array: (number | string)[]) {
 }
 
 // 全ての配列要素がtrueならtrueを返す、１つでもfalseがあればfalseを返す
-export function every(array: number[], callback: (y: number, index: number, a: number[]) => boolean) {
+export function every(
+  array: number[],
+  callback: (y: number, index: number, a: number[]) => boolean,
+) {
   return array.reduce((x, y, index, a) => {
     // xがfalseならfalseを返して終了
     if (!x) return false;
@@ -27,7 +30,10 @@ export function every(array: number[], callback: (y: number, index: number, a: n
 }
 
 // 全ての配列要素がfalseならfalseを返す、1つでもtrueがあればtrueを返す
-export function some(array: number[], callback: (y: number, index: number, a: number[]) => boolean) {
+export function some(
+  array: number[],
+  callback: (y: number, index: number, a: number[]) => boolean,
+) {
   return array.reduce((x, y, index, a) => {
     if (x) return true;
     return callback(y, index, a);

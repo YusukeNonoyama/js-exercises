@@ -1,13 +1,15 @@
-import { readFile } from 'fs/promises';
+import { readFile } from "fs/promises";
 
 // 独自のエラーを定義
 class FileSizeError extends Error {
-    fileSize: number;
-    constructor(text: string, fileSize: number) {
-        super(`${text}: ${fileSize}`);
-        this.fileSize = fileSize;
-    }
-    get name() { return "FileSizeError" }
+  fileSize: number;
+  constructor(text: string, fileSize: number) {
+    super(`${text}: ${fileSize}`);
+    this.fileSize = fileSize;
+  }
+  get name() {
+    return "FileSizeError";
+  }
 }
 
 // エラーの動作確認
@@ -17,15 +19,15 @@ console.log(error.fileSize);
 
 // 定義したエラーを発生させる
 async function checkFileSize(path: string) {
-    const fileSizeLimit = 1000;
-    const data = await readFile(path, 'utf8');
-    const sizeInBytes = Buffer.byteLength(data, 'utf8');
-    console.log('Size in bytes:', sizeInBytes);
-    if (sizeInBytes > fileSizeLimit) {
-        throw new FileSizeError(`file size is over the limit`, sizeInBytes)
-    }
-};
-const text = 'ch11/ex11/index.js'
+  const fileSizeLimit = 1000;
+  const data = await readFile(path, "utf8");
+  const sizeInBytes = Buffer.byteLength(data, "utf8");
+  console.log("Size in bytes:", sizeInBytes);
+  if (sizeInBytes > fileSizeLimit) {
+    throw new FileSizeError(`file size is over the limit`, sizeInBytes);
+  }
+}
+const text = "ch11/ex11/index.js";
 checkFileSize(text);
 
 // 実行結果

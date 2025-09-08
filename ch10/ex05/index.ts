@@ -1,6 +1,6 @@
-import defalutFunction from "./module.ts" // defaultのインポート
-import { fooRenamed2 as fooRenamed , BarRenamed} from "./module.ts" // 名前変更を伴うインポート
-import {a, b} from "./modules.ts"   // 再エクスポートしたファイルを参照
+import defalutFunction from "./module.ts"; // defaultのインポート
+import { fooRenamed2 as fooRenamed, BarRenamed } from "./module.ts"; // 名前変更を伴うインポート
+import { a, b } from "./modules.ts"; // 再エクスポートしたファイルを参照
 
 console.log(defalutFunction());
 console.log(fooRenamed());

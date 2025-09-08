@@ -21,8 +21,8 @@ describe("f", () => {
         "7",
         "8",
         "Fizz",
-        "Buzz"
-      )
+        "Buzz",
+      ),
     ).toBe("12Fizz4BuzzFizz78FizzBuzz");
   });
 

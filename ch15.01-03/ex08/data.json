@@ -1,4 +1,4 @@
 {
-    "name": "<img src=x onerror='alert(globalThis.navigator.languages)'>",
-    "age": 50
+  "name": "<img src=x onerror='alert(globalThis.navigator.languages)'>",
+  "age": 50
 }

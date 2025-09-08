@@ -3,21 +3,20 @@
 
 let output;
 for (let i = 1; i < 101; i++) {
-    if (i % 15) {
-        if (i % 3) {
-            if (i % 5) {
-                output = i;
-            } else {
-                output = "Buzz";
-            };
-        } else {
-            output = "Fizz";
-        };
+  if (i % 15) {
+    if (i % 3) {
+      if (i % 5) {
+        output = i;
+      } else {
+        output = "Buzz";
+      }
+    } else {
+      output = "Fizz";
     }
-    else {
-        output = "FizzBuzz";
-    }
-    console.log(output);
+  } else {
+    output = "FizzBuzz";
+  }
+  console.log(output);
 }
 
 // 実行コマンド： node ch04/ex02/index.js

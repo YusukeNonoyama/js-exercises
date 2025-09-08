@@ -6,9 +6,11 @@
 // console.log("𠮷野家"[0]);
 // console.log("𠮷野家"[3]);
 // console.log("yoshinoya"[0]);
-console.log(Array.from("𠮷野家").map((char)=>char.codePointAt(0)?.toString(8))) 
-console.log("𠮷野家".length);    // 4文字
-console.log("👨‍👨‍👧‍👧".length);   // 11文字
+console.log(
+  Array.from("𠮷野家").map((char) => char.codePointAt(0)?.toString(8)),
+);
+console.log("𠮷野家".length); // 4文字
+console.log("👨‍👨‍👧‍👧".length); // 11文字
 
 let s = "𠮷";
 console.log(s.charCodeAt(0).toString(16)); // d842

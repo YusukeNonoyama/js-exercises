@@ -1,28 +1,28 @@
 // リスコフの置換原則（Liskov substitution principle）を違反したコード
 
 class Rectangle {
-    width!: number;
-    height!: number;
-    setWidth(width: number) {
-        this.width = width;
-    }
-    setHeight(height: number) {
-        this.height = height;
-    }
-    getArea() {
-        return this.width * this.height;
-    }
+  width!: number;
+  height!: number;
+  setWidth(width: number) {
+    this.width = width;
+  }
+  setHeight(height: number) {
+    this.height = height;
+  }
+  getArea() {
+    return this.width * this.height;
+  }
 }
 
 class Square extends Rectangle {
-    setWidth(width: number) {
-        this.width = width;
-        this.height = width;
-    }
-    setHeight(height: number) {
-        this.width = height;
-        this.height = height;
-    }
+  setWidth(width: number) {
+    this.width = width;
+    this.height = width;
+  }
+  setHeight(height: number) {
+    this.width = height;
+    this.height = height;
+  }
 }
 
 let rectangle = new Rectangle();
@@ -40,31 +40,31 @@ console.log(square.getArea()); // 2500: 異なる動作になっている
 // 以下解消したコードの例
 
 interface Shape {
-    getArea(): number;
+  getArea(): number;
 }
 
 class Rectangle2 implements Shape {
-    width!: number;
-    height!: number;
-    setWidth(width: number) {
-        this.width = width;
-    }
-    setHeight(height: number) {
-        this.height = height;
-    }
-    getArea(): number {
-        return this.width * this.height;
-    }
+  width!: number;
+  height!: number;
+  setWidth(width: number) {
+    this.width = width;
+  }
+  setHeight(height: number) {
+    this.height = height;
+  }
+  getArea(): number {
+    return this.width * this.height;
+  }
 }
 
 class Square2 implements Shape {
-    size: number = 0;
-    setSize(size: number) {
-        this.size = size;
-    }
-    getArea(): number {
-        return this.size ** 2;
-    }
+  size: number = 0;
+  setSize(size: number) {
+    this.size = size;
+  }
+  getArea(): number {
+    return this.size ** 2;
+  }
 }
 
 let rectangle2 = new Rectangle2();

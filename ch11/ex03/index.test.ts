@@ -1,18 +1,26 @@
-import { little2Big, big2Little } from "./index.ts"
+import { little2Big, big2Little } from "./index.ts";
 
 describe("check Uint32Array func", () => {
-    test("little2Big() 1", () => {
-        expect(little2Big(new Uint32Array([0x00000001]))).toEqual(new Uint32Array([0x01000000]));
-    });
-    test("little2Big() 大きい数", () => {
-        expect(little2Big(new Uint32Array([0x12345678]))).toEqual(new Uint32Array([0x78563412]));
-    });
-    test("little2Big() 0", () => {
-        expect(little2Big(new Uint32Array([0x00000000]))).toEqual(new Uint32Array([0x00000000]));
-    });
-    test("big2Little()", () => {
-        expect(big2Little(new Uint32Array([1]))).toEqual(new Uint32Array([0x01000000]));
-    });
+  test("little2Big() 1", () => {
+    expect(little2Big(new Uint32Array([0x00000001]))).toEqual(
+      new Uint32Array([0x01000000]),
+    );
+  });
+  test("little2Big() 大きい数", () => {
+    expect(little2Big(new Uint32Array([0x12345678]))).toEqual(
+      new Uint32Array([0x78563412]),
+    );
+  });
+  test("little2Big() 0", () => {
+    expect(little2Big(new Uint32Array([0x00000000]))).toEqual(
+      new Uint32Array([0x00000000]),
+    );
+  });
+  test("big2Little()", () => {
+    expect(big2Little(new Uint32Array([1]))).toEqual(
+      new Uint32Array([0x01000000]),
+    );
+  });
 });
 
 // 結果：
@@ -27,10 +35,10 @@ describe("check Uint32Array func", () => {
 //     ✓ big endian to Little endian()
 
 // ----------|---------|----------|---------|---------|-------------------
-// File      | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
+// File      | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s
 // ----------|---------|----------|---------|---------|-------------------
-// All files |     100 |      100 |     100 |     100 |                   
-//  index.ts |     100 |      100 |     100 |     100 |                   
+// All files |     100 |      100 |     100 |     100 |
+//  index.ts |     100 |      100 |     100 |     100 |
 // ----------|---------|----------|---------|---------|-------------------
 // Test Suites: 1 passed, 1 total
 // Tests:       2 passed, 2 total

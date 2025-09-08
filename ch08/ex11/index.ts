@@ -4,7 +4,7 @@ console.log(Math.abs.toString());
 
 // 自作関数
 function checkToString() {
-    return "function to check result of toString() method"
+  return "function to check result of toString() method";
 }
 
 // 自作関数のtoString()実行

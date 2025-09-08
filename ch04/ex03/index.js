@@ -3,7 +3,7 @@
 //   bit桁毎の足し算は繰り上がりを無視すればビット排他的論理和演算(^)で決まる(=> c)
 //   - 0と0 => 0
 //   - 0と1 または 1と0 => 1
-//   - 1と1 => 0 (次の位に繰り上がり) 
+//   - 1と1 => 0 (次の位に繰り上がり)
 //   繰り上がりで足される数は以下の通りに算出できる
 //   - 繰り上がりが必要な桁をビット積演算(&)で抽出
 //   - 抽出した2進数について左に1つシフト(<<)した2進数を求める(=> d)
@@ -13,37 +13,35 @@
 //    ※全て4の表現でも算出できるがバイナリ数にもマイナス符号が付き考えにくかった
 // 4. 最終出力は符号付きの32-bit表現に強制するため"| 0"を追加
 
-
 // 再帰的に足し算をする関数
 function add(a, b) {
-    // 繰り上がりを無視した演算（ビット排他的論理和演算）
-    let c = (a ^ b) >>> 0;
-    // let c = (a ^ b) | 0;
-    console.log("c: ", c.toString(2));
-    // 繰り上がりで加算が必要な数の算出（ビット積演算結果を1つ左にシフト）
-    let d = (((a & b) >>> 0) << 1) >>> 0;
-    console.log("d: ", d.toString(2));
+  // 繰り上がりを無視した演算（ビット排他的論理和演算）
+  let c = (a ^ b) >>> 0;
+  // let c = (a ^ b) | 0;
+  console.log("c: ", c.toString(2));
+  // 繰り上がりで加算が必要な数の算出（ビット積演算結果を1つ左にシフト）
+  let d = (((a & b) >>> 0) << 1) >>> 0;
+  console.log("d: ", d.toString(2));
 
-    // dが0でなければ再帰的に演算
-    if (d !== 0) {
-        return add(c, d);
-    } 
-    return c | 0;
+  // dが0でなければ再帰的に演算
+  if (d !== 0) {
+    return add(c, d);
+  }
+  return c | 0;
 }
 
 // bの負数表現を算出して足し算を再帰的に呼び出す
 export function sub(a, b) {
-    let negative_b = (~b + 1) >>> 0;
-    console.log("a: ", a.toString(2));
-    console.log("b: ", b.toString(2));
-    console.log("negative_b: ", negative_b.toString(2));
-    console.log("start recurse...")
-    return add(a, negative_b);
+  let negative_b = (~b + 1) >>> 0;
+  console.log("a: ", a.toString(2));
+  console.log("b: ", b.toString(2));
+  console.log("negative_b: ", negative_b.toString(2));
+  console.log("start recurse...");
+  return add(a, negative_b);
 }
 
 // console.log(sub(8, 100));
 console.log(sub(8, 100));
-
 
 // 実行コマンド： node ch04/ex03/index.js
 

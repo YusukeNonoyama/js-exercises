@@ -1,3 +1,3 @@
-export function aRenamed(){
-    return "Function a() from moduleA.ts"
+export function aRenamed() {
+  return "Function a() from moduleA.ts";
 }

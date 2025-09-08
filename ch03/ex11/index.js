@@ -6,13 +6,12 @@ const obj2 = { x: 1, y: 2 };
 // 別のobjectのためfalseの予想　=> false
 console.log(obj1 === obj2);
 
-
 // equals()
 export function equals(a, b) {
   // 厳密に一致
   if (a === b) return true;
   // object以外とnullはfalse
-  if (typeof (a) !== "object" || typeof (b) !== "object") return false;
+  if (typeof a !== "object" || typeof b !== "object") return false;
   if (a === null || b === null) return false;
 
   // プロパティの数が異なるとfalse
@@ -20,10 +19,10 @@ export function equals(a, b) {
 
   // objectの中身が同一かどうかを再帰的に調べる
   for (let property in a) {
-    if (typeof (a[property]) === "object") {
-      return equals(a[property], b[property]);  // 最後のループのreturnがそのまま元の比較の結果
+    if (typeof a[property] === "object") {
+      return equals(a[property], b[property]); // 最後のループのreturnがそのまま元の比較の結果
     } else if (a[property] !== b[property]) {
-      return false;  // propertyが全て同じ値でないとfalseを返す
+      return false; // propertyが全て同じ値でないとfalseを返す
     }
   }
   return true;
@@ -43,4 +42,7 @@ console.log("7", equals({ x: 1 }, { x: 1, y: 1 })); // false
 
 // プロパティの各値を equals で再帰的に比較
 console.log("8", equals({ x: { y: { z: 10 } } }, { x: { y: { z: 10 } } })); // true
-console.log("9", equals({ x: { y: { z: 10 } } }, { x: { y: { z: 10, w: 1 } } })); // false
+console.log(
+  "9",
+  equals({ x: { y: { z: 10 } } }, { x: { y: { z: 10, w: 1 } } }),
+); // false

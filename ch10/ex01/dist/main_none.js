@@ -1,33 +1,40 @@
-/******/ (() => { // webpackBootstrap
-/******/ 	var __webpack_modules__ = ([
-/* 0 */,
-/* 1 */
-/***/ ((__unused_webpack_module, exports) => {
+/******/ (() => {
+  // webpackBootstrap
+  /******/ var __webpack_modules__ = [
+    ,
+    /* 0 */ /* 1 */
+    /***/ (__unused_webpack_module, exports) => {
+      const sum = (x, y) => x + y;
+      const square = (x) => x * x;
 
-const sum = (x, y) => x + y;
-const square = x => x * x;
+      exports.mean = (data) => data.reduce(sum) / data.length;
+      exports.stddev = function (d) {
+        let m = exports.mean(d);
+        return Math.sqrt(
+          d
+            .map((x) => x - m)
+            .map(square)
+            .reduce(sum) /
+            (d.length - 1),
+        );
+      };
 
-exports.mean = data => data.reduce(sum) / data.length;
-exports.stddev = function (d) {
-    let m = exports.mean(d);
-    return Math.sqrt(d.map(x => x -
-        m).map(square).reduce(sum) / (d.length - 1));
-};
-
-/***/ }),
-/* 2 */
-/***/ ((module) => {
-
-/**
+      /***/
+    },
+    /* 2 */
+    /***/ (module) => {
+      /**
 * The AbstractSet class defines a single abstract method,
 has().
 */
-class AbstractSet {
-    // Throw an error here so that subclasses are forced
-    // to define their own working version of this method.
-    has(x) { throw new Error("Abstract method"); }
-}
-/**
+      class AbstractSet {
+        // Throw an error here so that subclasses are forced
+        // to define their own working version of this method.
+        has(x) {
+          throw new Error("Abstract method");
+        }
+      }
+      /**
 * NotSet is a concrete subclass of AbstractSet.
 * The members of this set are all values that are not members
 of some
@@ -39,17 +46,21 @@ enumerable.
 to a
 * string using mathematical notation.
 */
-class NotSet extends AbstractSet {
-    constructor(set) {
-        super();
-        this.set = set;
-    }
-    // Our implementation of the abstract method we inherited
-    has(x) { return !this.set.has(x); }
-    // And we also override this Object method
-    toString() { return `{ x| x ∉ ${this.set.toString()} }`; }
-}
-/**
+      class NotSet extends AbstractSet {
+        constructor(set) {
+          super();
+          this.set = set;
+        }
+        // Our implementation of the abstract method we inherited
+        has(x) {
+          return !this.set.has(x);
+        }
+        // And we also override this Object method
+        toString() {
+          return `{ x| x ∉ ${this.set.toString()} }`;
+        }
+      }
+      /**
 * Range set is a concrete subclass of AbstractSet. Its members
 are
 * all values that are between the from and to bounds,
@@ -57,18 +68,20 @@ inclusive.
 * Since its members can be floating point numbers, it is not
 * enumerable and does not have a meaningful size.
 */
-class RangeSet extends AbstractSet {
-    constructor(from, to) {
-        super();
-        this.from = from;
-        this.to = to;
-    }
-    has(x) { return x >= this.from && x <= this.to; }
-    toString() {
-        return `{ x| ${this.from} ≤ x ≤ ${this.to} }`;
-    }
-}
-/*
+      class RangeSet extends AbstractSet {
+        constructor(from, to) {
+          super();
+          this.from = from;
+          this.to = to;
+        }
+        has(x) {
+          return x >= this.from && x <= this.to;
+        }
+        toString() {
+          return `{ x| ${this.from} ≤ x ≤ ${this.to} }`;
+        }
+      }
+      /*
 * AbstractEnumerableSet is an abstract subclass of
 AbstractSet. It defines
 * an abstract getter that returns the size of the set and also
@@ -81,43 +94,57 @@ implement the
 concrete
 * methods for free.
 */
-class AbstractEnumerableSet extends AbstractSet {
-    get size() { throw new Error("Abstract method"); }
-    [Symbol.iterator]() { throw new Error("Abstract method"); }
-    isEmpty() { return this.size === 0; }
-    toString() { return `{${Array.from(this).join(", ")}}`; }
-    equals(set) {
-        // If the other set is not also Enumerable, it isn't equal to this one
-        if (!(set instanceof AbstractEnumerableSet)) return
-        false;
-        // If they don't have the same size, they're not equal
-        if (this.size !== set.size) return false;
-        // Loop through the elements of this set
-        for (let element of this) {
+      class AbstractEnumerableSet extends AbstractSet {
+        get size() {
+          throw new Error("Abstract method");
+        }
+        [Symbol.iterator]() {
+          throw new Error("Abstract method");
+        }
+        isEmpty() {
+          return this.size === 0;
+        }
+        toString() {
+          return `{${Array.from(this).join(", ")}}`;
+        }
+        equals(set) {
+          // If the other set is not also Enumerable, it isn't equal to this one
+          if (!(set instanceof AbstractEnumerableSet)) return;
+          false;
+          // If they don't have the same size, they're not equal
+          if (this.size !== set.size) return false;
+          // Loop through the elements of this set
+          for (let element of this) {
             // If an element isn't in the other set, they aren't equal
             if (!set.has(element)) return false;
+          }
+          // The elements matched, so the sets are equal
+          return true;
         }
-        // The elements matched, so the sets are equal
-        return true;
-    }
-}
-/*
+      }
+      /*
 * SingletonSet is a concrete subclass of
 AbstractEnumerableSet.
 * A singleton set is a read-only set with a single member.
 */
-class SingletonSet extends AbstractEnumerableSet {
-    constructor(member) {
-        super();
-        this.member = member;
-    }
-    // We implement these three methods, and inherit isEmpty, equals()
-    // and toString() implementations based on these methods.
-    has(x) { return x === this.member; }
-    get size() { return 1; }
-    *[Symbol.iterator]() { yield this.member; }
-}
-/*
+      class SingletonSet extends AbstractEnumerableSet {
+        constructor(member) {
+          super();
+          this.member = member;
+        }
+        // We implement these three methods, and inherit isEmpty, equals()
+        // and toString() implementations based on these methods.
+        has(x) {
+          return x === this.member;
+        }
+        get size() {
+          return 1;
+        }
+        *[Symbol.iterator]() {
+          yield this.member;
+        }
+      }
+      /*
 * AbstractWritableSet is an abstract subclass of
 AbstractEnumerableSet.
 * It defines the abstract methods insert() and remove() that
@@ -129,153 +156,169 @@ Note that
 * our API diverges here from the standard JavaScript Set
 class.
 */
-class AbstractWritableSet extends AbstractEnumerableSet {
-    insert(x) { throw new Error("Abstract method"); }
-    remove(x) { throw new Error("Abstract method"); }
-    add(set) {
-        for (let element of set) {
+      class AbstractWritableSet extends AbstractEnumerableSet {
+        insert(x) {
+          throw new Error("Abstract method");
+        }
+        remove(x) {
+          throw new Error("Abstract method");
+        }
+        add(set) {
+          for (let element of set) {
             this.insert(element);
+          }
         }
-    }
-    subtract(set) {
-        for (let element of set) {
+        subtract(set) {
+          for (let element of set) {
             this.remove(element);
+          }
         }
-    }
-    intersect(set) {
-        for (let element of this) {
+        intersect(set) {
+          for (let element of this) {
             if (!set.has(element)) {
-                this.remove(element);
+              this.remove(element);
             }
+          }
         }
-    }
-}
-/**
+      }
+      /**
 * A BitSet is a concrete subclass of AbstractWritableSet with
 a
 * very efficient fixed-size set implementation for sets whose
 * elements are non-negative integers less than some maximum
 size.
 */
-class BitSet extends AbstractWritableSet {
-    constructor(max) {
-        super();
-        this.max = max; // The maximum integer we can store.
-        this.n = 0; // How many integers are in the set
-        this.numBytes = Math.floor(max / 8) + 1; // How many bytes we need
-        this.data = new Uint8Array(this.numBytes); // The bytes
-    }
-    // Internal method to check if a value is a legal member of this set
-    _valid(x) {
-        return Number.isInteger(x) && x >= 0 && x <=
-            this.max;
-    }
-    // Tests whether the specified bit of the specified byte of our
-    // data array is set or not. Returns true or false.
-    _has(byte, bit) {
-        return (this.data[byte] &
-            BitSet.bits[bit]) !== 0;
-    }
-    // Is the value x in this BitSet?
-    has(x) {
-        if (this._valid(x)) {
+      class BitSet extends AbstractWritableSet {
+        constructor(max) {
+          super();
+          this.max = max; // The maximum integer we can store.
+          this.n = 0; // How many integers are in the set
+          this.numBytes = Math.floor(max / 8) + 1; // How many bytes we need
+          this.data = new Uint8Array(this.numBytes); // The bytes
+        }
+        // Internal method to check if a value is a legal member of this set
+        _valid(x) {
+          return Number.isInteger(x) && x >= 0 && x <= this.max;
+        }
+        // Tests whether the specified bit of the specified byte of our
+        // data array is set or not. Returns true or false.
+        _has(byte, bit) {
+          return (this.data[byte] & BitSet.bits[bit]) !== 0;
+        }
+        // Is the value x in this BitSet?
+        has(x) {
+          if (this._valid(x)) {
             let byte = Math.floor(x / 8);
             let bit = x % 8;
             return this._has(byte, bit);
-        } else {
+          } else {
             return false;
+          }
         }
-    }
-    // Insert the value x into the BitSet
-    insert(x) {
-        if (this._valid(x)) { // If the value is valid
+        // Insert the value x into the BitSet
+        insert(x) {
+          if (this._valid(x)) {
+            // If the value is valid
             let byte = Math.floor(x / 8); // convert to byte and bit
             let bit = x % 8;
-            if (!this._has(byte, bit)) { // If that bit isnot set yet
-                this.data[byte] |= BitSet.bits[bit]; // then set it
-                this.n++; // and increment set size
+            if (!this._has(byte, bit)) {
+              // If that bit isnot set yet
+              this.data[byte] |= BitSet.bits[bit]; // then set it
+              this.n++; // and increment set size
             }
-        } else {
+          } else {
             throw new TypeError("Invalid set element: " + x);
+          }
         }
-    }
-    remove(x) {
-        if (this._valid(x)) { // If the value is
-            valid
+        remove(x) {
+          if (this._valid(x)) {
+            // If the value is
+            valid;
             let byte = Math.floor(x / 8); // compute the byte and bit
             let bit = x % 8;
-            if (this._has(byte, bit)) { // If that bit is already set
-                this.data[byte] &= BitSet.masks[bit]; // then unset it
-                this.n--; // and decrement size
+            if (this._has(byte, bit)) {
+              // If that bit is already set
+              this.data[byte] &= BitSet.masks[bit]; // then unset it
+              this.n--; // and decrement size
             }
-        } else {
+          } else {
             throw new TypeError("Invalid set element: " + x);
+          }
         }
-    }
-    // A getter to return the size of the set
-    get size() { return this.n; }
-    // Iterate the set by just checking each bit in turn.
-    // (We could be a lot more clever and optimize this substantially)
-    *[Symbol.iterator]() {
-        for (let i = 0; i <= this.max; i++) {
+        // A getter to return the size of the set
+        get size() {
+          return this.n;
+        }
+        // Iterate the set by just checking each bit in turn.
+        // (We could be a lot more clever and optimize this substantially)
+        *[Symbol.iterator]() {
+          for (let i = 0; i <= this.max; i++) {
             if (this.has(i)) {
-                yield i;
+              yield i;
             }
+          }
         }
+      }
+      // Some pre-computed values used by the has(), insert() and remove() methods
+      BitSet.bits = new Uint8Array([1, 2, 4, 8, 16, 32, 64, 128]);
+      BitSet.masks = new Uint8Array([~1, ~2, ~4, ~8, ~16, ~32, ~64, ~128]);
+
+      module.exports = {
+        BitSet,
+      };
+
+      /***/
+    },
+    /******/
+  ];
+  /************************************************************************/
+  /******/ // The module cache
+  /******/ var __webpack_module_cache__ = {};
+  /******/
+  /******/ // The require function
+  /******/ function __webpack_require__(moduleId) {
+    /******/ // Check if module is in cache
+    /******/ var cachedModule = __webpack_module_cache__[moduleId];
+    /******/ if (cachedModule !== undefined) {
+      /******/ return cachedModule.exports;
+      /******/
     }
-}
-// Some pre-computed values used by the has(), insert() and remove() methods
-BitSet.bits = new Uint8Array([1, 2, 4, 8, 16, 32, 64, 128]);
-BitSet.masks = new Uint8Array([~1, ~2, ~4, ~8, ~16, ~32, ~64,
-~128]);
+    /******/ // Create a new module (and put it into the cache)
+    /******/ var module = (__webpack_module_cache__[moduleId] = {
+      /******/ // no module.id needed
+      /******/ // no module.loaded needed
+      /******/ exports: {},
+      /******/
+    });
+    /******/
+    /******/ // Execute the module function
+    /******/ __webpack_modules__[moduleId](
+      module,
+      module.exports,
+      __webpack_require__,
+    );
+    /******/
+    /******/ // Return the exports of the module
+    /******/ return module.exports;
+    /******/
+  }
+  /******/
+  /************************************************************************/
+  var __webpack_exports__ = {};
+  // This entry needs to be wrapped in an IIFE because it needs to be isolated against other modules in the chunk.
+  (() => {
+    const stats = __webpack_require__(1);
+    const BitSet = __webpack_require__(2).BitSet;
 
-module.exports = {
-    BitSet
-};
+    let s = new BitSet(100);
+    s.insert(10);
+    s.insert(20);
+    s.insert(30);
+    let average = stats.mean([...s]);
 
-/***/ })
-/******/ 	]);
-/************************************************************************/
-/******/ 	// The module cache
-/******/ 	var __webpack_module_cache__ = {};
-/******/ 	
-/******/ 	// The require function
-/******/ 	function __webpack_require__(moduleId) {
-/******/ 		// Check if module is in cache
-/******/ 		var cachedModule = __webpack_module_cache__[moduleId];
-/******/ 		if (cachedModule !== undefined) {
-/******/ 			return cachedModule.exports;
-/******/ 		}
-/******/ 		// Create a new module (and put it into the cache)
-/******/ 		var module = __webpack_module_cache__[moduleId] = {
-/******/ 			// no module.id needed
-/******/ 			// no module.loaded needed
-/******/ 			exports: {}
-/******/ 		};
-/******/ 	
-/******/ 		// Execute the module function
-/******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
-/******/ 	
-/******/ 		// Return the exports of the module
-/******/ 		return module.exports;
-/******/ 	}
-/******/ 	
-/************************************************************************/
-var __webpack_exports__ = {};
-// This entry needs to be wrapped in an IIFE because it needs to be isolated against other modules in the chunk.
-(() => {
-const stats = __webpack_require__(1);
-const BitSet = (__webpack_require__(2).BitSet);
+    console.log(s);
+    console.log(average);
+  })();
 
-let s = new BitSet(100);
-s.insert(10);
-s.insert(20);
-s.insert(30);
-let average = stats.mean([...s]); 
-
-console.log(s);
-console.log(average);
+  /******/
 })();
-
-/******/ })()
-;

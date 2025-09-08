@@ -4,7 +4,7 @@ function createElement(type, props, ...children) {
     props: {
       ...props,
       children: children.map((child) =>
-        typeof child === "object" ? child : createTextElement(child)
+        typeof child === "object" ? child : createTextElement(child),
       ),
     },
   };
@@ -275,4 +275,3 @@ function Counter() {
 const element = <Counter />;
 const container = document.getElementById("root");
 Didact.render(element, container);
-

@@ -18,7 +18,7 @@ export function slowFn(obj: { iteration: number }) {
   let i = 0;
   let result = 0;
   while (i < obj.iteration) {
-    result += i;  // iを足し続ける
+    result += i; // iを足し続ける
     i++;
   }
   return result;

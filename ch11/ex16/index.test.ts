@@ -3,59 +3,59 @@ import { retryWithExponentialBackoff } from "./index.ts";
 // setTimeout等のタイマーを実行せずにテストできるようにする
 jest.useFakeTimers();
 
-describe('retryWithExponentialBackoff()', () => {
-    it('maxRetryに到達する前にfuncがtrueを返す', () => {
-        const func = jest.fn();
-        const callback = jest.fn();
+describe("retryWithExponentialBackoff()", () => {
+  it("maxRetryに到達する前にfuncがtrueを返す", () => {
+    const func = jest.fn();
+    const callback = jest.fn();
 
-        // 3回目でtrueを返すようにfuncのmockを設定
-        func.mockReturnValueOnce(false)
-            .mockReturnValueOnce(false)
-            .mockReturnValueOnce(true);
+    // 3回目でtrueを返すようにfuncのmockを設定
+    func
+      .mockReturnValueOnce(false)
+      .mockReturnValueOnce(false)
+      .mockReturnValueOnce(true);
 
-        retryWithExponentialBackoff(func, 5, callback);
+    retryWithExponentialBackoff(func, 5, callback);
 
-        // setTimeout()を呼び出す前の1回の呼び出し
-        expect(func).toHaveBeenCalledTimes(1);
+    // setTimeout()を呼び出す前の1回の呼び出し
+    expect(func).toHaveBeenCalledTimes(1);
 
-        jest.advanceTimersByTime(1000);
-        expect(func).toHaveBeenCalledTimes(2);
+    jest.advanceTimersByTime(1000);
+    expect(func).toHaveBeenCalledTimes(2);
 
-        jest.advanceTimersByTime(2000);
-        expect(func).toHaveBeenCalledTimes(3);
+    jest.advanceTimersByTime(2000);
+    expect(func).toHaveBeenCalledTimes(3);
 
-        // 3回目の後にcallbackがtrueを引数にして呼び出される
-        expect(callback).toHaveBeenCalledWith(true);
-        // callbackが呼ばれているのは１度だけであること
-        expect(callback).toHaveBeenCalledTimes(1);
-    });
+    // 3回目の後にcallbackがtrueを引数にして呼び出される
+    expect(callback).toHaveBeenCalledWith(true);
+    // callbackが呼ばれているのは１度だけであること
+    expect(callback).toHaveBeenCalledTimes(1);
+  });
 
-    it('maxRetryに到達した後にfuncがfalseを返す', () => {
-        // funcは必ずfalseを返す
-        const func = jest.fn(() => false);
-        const callback = jest.fn();
+  it("maxRetryに到達した後にfuncがfalseを返す", () => {
+    // funcは必ずfalseを返す
+    const func = jest.fn(() => false);
+    const callback = jest.fn();
 
-        retryWithExponentialBackoff(func, 3, callback);
+    retryWithExponentialBackoff(func, 3, callback);
 
-        //最初の1回
-        expect(func).toHaveBeenCalledTimes(1);
+    //最初の1回
+    expect(func).toHaveBeenCalledTimes(1);
 
-        // retryの3回
-        jest.advanceTimersByTime(1000);
-        expect(func).toHaveBeenCalledTimes(2);
+    // retryの3回
+    jest.advanceTimersByTime(1000);
+    expect(func).toHaveBeenCalledTimes(2);
 
-        jest.advanceTimersByTime(2000);
-        expect(func).toHaveBeenCalledTimes(3);
+    jest.advanceTimersByTime(2000);
+    expect(func).toHaveBeenCalledTimes(3);
 
-        jest.advanceTimersByTime(4000);
-        expect(func).toHaveBeenCalledTimes(4); // maxRetryを超えた呼び出し
+    jest.advanceTimersByTime(4000);
+    expect(func).toHaveBeenCalledTimes(4); // maxRetryを超えた呼び出し
 
-        // 3回目のretry時にfalseを引数にcallbackが呼ばれる
-        expect(callback).toHaveBeenCalledWith(false);
-        expect(callback).toHaveBeenCalledTimes(1);
-    });
+    // 3回目のretry時にfalseを引数にcallbackが呼ばれる
+    expect(callback).toHaveBeenCalledWith(false);
+    expect(callback).toHaveBeenCalledTimes(1);
+  });
 });
-
 
 // import { retryWithExponentialBackoff } from "./index.ts";
 
@@ -81,7 +81,6 @@ describe('retryWithExponentialBackoff()', () => {
 //         expect(count).toBe(5);
 //     });
 // });
-
 
 // 受け取った関数 func を呼び出し、func が true を返せばそこで終了する
 

@@ -1,5 +1,5 @@
 function wait(msec: number) {
-    return new Promise((resolve) => setTimeout(resolve, msec));
+  return new Promise((resolve) => setTimeout(resolve, msec));
 }
 // 0, 1, 2, 3 秒待つ
 const wait0 = () => wait(0);
@@ -15,52 +15,51 @@ const logC = () => console.log("C");
 
 // 例外
 const errX = () => {
-    throw new Error("X");
+  throw new Error("X");
 };
 const errY = () => {
-    throw new Error("Y");
+  throw new Error("Y");
 };
 
-
 async function h1() {
-    try {
-        await wait3();
-        logA();
-        await wait2();
-        logB();
-        await wait1();
-        logC();
-    } catch (e: any) {
-        log(e.message);
-    }
+  try {
+    await wait3();
+    logA();
+    await wait2();
+    logB();
+    await wait1();
+    logC();
+  } catch (e: any) {
+    log(e.message);
+  }
 }
 
 function h2() {
-    // NOTE: h3 との比較用
-    new Promise(() => {
-        errX();
-    }).catch((e) => log(e.message));
+  // NOTE: h3 との比較用
+  new Promise(() => {
+    errX();
+  }).catch((e) => log(e.message));
 }
 
 function h3() {
-    // NOTE: new Promise の引数が async function の場合、例外はどう扱われるだろう
-    new Promise(async () => {
-        errX();
-    }).catch((e) => log(e.message));
+  // NOTE: new Promise の引数が async function の場合、例外はどう扱われるだろう
+  new Promise(async () => {
+    errX();
+  }).catch((e) => log(e.message));
 }
 
 async function h4() {
-    // NOTE: 2つの例外は両方 catch できるか？
-    try {
-        const p1 = wait2().then(() => {
-            errX();
-        });
-        const p2 = wait1().then(() => {
-            errY();
-        });
-        await p1;
-        await p2;
-    } catch (e: any) {
-        log(e.message);
-    }
+  // NOTE: 2つの例外は両方 catch できるか？
+  try {
+    const p1 = wait2().then(() => {
+      errX();
+    });
+    const p2 = wait1().then(() => {
+      errY();
+    });
+    await p1;
+    await p2;
+  } catch (e: any) {
+    log(e.message);
+  }
 }

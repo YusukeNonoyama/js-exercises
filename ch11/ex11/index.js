@@ -1,7 +1,7 @@
 // N 回何もしないループの時間を返す
 function costOfLoop(N) {
   const start = performance.now();
-  for (let i = 0; i < N; i++) { }
+  for (let i = 0; i < N; i++) {}
   const end = performance.now();
   return end - start;
 }

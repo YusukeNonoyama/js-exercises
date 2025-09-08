@@ -12,7 +12,7 @@ import {
 // NOTE: 配列の各要素の先頭 (正規表現) は説明用の値でありテストには用いない
 const oks = [
   // seq
-  [new RegExp(""), "", seq()],  // _name, input, pattern
+  [new RegExp(""), "", seq()], // _name, input, pattern
   [/HELLO/, "HELLO", seq(quote("HELLO"))],
   [/(HELLO)(WORLD)/, "HELLOWORLD", seq(quote("HELLO"), quote("WORLD"))],
   [
@@ -74,7 +74,7 @@ const oks = [
       charFrom("Jj"),
       quote("ava"),
       repeat(seq(charFrom("Ss"), quote("cript")), 0, 1),
-      quote(" is fun")
+      quote(" is fun"),
     ),
   ],
   [
@@ -84,7 +84,7 @@ const oks = [
       charFrom("Jj"),
       quote("ava"),
       repeat(seq(charFrom("Ss"), quote("cript")), 0, 1),
-      quote(" is fun")
+      quote(" is fun"),
     ),
   ],
 ];
@@ -154,7 +154,7 @@ const ngs = [
       charFrom("Jj"),
       quote("ava"),
       repeat(seq(charFrom("Ss"), quote("cript")), 0, 1),
-      quote(" is fun")
+      quote(" is fun"),
     ),
   ],
   [
@@ -164,7 +164,7 @@ const ngs = [
       charFrom("Jj"),
       quote("ava"),
       repeat(seq(charFrom("Ss"), quote("cript")), 0, 1),
-      quote(" is fun")
+      quote(" is fun"),
     ),
   ],
 ];

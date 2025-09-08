@@ -3,7 +3,7 @@ import { withResource } from "./index.ts";
 type Res = {
   doA: () => void;
   doB: () => void;
-}
+};
 
 describe("withResource", () => {
   it("should do process and call close finally", () => {
@@ -38,7 +38,9 @@ describe("withResource", () => {
         this.called.push("close");
       },
     };
-    expect(() => withResource(resource, (res: Res) => res.doA())).toThrow(Error);
+    expect(() => withResource(resource, (res: Res) => res.doA())).toThrow(
+      Error,
+    );
     expect(resource.called).toEqual(["doA", "close"]);
   });
 });

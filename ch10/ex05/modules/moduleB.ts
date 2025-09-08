@@ -1,3 +1,3 @@
-export function b(){
-    return "Function b() from moduleB.ts"
+export function b() {
+  return "Function b() from moduleB.ts";
 }

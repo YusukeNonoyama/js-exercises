@@ -1,4 +1,4 @@
-const pattern = /^(a|aa)+$/u
+const pattern = /^(a|aa)+$/u;
 
 // const string = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa!";
 const string = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa!";

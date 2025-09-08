@@ -14,19 +14,34 @@ let test_array = [
   ["1234567890", "123456789\\0"],
   ["string0", "s\\t\\ri\\ng\\0"],
   [true, true],
-  [{x:1}, {x:1}],
+  [{ x: 1 }, { x: 1 }],
   [null, null],
   [undefined, undefined],
-]
+];
 
-test.each(test_array)("add backslash with if else conditionals: %s => %s", (input, expected) => {
-  expect(JSON.stringify(AddBackslash.withElseif(input))).toBe(JSON.stringify(expected));
-});
+test.each(test_array)(
+  "add backslash with if else conditionals: %s => %s",
+  (input, expected) => {
+    expect(JSON.stringify(AddBackslash.withElseif(input))).toBe(
+      JSON.stringify(expected),
+    );
+  },
+);
 
-test.each(test_array)("add backslash with switch conditionals: %s => %s", (input, expected) => {
-  expect(JSON.stringify(AddBackslash.withSwitch(input))).toBe(JSON.stringify(expected));
-});
+test.each(test_array)(
+  "add backslash with switch conditionals: %s => %s",
+  (input, expected) => {
+    expect(JSON.stringify(AddBackslash.withSwitch(input))).toBe(
+      JSON.stringify(expected),
+    );
+  },
+);
 
-test.each(test_array)("add backslash with if conditionals: %s => %s", (input, expected) => {
-  expect(JSON.stringify(AddBackslash.withIf(input))).toBe(JSON.stringify(expected));
-});
+test.each(test_array)(
+  "add backslash with if conditionals: %s => %s",
+  (input, expected) => {
+    expect(JSON.stringify(AddBackslash.withIf(input))).toBe(
+      JSON.stringify(expected),
+    );
+  },
+);

@@ -86,7 +86,7 @@ export function match(p, s) {
 
 // seq2 の可変長引数版
 export function seq(...pats) {
-  // if(pats.length ===0) 
+  // if(pats.length ===0)
   // HINT: seq(p1, p2, p3, p4) = seq2(seq2(seq2(p1, p2), p3), p4)
   if (pats[0] === undefined) {
     return (str) => str === ""; // 入力値が空文字であればtrue
@@ -109,13 +109,15 @@ export function dot() {
 // [...] に対応 (例: [abc] は charFrom("abc"))
 export function charFrom(s) {
   // HINT: quote の実装を参考にすると良い
-  return (str, pos, k) => pos < str.length && s.includes(str[pos]) && k(str, pos + 1);
+  return (str, pos, k) =>
+    pos < str.length && s.includes(str[pos]) && k(str, pos + 1);
 }
 
 // [^...] に対応
 export function charNotFrom(s) {
   // HINT: quote の実装を参考にすると良い
-  return (str, pos, k) => pos < str.length && !s.includes(str[pos]) && k(str, pos + 1);
+  return (str, pos, k) =>
+    pos < str.length && !s.includes(str[pos]) && k(str, pos + 1);
 }
 
 // // 繰り返し (min 回数以上 max 回数以下)
@@ -126,18 +128,22 @@ export function charNotFrom(s) {
 // }
 
 export function repeat(pat, min = 0, max = Infinity) {
-  return (str, pos, k) => { //パターン関数を返す
+  return (str, pos, k) => {
+    //パターン関数を返す
     let count = 0;
     function tryRecursivePat(str2, pos2) {
       if (count >= max) {
         return k(str2, pos2); // 繰り返しが最大になるまでマッチすればOKなので継続を返す
       }
       // マッチする場合は、継続でcountを増やし次の位置でstep()呼び出し
-      return pat(str2, pos2, (nextStr, nextPos) => {
-        count++;
-        return tryRecursivePat(nextStr, nextPos);
-        //patがマッチしなくなった時点でminよりcountが大きければOKだから継続を返す
-      }) || (count >= min && k(str2, pos2));
+      return (
+        pat(str2, pos2, (nextStr, nextPos) => {
+          count++;
+          return tryRecursivePat(nextStr, nextPos);
+          //patがマッチしなくなった時点でminよりcountが大きければOKだから継続を返す
+        }) ||
+        (count >= min && k(str2, pos2))
+      );
     }
     return tryRecursivePat(str, pos);
   };

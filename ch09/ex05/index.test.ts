@@ -1,44 +1,46 @@
-import { instanceOf } from "./index.ts"
+import { instanceOf } from "./index.ts";
 
 describe("instanceOf()", () => {
-    class A {
-        constructor() { };
+  class A {
+    constructor() {}
+  }
+  class B extends A {
+    constructor() {
+      super();
     }
-    class B extends A {
-        constructor() {
-            super();
-        };
+  }
+  class C extends B {
+    constructor() {
+      super();
     }
-    class C extends B {
-        constructor() {
-            super();
-        };
-    }
-    class D {
-        constructor() { };
-    }
+  }
+  class D {
+    constructor() {}
+  }
 
-    let objectA = new A();
-    let objectB = new B();
-    let objectC = new C();
-    let objectD = new D();
+  let objectA = new A();
+  let objectB = new B();
+  let objectC = new C();
+  let objectD = new D();
 
-    const testArray: [{}, Function, boolean][] = [
-        [objectA, objectA.constructor, true],
-        [objectB, objectA.constructor, true],
-        [objectC, objectA.constructor, true],
-        [objectD, objectA.constructor, false],
-        [objectA, objectD.constructor, false],
-        [objectB, objectD.constructor, false],
-        [objectC, objectD.constructor, false],
-        [objectD, objectD.constructor, true],
-        [{}, objectA.constructor, false],
-    ]
-    test.each(testArray)("%s is or extends %s constructor: %s", (object, constructor, expected) => {
-        expect(instanceOf(object, constructor)).toBe(expected);
-    });
+  const testArray: [{}, Function, boolean][] = [
+    [objectA, objectA.constructor, true],
+    [objectB, objectA.constructor, true],
+    [objectC, objectA.constructor, true],
+    [objectD, objectA.constructor, false],
+    [objectA, objectD.constructor, false],
+    [objectB, objectD.constructor, false],
+    [objectC, objectD.constructor, false],
+    [objectD, objectD.constructor, true],
+    [{}, objectA.constructor, false],
+  ];
+  test.each(testArray)(
+    "%s is or extends %s constructor: %s",
+    (object, constructor, expected) => {
+      expect(instanceOf(object, constructor)).toBe(expected);
+    },
+  );
 });
-
 
 // 結果：
 // npm run test:ts ./ch09/ex05/
@@ -86,10 +88,10 @@ describe("instanceOf()", () => {
 //     } constructor: false
 
 // ----------|---------|----------|---------|---------|-------------------
-// File      | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
+// File      | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s
 // ----------|---------|----------|---------|---------|-------------------
-// All files |     100 |      100 |     100 |     100 |                   
-//  index.ts |     100 |      100 |     100 |     100 |                   
+// All files |     100 |      100 |     100 |     100 |
+//  index.ts |     100 |      100 |     100 |     100 |
 // ----------|---------|----------|---------|---------|-------------------
 // Test Suites: 1 passed, 1 total
 // Tests:       9 passed, 9 total

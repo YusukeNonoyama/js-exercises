@@ -46,7 +46,7 @@ const resultB = new Uint8ClampedArray(N * M).fill(0.0);
 
 function typedArrayMultiply() {
   resultB.fill(0.0);
-    for (let i = 0; i < N; i++) {
+  for (let i = 0; i < N; i++) {
     for (let j = 0; j < M; j++) {
       for (let k = 0; k < K; k++) {
         // 全てのkについて　Lik * Rkj　の和が resultAのij

@@ -1,6 +1,6 @@
-import arrowFunction from "./module.ts" // defaultのインポート（関数名がなくてもエクスポートできる）
-import { foo as fooRenamed, Bar } from "./module.ts" // 名前変更を伴うインポート
-import { a, b } from "./modules.ts"   // 再エクスポートしたファイルを参照
+import arrowFunction from "./module.ts"; // defaultのインポート（関数名がなくてもエクスポートできる）
+import { foo as fooRenamed, Bar } from "./module.ts"; // 名前変更を伴うインポート
+import { a, b } from "./modules.ts"; // 再エクスポートしたファイルを参照
 
 console.log(arrowFunction());
 console.log(fooRenamed());

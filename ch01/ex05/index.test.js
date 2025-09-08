@@ -35,8 +35,7 @@ describe("math", () => {
     });
 
     it("returns factorial value for a number", () => {
-      expect(factorial(100)).toBe(9.332621544394418e+157);
+      expect(factorial(100)).toBe(9.332621544394418e157);
     });
   });
-
 });

@@ -1,7 +1,7 @@
 // date-fns
 import { compareAsc, format } from "date-fns";
-import { DateTime } from 'luxon';
-import dayjs from 'dayjs';
+import { DateTime } from "luxon";
+import dayjs from "dayjs";
 
 format(new Date(2014, 1, 11), "yyyy-MM-dd");
 //=> '2014-02-11'

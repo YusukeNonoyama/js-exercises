@@ -20,7 +20,7 @@ export class LinkedList {
 
   pushAll(...items) {
     items.forEach((item) => this.push(item));
-    console.log("this: ", this);  // thisの出力を追加
+    console.log("this: ", this); // thisの出力を追加
   }
 
   toString() {
@@ -58,8 +58,6 @@ export class LinkedList {
 //   }
 // }
 
-
-
 export class InstrumentedLinkedList {
   #pushCount = 0;
   #linkedList = new LinkedList();
@@ -72,11 +70,10 @@ export class InstrumentedLinkedList {
     this.#pushCount++;
   }
   pushAll(...items) {
-    this.#linkedList.pushAll(...items)
+    this.#linkedList.pushAll(...items);
     this.#pushCount += items.length;
   }
 }
-
 
 // // 親クラスのpusuAll()にthisのコンソール出力を追加して確認すると、呼び出し元のクラスがthisになっている。
 // const list1 = new InstrumentedLinkedList();

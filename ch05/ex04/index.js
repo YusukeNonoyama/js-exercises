@@ -1,7 +1,9 @@
 // while
 export function fibWhile() {
   let fib = [];
-  let a = 0, b = 1, i = 0;
+  let a = 0,
+    b = 1,
+    i = 0;
   while (i < 10) {
     [a, b] = [b, a + b];
     fib[i] = a;
@@ -13,19 +15,22 @@ export function fibWhile() {
 // do while
 export function fibDoWhile() {
   let fib = [];
-  let a = 0, b = 1, i = 0;
+  let a = 0,
+    b = 1,
+    i = 0;
   do {
     [a, b] = [b, a + b];
     fib[i] = a;
     i++;
-  } while(i < 10);
+  } while (i < 10);
   return fib;
 }
 
 // for
 export function fibFor() {
   let fib = [];
-  let a = 0, b = 1;
+  let a = 0,
+    b = 1;
   for (let i = 0; i < 10; i++) {
     [a, b] = [b, a + b];
     fib[i] = a;

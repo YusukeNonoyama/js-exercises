@@ -86,7 +86,7 @@ export function match(p, s) {
 
 // seq2 の可変長引数版
 export function seq(...pats) {
-  // if(pats.length ===0) 
+  // if(pats.length ===0)
   // HINT: seq(p1, p2, p3, p4) = seq2(seq2(seq2(p1, p2), p3), p4)
   if (pats[0] === undefined) {
     return (str) => str === ""; // 入力値が空文字であればtrue
@@ -109,13 +109,15 @@ export function dot() {
 // [...] に対応 (例: [abc] は charFrom("abc"))
 export function charFrom(s) {
   // HINT: quote の実装を参考にすると良い
-  return (str, pos, k) => pos < str.length && s.includes(str[pos]) && k(str, pos + 1);
+  return (str, pos, k) =>
+    pos < str.length && s.includes(str[pos]) && k(str, pos + 1);
 }
 
 // [^...] に対応
 export function charNotFrom(s) {
   // HINT: quote の実装を参考にすると良い
-  return (str, pos, k) => pos < str.length && !s.includes(str[pos]) && k(str, pos + 1);
+  return (str, pos, k) =>
+    pos < str.length && !s.includes(str[pos]) && k(str, pos + 1);
 }
 
 // // 繰り返し (min 回数以上 max 回数以下)
@@ -129,7 +131,7 @@ export function repeat(pat, min = 0, max = Infinity) {
   if (min > 0) {
     return seq2(
       pat,
-      repeat(pat, min - 1, max === Infinity ? Infinity : max - 1)
+      repeat(pat, min - 1, max === Infinity ? Infinity : max - 1),
     );
   }
   return alt2(
@@ -139,10 +141,10 @@ export function repeat(pat, min = 0, max = Infinity) {
       return repeat(pat, 0, max === Infinity ? Infinity : max - 1)(
         nstr,
         npos,
-        k
+        k,
       );
-    })
-  )
+    }),
+  );
 }
 
 // export function repeat(pat, min = 0, max = Infinity) {

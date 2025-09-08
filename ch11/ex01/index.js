@@ -1,18 +1,18 @@
-class Foo { }
+class Foo {}
 
 export class TypeMap {
-    constructor() {
-        this.map = new Map();
+  constructor() {
+    this.map = new Map();
+  }
+  set(key, value) {
+    if (typeof new key().valueOf() !== typeof value) {
+      throw Error("Value is not a member of the constructor");
     }
-    set(key, value) {
-        if (typeof new key().valueOf() !== typeof value) {
-            throw Error("Value is not a member of the constructor")
-        }
-        return this.map.set(key, value);
-    }
-    get(key) {
-        return this.map.get(key);
-    }
+    return this.map.set(key, value);
+  }
+  get(key) {
+    return this.map.get(key);
+  }
 }
 
 const a = new Number(5);
@@ -27,4 +27,4 @@ typeMap.set(Foo, new Foo());
 
 console.log(typeMap.get(String));
 console.log(typeMap.get(Number));
-console.log(typeMap.get(Foo)); 
+console.log(typeMap.get(Foo));

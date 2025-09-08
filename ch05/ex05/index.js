@@ -1,21 +1,21 @@
-export function omitOddNumber(o){
-    const ERROR_MESSAGE = "Object should have number type in every value.";
-    if(!Object.values(o).every(element => typeof element === 'number')) throw new CustomTypeError(ERROR_MESSAGE);
-    let newObj = {};  // 新しいobjectを作成して元のobjectは操作しない
-    for ( let property in o){
-        // 偶数の場合、は新しいobjectに代入
-        if(o[property] % 2 === 0) newObj[property] = o[property];
-    }
-    return newObj;
+export function omitOddNumber(o) {
+  const ERROR_MESSAGE = "Object should have number type in every value.";
+  if (!Object.values(o).every((element) => typeof element === "number"))
+    throw new CustomTypeError(ERROR_MESSAGE);
+  let newObj = {}; // 新しいobjectを作成して元のobjectは操作しない
+  for (let property in o) {
+    // 偶数の場合、は新しいobjectに代入
+    if (o[property] % 2 === 0) newObj[property] = o[property];
+  }
+  return newObj;
 }
 
-
 class CustomTypeError extends Error {
-    constructor(message) {
-      super(message);
-      this.name = 'CustomTypeError';
-    }
+  constructor(message) {
+    super(message);
+    this.name = "CustomTypeError";
   }
+}
 
 // const o1 = { x: 1, y: 2, z: 3 };
 // const o2 = { x: 1, y: 2, z: "3" };

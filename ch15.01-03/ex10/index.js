@@ -3,19 +3,18 @@ div_elem.style.backgroundColor = "white";
 
 const input = document.getElementById("editor-back");
 
-
 div_elem.addEventListener("click", () => {
-    input.focus();
-})
+  input.focus();
+});
 
 input.addEventListener("focus", () => {
-    div_elem.style.backgroundColor = "silver";
+  div_elem.style.backgroundColor = "silver";
 });
 
 input.addEventListener("blur", () => {
-    div_elem.style.backgroundColor = "white";
+  div_elem.style.backgroundColor = "white";
 });
 
 input.addEventListener("input", () => {
-    div_elem.textContent = input.value;
+  div_elem.textContent = input.value;
 });
