@@ -1,19 +1,15 @@
 import { primes } from "./index.ts";
 
-describe("counterGen()", () => {
-  test("next() イテレーションの途中でリセット", () => {
+describe("primes()", () => {
+  test("", () => {
+    const primeArr = [
+      2, 3, 5, 7, 11, 13, 17, 19, 23, 29,
+      31, 37, 41, 43, 47, 53, 59, 61, 67, 71,
+      73, 79, 83, 89, 97, 101, 103, 107, 109, 113
+    ];
     const gen = primes();
-    expect(gen.next().value).toEqual(2);
-    expect(gen.next().value).toEqual(3);
-    expect(gen.next().value).toEqual(5);
-    expect(gen.next().value).toEqual(7);
-    expect(gen.next().value).toEqual(11);
-    expect(gen.next().value).toEqual(13);
-    expect(gen.next().value).toEqual(17);
-    expect(gen.next().value).toEqual(19);
-    expect(gen.next().value).toEqual(23);
-    expect(gen.next().value).toEqual(29);
-    expect(gen.next().value).toEqual(31);
-    expect(gen.next().value).toEqual(37);
+    for (const v of primeArr) {
+      expect(gen.next().value).toEqual(v);
+    }
   });
 });

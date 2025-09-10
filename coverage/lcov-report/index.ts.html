@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">88.23% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>15/17</span>
+                <span class='fraction'>12/12</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/0</span>
+                <span class='fraction'>1/1</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">66.66% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>4/6</span>
+                <span class='fraction'>5/5</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">88.23% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>15/17</span>
+                <span class='fraction'>11/11</span>
             </div>
         
             
@@ -88,70 +88,55 @@
 <a name='L23'></a><a href='#L23'>23</a>
 <a name='L24'></a><a href='#L24'>24</a>
 <a name='L25'></a><a href='#L25'>25</a>
-<a name='L26'></a><a href='#L26'>26</a>
-<a name='L27'></a><a href='#L27'>27</a>
-<a name='L28'></a><a href='#L28'>28</a>
-<a name='L29'></a><a href='#L29'>29</a>
-<a name='L30'></a><a href='#L30'>30</a>
-<a name='L31'></a><a href='#L31'>31</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">200x</span>
-<span class="cline-any cline-yes">200x</span>
-<span class="cline-any cline-yes">200x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L26'></a><a href='#L26'>26</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">112x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">29x</span>
+<span class="cline-any cline-yes">556x</span>
+<span class="cline-any cline-yes">474x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">200x</span>
-<span class="cline-any cline-yes">198x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">30x</span>
+<span class="cline-any cline-yes">30x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">556x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">export function fibonacciSequence() {
-  let x = 0,
-    y = 1;
-  let temp = 0;
-  return {
-<span class="fstat-no" title="function not covered" >    [S</span>ymbol.iterator]() {
-<span class="cstat-no" title="statement not covered" >      return this;</span>
-    },
-    next() {
-      temp = y;
-      [x, y] = [y, x + y]; // Note: destructuring assignment
-      return { value: temp, done: false };
-    },
-    return() {
-      return { done: true, value: undefined };
-    },
-<span class="fstat-no" title="function not covered" >    throw(</span>e: ErrorConstructor) {
-<span class="cstat-no" title="statement not covered" >      throw e;</span>
-    },
-  };
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">function* integers(): Generator&lt;number, void, unknown&gt; {
+  let i = 2;
+  while (true) {
+    yield i++;
+  }
 }
 &nbsp;
-export function* fibonacciSequenceGen() {
-  let x = 0,
-    y = 1;
-  for (; ;) {
-    yield y;
-    [x, y] = [y, x + y]; // Note: destructuring assignment
+function* filter(iterable: Iterable&lt;number&gt;, predicate: (x: number) =&gt; boolean): Generator&lt;number, void, unknown&gt; {
+  for (const value of iterable) {
+    if (predicate(value)) {
+      yield value;
+    }
   }
+}
+&nbsp;
+export function* primes(): Generator&lt;number, void, unknown&gt; {
+  function* sieve(intIterable: IterableIterator&lt;number&gt;): Generator&lt;number, void, unknown&gt; {
+    const prime: number = intIterable.next().value; // フィルターされて残った次の値が返る
+    yield prime;  // ここで値を返す
+    // primeを使った篩をwrapして階層がフィルターする階層が増えていく
+    yield* sieve(filter(intIterable, x =&gt; x % prime !== 0));
+  }
+  // 整数のイテレーターを引数に再帰ジェネレーターを実行
+  yield* sieve(integers());
 }
 &nbsp;</pre></td></tr></table></pre>
 
@@ -160,7 +145,7 @@ export function* fibonacciSequenceGen() {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-09-09T12:39:17.875Z
+                at 2025-09-10T12:53:18.120Z
             </div>
         <script src="prettify.js"></script>
         <script>
