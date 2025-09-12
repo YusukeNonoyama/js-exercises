@@ -8,6 +8,6 @@
 
 ## 説明
 
-- JavaScriptコードはタスクとしてタスクキューに積まれる。
-- setTimeout()の場合は設定したタイムアウトの段階で対応するコールバックがタスクキューに積まれる。
-- 今回の場合ではlongRunningFunction()の中で無限ループを実行しているため、setTimeout()のコールバックは、longRunningFunction()の次にタスクに積まれるため、無限ループが実行されている間は実行されない。
+- JavaScriptコードはタスクとしてタスクキューに積まれ順次実行される。
+- setTimeout()の場合は設定したタイムアウトの時間が終了した段階でコールバックがタスクキューに積まれる。
+- この場合、setTimeout()による1秒のタイムアウト中に、同期的にlongRunningFunction()のタスクが実行されるため、setTImeout()のコールバックはその次にタスクとして積まれる。しかしlongRunningFunction()は無限ループを実行しているため終了せず、setTimeout()のコールバックは呼ばれない。
