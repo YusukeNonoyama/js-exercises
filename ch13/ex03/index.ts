@@ -1,4 +1,5 @@
 import * as fs from "node:fs";
+import { promisify } from "util"
 
 // export function mkdir(path: string, options?: {}) {
 //     return new Promise((resolve: Function, reject: Function) => {
@@ -13,6 +14,7 @@ import * as fs from "node:fs";
 // }
 
 // fs.readdir
+// Promise constructor
 export function readdir(path: string, options?: {}) {
   return new Promise((resolve: Function, reject: Function) => {
     fs.readdir(path, options, (err, files) => {
@@ -25,7 +27,12 @@ export function readdir(path: string, options?: {}) {
   });
 }
 
+// fs.readdir
+// promisify
+export const promisifiedReaddir = promisify(fs.readdir);
+
 // fs.stat
+// Promise constructor
 export function stat(path: string, options?: {}) {
   return new Promise((resolve: Function, reject: Function) => {
     fs.stat(path, options, (err, files) => {
@@ -37,3 +44,7 @@ export function stat(path: string, options?: {}) {
     });
   });
 }
+
+// fs.stat
+// promisify
+export const promisifiedstat = promisify(fs.stat);
