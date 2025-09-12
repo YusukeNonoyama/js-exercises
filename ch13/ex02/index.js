@@ -132,7 +132,7 @@ function f6() {
 }
 
 function f7() {
-  // NOTE: 2つ目の wait の引数が実行される差には p は解決済み
+  // NOTE: 2つ目の wait の引数が実行される際には p は解決済み
   // (= 解決済みの Promise の then を呼び出すとどうなるか)
   const p = wait1().then(logA);
   wait2()
@@ -181,4 +181,4 @@ function f12() {
     setTimeout(() => errX(), 0);
   }).catch((e) => log(e.message));
 }
-f12();
+f12()
