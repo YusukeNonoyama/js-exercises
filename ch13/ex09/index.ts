@@ -86,19 +86,21 @@ async function i4() {
 
   const p1 = async () => {
     await wait1();
+    let p1_result = 0;
     for (let i = 0; i < 5; i++) {
-      const next = v + 1;
+      p1_result += 1;
       await wait2();
-      v = next;
     }
+    v += p1_result;
   };
 
   const p2 = async () => {
+    let p2_result = 0;
     for (let i = 0; i < 5; i++) {
-      const next = v + 1;
+      p2_result += 1;
       await wait2();
-      v = next;
     }
+    v += p2_result;
   };
 
   await Promise.all([p1(), p2()]);
