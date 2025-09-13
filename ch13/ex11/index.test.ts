@@ -3,7 +3,7 @@ import { retryWithExponentialBackoff } from "./index.ts";
 jest.useFakeTimers();
 
 describe("retryWithExponentialBackoff", () => {
-  it("resolves immediately when func succeeds first try", async () => {
+  it("最初に成功", async () => {
     const mockFunc = jest.fn().mockResolvedValue("success");
 
     const promise = retryWithExponentialBackoff(mockFunc, 3);
@@ -13,7 +13,7 @@ describe("retryWithExponentialBackoff", () => {
     expect(mockFunc).toHaveBeenCalledTimes(1);
   });
 
-  it("retries and eventually succeeds", async () => {
+  it("失敗後に成功", async () => {
     const mockFunc = jest
       .fn()
       .mockRejectedValueOnce(new Error("fail1"))
@@ -27,14 +27,13 @@ describe("retryWithExponentialBackoff", () => {
     expect(mockFunc).toHaveBeenCalledTimes(3);
   });
 
-  it("fails after maxRetry attempts", async () => {
+  it("全て失敗", async () => {
     const mockFunc = jest.fn().mockRejectedValue(new Error("always fails"));
 
-    const promise = retryWithExponentialBackoff(mockFunc, 4);
+    const prom = retryWithExponentialBackoff(mockFunc, 4);
     await jest.runAllTimersAsync();
 
-    expect(JSON.stringify(promise)).toEqual("{}"); //
-    expect(mockFunc).toHaveBeenCalledTimes(4); // 初回 + 2回リトライ
-    console.log("log:", promise);
+    expect(mockFunc).toHaveBeenCalledTimes(4); // 4回リトライ
+    expect(JSON.stringify(prom)).toEqual("{}"); // 失敗のケースの正しい処理わからず
   });
 });

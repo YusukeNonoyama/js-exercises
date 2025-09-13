@@ -10,28 +10,28 @@
 //   5
 // );
 
-export function retryWithExponentialBackoff(
+export async function retryWithExponentialBackoff(
   func: () => Promise<any>,
   maxRetry: number,
 ): Promise<any> {
-  let count = 0;
+  let attempts = 0;
   function wait(msec: number) {
     return new Promise((resolve) => setTimeout(resolve, msec));
   }
   async function tryFunc(): Promise<any> {
-    while (count < maxRetry) {
+    while (attempts < maxRetry) {
       try {
+        console.log("attempts", attempts);
         return await func();
       } catch (err) {
-        count++;
-        if (count >= maxRetry) {
-          break;
-        }
-        const delay = 2 ** (count - 1) * 1000;
+        attempts++;
+        const delay = 2 ** (attempts - 1) * 1000;
         await wait(delay);
+        console.log("attempts2", attempts);
       }
     }
+    console.log("filanlly");
     return Promise.reject("failed");
   }
-  return tryFunc().catch(() => {}); // catchしてundefinedをreturn
+  return await tryFunc().catch(e => e); // catchしてundefinedをreturn
 }
