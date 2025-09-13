@@ -86,7 +86,7 @@ gantt
     wait2 :w2, 0, 2s
     wait1 :w1, 0, 1s
     errY :eY, after w1, 0.2s
-    throw  :t, after eY , 0.1s      
+    throw  :t   , after eY , 0.1s      
 ```
 
 ### 結果
