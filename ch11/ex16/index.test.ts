@@ -1,4 +1,4 @@
-import { retryWithExponentialBackoff } from "./index.ts";
+import { retryWithExponentialBackoff } from "./index2.ts";
 
 // setTimeout等のタイマーを実行せずにテストできるようにする
 jest.useFakeTimers();
@@ -15,6 +15,7 @@ describe("retryWithExponentialBackoff()", () => {
       .mockReturnValueOnce(true);
 
     retryWithExponentialBackoff(func, 5, callback);
+    jest.advanceTimersByTime(0);
 
     // setTimeout()を呼び出す前の1回の呼び出し
     expect(func).toHaveBeenCalledTimes(1);
@@ -37,6 +38,7 @@ describe("retryWithExponentialBackoff()", () => {
     const callback = jest.fn();
 
     retryWithExponentialBackoff(func, 3, callback);
+    jest.advanceTimersByTime(0);
 
     //最初の1回
     expect(func).toHaveBeenCalledTimes(1);
