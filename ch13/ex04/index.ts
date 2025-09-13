@@ -9,6 +9,8 @@ export function fetchFirstFileSize(path: string, callback: Function) {
     return fsPromises.stat(join(path, files[0])).then((stats) => {
       return callback(stats.size);
     });
+  }).catch(() => {
+    throw new Error("no files found")
   });
 }
 
@@ -29,5 +31,7 @@ export function fetchSumOfFileSizes(path: string, callback: Function) {
       });
     }
     return iter();
+  }).catch(() => {
+    throw new Error("no files found")
   });
 }
