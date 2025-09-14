@@ -1,3 +1,4 @@
+import { log } from "console";
 import { retryWithExponentialBackoff } from "./index.ts";
 
 jest.useFakeTimers();
@@ -28,12 +29,12 @@ describe("retryWithExponentialBackoff", () => {
   });
 
   it("全て失敗", async () => {
-    const mockFunc = jest.fn().mockRejectedValue(new Error("always fails"));
+    const mockFunc = jest.fn().mockRejectedValue("fail always");
 
-    const prom = retryWithExponentialBackoff(mockFunc, 4);
+    const promise = retryWithExponentialBackoff(mockFunc, 4);
     await jest.runAllTimersAsync();
 
+    await expect(promise).rejects.toBe("fail always"); // エラーになる => thrown: "fail always" 
     expect(mockFunc).toHaveBeenCalledTimes(4); // 4回リトライ
-    expect(JSON.stringify(prom)).toEqual("{}"); // 失敗のケースの正しい処理わからず
   });
 });
