@@ -5,6 +5,7 @@ import { PromisePool } from "./index.ts";
 const wait = (msec: number) =>
   new Promise((resolve) => setTimeout(resolve, msec));
 
+// #runCount が count になるまで待ち続ける？？
 class CounterTask {
   #runCount = 0;
   async run() {
@@ -110,7 +111,7 @@ test("dispatch before start", async () => {
   const tp = new PromisePool(1, 1);
   await expect(() =>
     tp.dispatch(() => {
-      return new Promise(() => {});
+      return new Promise(() => { });
     }),
   ).rejects.not.toBeNull();
 });

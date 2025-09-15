@@ -17,20 +17,20 @@ export async function* walk(
   } catch (e) {
     throw new Error("directroy does not exist");
   }
-  for await (const item of result) {
+  for async (const item of result) {
     const itemFullPath = join(rootPath, item);
     const itemStat = statSync(itemFullPath);
     if (itemStat.isDirectory()) {
       yield {
         path: itemFullPath,
-        isDirectory: true,
+          isDirectory: true,
       };
-      yield* walk(itemFullPath);
+      yield * walk(itemFullPath);
     }
     if (itemStat.isFile()) {
       yield {
         path: itemFullPath,
-        isDirectory: false,
+          isDirectory: false,
       };
     }
   }

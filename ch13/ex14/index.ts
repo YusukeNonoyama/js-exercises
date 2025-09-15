@@ -40,8 +40,8 @@ export class PromisePool {
       if (this.#promiseNum > this.#queueSize) {
         reject("PromisePool is full");
       }
-      resolve("Promise resolved");
       this.#promiseStatus = "Started";
+      resolve("Promise resolved");
     });
   }
 
@@ -60,8 +60,8 @@ export class PromisePool {
       if (this.#promiseStatus === "Ended") {
         reject("promise has already ended");
       }
-      resolve("promise has stopped");
       this.#promiseStatus = "Ended";
+      resolve("promise has stopped");
     });
   }
 
