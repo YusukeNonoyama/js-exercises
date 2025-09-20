@@ -18,6 +18,7 @@ gantt
 ```
 
 ### 結果
+
 ```
 C
 A
@@ -35,6 +36,7 @@ Error: X
 2秒後にAが出力され、2つ目のthenのコールバックが40を入力として実行され、1秒後にBが出力される。その後、ほぼ同時に3つ目のthenのコールバックが100を入力として実行され100が出力される。
 
 ### 図解
+
 ```mermaid
 gantt
   title f4
@@ -47,8 +49,8 @@ gantt
     log(100)  :l100, after lB, 0.2s
 ```
 
-
 ### 結果
+
 ```
 A
 B
@@ -62,6 +64,7 @@ B
 2つ目のthenの引数が関数ではなくプロミスになっているため、同期処理として直ちに実行される。その後非同期処理の実行で、1つ目のthen解決後にAが出力し40を返し、2つ目のthenは解決既に満たされているため無視され、3つ目のthenで40を入力にしてコールバックが呼ばれ40が出力される。
 
 ### 図解
+
 ```mermaid
 gantt
   title f5
@@ -75,6 +78,7 @@ gantt
 ```
 
 ### 結果
+
 ```
 B
 A
@@ -88,6 +92,7 @@ A
 1秒後にAが出力されてpが満たされると同時に登録されたコールバックが同時に呼ばれるため、1秒後にB、その1秒後にCが出力される。
 
 ### 図解
+
 ```mermaid
 gantt
   title f6
@@ -102,6 +107,7 @@ gantt
 ```
 
 ### 結果
+
 ```
 A
 B
@@ -129,6 +135,7 @@ gantt
 ```
 
 ### 結果
+
 ```
 A
 B
@@ -156,6 +163,7 @@ gantt
 ```
 
 ### 結果
+
 ```
 X
 A
@@ -182,6 +190,7 @@ gantt
 ```
 
 ### 結果
+
 ```
 Y
 A
@@ -194,6 +203,7 @@ A
 errYをthrowした後にcatch節がないためエラーで終了する。then(r).then(null, c) と then(r).catch(c)が等しい。
 
 ### 図解
+
 ```mermaid
 gantt
   title f9
@@ -204,6 +214,7 @@ gantt
 ```
 
 ### 結果
+
 ```
   throw new Error("Y");
         ^
@@ -218,6 +229,7 @@ Error: Y
 前のプロミスで発生したエラーはプロミスチェーンを下ってcatchされる。
 
 ### 図解
+
 ```mermaid
 gantt
   title f11
@@ -229,6 +241,7 @@ gantt
 ```
 
 ### 結果
+
 ```
 X
 ```
@@ -236,9 +249,11 @@ X
 ## f12()
 
 ### 説明
+
 errXでエラーで止まる。catchされずにそのまま終了。
 
 ### 図解
+
 ```mermaid
 gantt
   title f12
@@ -249,6 +264,7 @@ gantt
 ```
 
 ### 結果
+
 ```
     at errX (file:///home/nonoyama/js/js-exercises/ch13/ex02/index.js:20:9)
     at Timeout._onTimeout (file:///home/nonoyama/js/js-exercises/ch13/ex02/index.js:181:22)

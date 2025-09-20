@@ -38,6 +38,6 @@ export async function* walk(
 
 for await (const elem of walk("ch13/ex13")) {
   console.log(elem);
-};
+}
 
 console.log(async () => await walk("ch13/ex13/notExist").next());

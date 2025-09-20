@@ -31,7 +31,10 @@ describe("fetchSumOfFileSizes()", () => {
     mkdirSync(dirPath);
     closeSync(openSync(filesPath, "w"));
     writeFileSync(filesPath, "123");
-    const result = await fetchSumOfFileSizes(dirPath, (statSize: number) => statSize).catch(e => e);
+    const result = await fetchSumOfFileSizes(
+      dirPath,
+      (statSize: number) => statSize,
+    ).catch((e) => e);
     expect(result).toEqual(3);
   });
   it("ファイルが3つの場合、fetchSumOfFileSizes()でファイルサイズが返る", async () => {
@@ -51,10 +54,15 @@ describe("fetchSumOfFileSizes()", () => {
       return e;
     });
     // ファイルの中の合計文字数をカウント（一旦、簡単のため文字数＝バイト数の前提）
-    const totalLetterCount = files.reduce((acc, file) => acc + file[1].length, 0);
+    const totalLetterCount = files.reduce(
+      (acc, file) => acc + file[1].length,
+      0,
+    );
     expect(result).toEqual(totalLetterCount);
   });
   it("fetchSumOfFileSizes()の入力パスが存在しない場合、プロミスは失敗する", async () => {
-    await expect(fetchSumOfFileSizes("no/existent/path", (statsSize: number) => statsSize)).rejects.toThrow();
+    await expect(
+      fetchSumOfFileSizes("no/existent/path", (statsSize: number) => statsSize),
+    ).rejects.toThrow();
   });
 });

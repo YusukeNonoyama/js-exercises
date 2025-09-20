@@ -46,7 +46,8 @@ function g3() {
   // TODO: var, let, const による変数宣言を無くしなさい。async/awaitは使用しないこと。
   // ネスト構造にすればよい
   return fetchUser().then((user) => {
-    return fetchUserFriends(user).then((friends) => { // user変数のスコープ内でthenを繋げる
+    return fetchUserFriends(user).then((friends) => {
+      // user変数のスコープ内でthenを繋げる
       console.log(`${user.name} has ${friends.length} friends!`);
     });
   });

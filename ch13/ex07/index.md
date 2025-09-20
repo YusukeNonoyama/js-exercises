@@ -5,6 +5,7 @@
 await wait3()はwait3()が完了するのを待つ。そのためwait3(), wait2(), wait1()は同期的に順番に実行される。
 
 ### 図解
+
 ```mermaid
 gantt
   title h1
@@ -17,7 +18,9 @@ gantt
     wait1 :w1, after lB, 1s
     logC  :lC, after w1, 0.2s
 ```
+
 ### 結果
+
 ```
 A
 B
@@ -41,7 +44,9 @@ gantt
     catch  :c, after eX, 0.2s
     logX :lX, after c, 0.2s
 ```
+
 ### 結果
+
 ```
 X
 ```
@@ -63,6 +68,7 @@ gantt
 ```
 
 ### 結果
+
 ```
     throw new Error("X");
           ^
@@ -86,10 +92,11 @@ gantt
     wait2 :w2, 0, 2s
     wait1 :w1, 0, 1s
     errY :eY, after w1, 0.2s
-    throw  :t   , after eY , 0.1s      
+    throw  :t   , after eY , 0.1s
 ```
 
 ### 結果
+
 ```
     throw new Error("Y");
           ^

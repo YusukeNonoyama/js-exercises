@@ -181,4 +181,4 @@ function f12() {
     setTimeout(() => errX(), 0);
   }).catch((e) => log(e.message));
 }
-f10()
+f10();

@@ -10,7 +10,6 @@
 //   5
 // );
 
-
 export async function retryWithExponentialBackoff(
   func: () => Promise<any>,
   maxRetry: number,

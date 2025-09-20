@@ -44,7 +44,7 @@ function* counterGen(max: number) {
 const max = 3;
 
 {
-  console.log("=========明示的にnext()を呼ぶ： counterIter()")
+  console.log("=========明示的にnext()を呼ぶ： counterIter()");
   {
     const iter = counterIter(max);
     let i = 0;
@@ -66,7 +66,7 @@ const max = 3;
     // { value: undefined, done: true }
   }
 
-  console.log("=========明示的にnext()を呼ぶ： counterGen()")
+  console.log("=========明示的にnext()を呼ぶ： counterGen()");
   {
     const iterGen = counterGen(max);
     let i = 0;
@@ -87,7 +87,7 @@ const max = 3;
     // { value: undefined, done: true }
   }
 
-  console.log("=========明示的にreturn()を呼ぶ： counterIter()")
+  console.log("=========明示的にreturn()を呼ぶ： counterIter()");
   {
     const iter = counterIter(max);
     console.log(iter.return(2)); // iteratorはreturnに引数を渡してそれiteration終了
@@ -97,7 +97,7 @@ const max = 3;
     // { value: 2, done: true }
   }
 
-  console.log("=========明示的にreturn()を呼ぶ： counterGen()")
+  console.log("=========明示的にreturn()を呼ぶ： counterGen()");
   {
     const iterGen = counterGen(max);
     console.log(iterGen.next());
@@ -110,10 +110,10 @@ const max = 3;
     // { value: undefined, done: true }
 
     // iterationの途中でないと出力はこの行だけでfinallyは実行されない
-    // { value: undefined, done: true }　
+    // { value: undefined, done: true }
   }
 
-  console.log("=========明示的にthrow()を呼ぶ： counterIter()")
+  console.log("=========明示的にthrow()を呼ぶ： counterIter()");
   {
     const iter = counterIter(max);
     try {
@@ -127,7 +127,7 @@ const max = 3;
     // error from counterIter()
   }
 
-  console.log("=========明示的にthrow()を呼ぶ： counterGen()")
+  console.log("=========明示的にthrow()を呼ぶ： counterGen()");
   {
     const iterGen = counterGen(max);
     console.log(iterGen.next());
@@ -144,11 +144,10 @@ const max = 3;
     // counterGen: finally
     // error from counterGen()　　// iterationの途中でないと出力はこの行だけ
   }
-
 }
 
 {
-  console.log("=========for-of ループを実行： counterIter()")
+  console.log("=========for-of ループを実行： counterIter()");
   {
     const iter: any = counterIter(max);
     for (const value of iter) {
@@ -166,7 +165,7 @@ const max = 3;
     // counterIter: next
   }
 
-  console.log("=========for-of ループを実行： counterGen()")
+  console.log("=========for-of ループを実行： counterGen()");
   {
     const iterGen = counterGen(max);
     for (const value of iterGen) {
@@ -182,7 +181,7 @@ const max = 3;
     // counterGen: finally
   }
 
-  console.log("=========for-of ループを実行途中で break： counterIter()")
+  console.log("=========for-of ループを実行途中で break： counterIter()");
   {
     const iter: any = counterIter(max);
     for (const value of iter) {
@@ -202,8 +201,7 @@ const max = 3;
     // counterIter: return: undefined
   }
 
-
-  console.log("=========for-of ループを実行途中で break： counterGen()")
+  console.log("=========for-of ループを実行途中で break： counterGen()");
   {
     const iterGen = counterGen(max);
     for (const value of iterGen) {
@@ -222,7 +220,7 @@ const max = 3;
     // counterGen: finally
   }
 
-  console.log("=========for-of ループを実行中に例外発生： counterIter()")
+  console.log("=========for-of ループを実行中に例外発生： counterIter()");
   {
     const iter: any = counterIter(max);
     try {
@@ -250,7 +248,7 @@ const max = 3;
     // finally
   }
 
-  console.log("=========for-of ループ実行中に例外発生： counterGen()")
+  console.log("=========for-of ループ実行中に例外発生： counterGen()");
   {
     const iterGen = counterGen(max);
     try {
@@ -277,8 +275,6 @@ const max = 3;
     // finally
   }
 }
-
-
 
 // 以下は、旧内容
 // まとめ１

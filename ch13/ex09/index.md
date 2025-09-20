@@ -21,11 +21,11 @@ gantt
 ```
 
 ### 結果
+
 ```
 42
 100
 ```
-
 
 ## i2()
 
@@ -34,6 +34,7 @@ gantt
 全てのプロミスが返った後に結果の配列を返しvに代入。vを出力。
 
 ### 図解
+
 ```mermaid
 gantt
   title i2
@@ -49,13 +50,13 @@ gantt
 ```
 
 ### 結果
+
 ```
 C
 B
 A
 [ 'A', 'B', 'C' ]
 ```
-
 
 ## i3()
 
@@ -64,6 +65,7 @@ A
 wait1が満たされてerrYにてcatch節が呼ばれる。catch節中のwait3()中に、Promise.all()内のwait3()が終了しv=0に書き換わるがerrXは無視される。その後、catch節のwait3が満たされてlog(0)を出力する。
 
 ### 図解
+
 ```mermaid
 gantt
   title i3
@@ -86,6 +88,7 @@ gantt
 ```
 
 ### 結果
+
 ```
 Y
 42
@@ -96,11 +99,12 @@ B
 ## i4()
 
 ### 説明
+
 - 元のコード
-p1とp2の非同期プロセスは１秒毎に交互にvの値を更新しようとするが、nextをvに代入する前にawait wait2()が入るため、直前にもう一方の非同期プロセスがvに加える分はカウントされない。従って10ではなく半分の5が最後に出力される。
+  p1とp2の非同期プロセスは１秒毎に交互にvの値を更新しようとするが、nextをvに代入する前にawait wait2()が入るため、直前にもう一方の非同期プロセスがvに加える分はカウントされない。従って10ではなく半分の5が最後に出力される。
 
 - 変更後のコード
-p1 と p2 のそれぞれの関数実行が全て完了してからvに結果を加える。
+  p1 と p2 のそれぞれの関数実行が全て完了してからvに結果を加える。
 
 ### 図解
 
@@ -115,19 +119,20 @@ gantt
     p1_wait2_3 :p1w3, after p1w2, 2s
     p1_wait2_4 :p1w4, after p1w3, 2s
     p1_wait2_5 :p1w5, after p1w4, 2s
-    v += 5 :p1_v,after p1w5, 0.2s 
+    v += 5 :p1_v,after p1w5, 0.2s
 
     p2_wait2_1 :p2w1, 0, 2s
     p2_wait2_2 :p2w2, after p2w1, 2s
     p2_wait2_3 :p2w3, after p2w2, 2s
     p2_wait2_4 :p2w4, after p2w3, 2s
     p2_wait2_5 :p2w5, after p2w4, 2s
-    v += 5 :p2_v, after p2w5, 0.2s 
+    v += 5 :p2_v, after p2w5, 0.2s
 
-    v = 10 :v10, after p1_v, 0.2s 
+    v = 10 :v10, after p1_v, 0.2s
 ```
 
 ### 結果
+
 ```
 10
 ```

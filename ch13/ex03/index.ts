@@ -1,5 +1,5 @@
 import * as fs from "node:fs";
-import { promisify } from "util"
+import { promisify } from "util";
 
 // export function mkdir(path: string, options?: {}) {
 //     return new Promise((resolve: Function, reject: Function) => {

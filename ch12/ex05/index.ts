@@ -8,7 +8,13 @@ export function* readLines(filePath: string) {
   let previouLines = "";
   try {
     while (true) {
-      const bytesRead = readSync(fd, buffer as Uint8Array, 0, bufferSize, startPosition);
+      const bytesRead = readSync(
+        fd,
+        buffer as Uint8Array,
+        0,
+        bufferSize,
+        startPosition,
+      );
       if (bytesRead === 0) {
         // 最後の行のyield
         if (previouLines.length > 0) {
