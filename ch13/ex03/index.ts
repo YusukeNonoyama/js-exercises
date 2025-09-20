@@ -48,3 +48,11 @@ export function stat(path: string, options?: {}) {
 // fs.stat
 // promisify
 export const promisifiedstat = promisify(fs.stat);
+
+const testDir = "./ch13";
+let expected;
+fs.stat(testDir, (err, files) => {
+  expected = files;
+});
+const result = await promisifiedstat(testDir);
+console.log(result);

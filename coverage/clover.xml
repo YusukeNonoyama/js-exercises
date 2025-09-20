@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1757978091575" clover="3.2.0">
-  <project timestamp="1757978091575" name="All files">
+<coverage generated="1758262033773" clover="3.2.0">
+  <project timestamp="1758262033774" name="All files">
     <metrics statements="29" coveredstatements="29" conditionals="7" coveredconditionals="7" methods="7" coveredmethods="7" elements="43" coveredelements="43" complexity="0" loc="29" ncloc="29" packages="1" files="1" classes="1"/>
     <file name="index.ts" path="/home/nonoyama/js/js-exercises/ch13/ex14/index.ts">
       <metrics statements="29" coveredstatements="29" conditionals="7" coveredconditionals="7" methods="7" coveredmethods="7"/>

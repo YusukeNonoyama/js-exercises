@@ -17,27 +17,27 @@ export async function* walk(
   } catch (e) {
     throw new Error("directroy does not exist");
   }
-  for async (const item of result) {
+  for await (const item of result) {
     const itemFullPath = join(rootPath, item);
     const itemStat = statSync(itemFullPath);
     if (itemStat.isDirectory()) {
       yield {
         path: itemFullPath,
-          isDirectory: true,
+        isDirectory: true,
       };
-      yield * walk(itemFullPath);
+      yield* walk(itemFullPath);
     }
     if (itemStat.isFile()) {
       yield {
         path: itemFullPath,
-          isDirectory: false,
+        isDirectory: false,
       };
     }
   }
 }
 
-// for await (const elem of walk("ch13/ex13")) {
-//     console.log(elem);
-// };
+for await (const elem of walk("ch13/ex13")) {
+  console.log(elem);
+};
 
-// console.log(async () => await walk("ch13/ex13/notExist").next());
+console.log(async () => await walk("ch13/ex13/notExist").next());
