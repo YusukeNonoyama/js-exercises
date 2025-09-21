@@ -1,6 +1,6 @@
 // https://github.com/YoshikiShibata/jpltest/blob/master/jpl/ch14/ex10/ThreadPoolTest.java
 
-import { PromisePool } from "./index.ts";
+import { PromisePool } from "./indexTutorsAanswer.ts";
 
 const wait = (msec: number) =>
   new Promise((resolve) => setTimeout(resolve, msec));
@@ -111,7 +111,7 @@ test("dispatch before start", async () => {
   const tp = new PromisePool(1, 1);
   await expect(() =>
     tp.dispatch(() => {
-      return new Promise(() => {});
+      return new Promise(() => { });
     }),
   ).rejects.not.toBeNull();
 });
