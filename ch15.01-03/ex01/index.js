@@ -34,7 +34,9 @@ form.addEventListener("submit", (e) => {
   destroy.textContent = "❌";
   // TODO: destroy がクリック (click) された場合に elem を削除しなさい
   destroy.onclick = function () {
-    elem.remove();
+    // elem.remove();
+    elem.style.display = "none";
+
   };
   const div = document.createElement("div");
 
