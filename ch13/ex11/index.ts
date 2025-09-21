@@ -27,6 +27,5 @@ export async function retryWithExponentialBackoff(
       await wait(delay);
     }
   }
-  // return await func().catch(() => Promise.reject("fail yey"));
   return await func();
 }
