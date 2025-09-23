@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <title>Simple ToDo</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width" />
+  <script type="module" src="/ch15.04-10/ex02/index.js"></script>
+  <!-- 以下の style.css は Tailwind CLI によって生成される -->
+  <!-- html または js を変更した場合は README.md に従い Tailwind CLI を実行し style.css を再度生成すること -->
+  <link rel="stylesheet" href="/ch15.04-10/ex02/style.css" />
+</head>
+<!-- IMPORTANT: ChatGPT にはここから下の内容しか変更させないこと -->
+
+<body>
+  <div class="flex items-center justify-center min-h-screen bg-gray-100 p-4">
+    <div class="w-full max-w-lg bg-white rounded-xl shadow-lg p-6">
+      <h1 class="text-7xl font-bold text-center text-gray-800 mb-6">Simple ToDo</h1>
+
+      <form id="new-todo-form" class="flex items-center gap-2 mb-6">
+        <input type="text" id="new-todo" placeholder="What needs to be done?"
+          class="flex-grow p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200" />
+        <button
+          class="bg-blue-600 text-white font-bold py-3 px-6 rounded-lg shadow-md hover:bg-blue-700 transition duration-200">
+          Add
+        </button>
+      </form>
+
+      <ul id="todo-list" class="space-y-4">
+      </ul>
+
+      <template id="todo-template">
+        <li class="flex items-center justify-between p-4 bg-gray-50 rounded-lg shadow-sm group">
+          <div class="flex items-center gap-3 w-full">
+            <input
+              class="toggle h-5 w-5 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 cursor-pointer"
+              type="checkbox" />
+            <label class="content flex-grow text-gray-800 break-all cursor-pointer"></label>
+          </div>
+          <button
+            class="destroy text-gray-400 hover:text-red-500 opacity-50 group-hover:opacity-100 transition-opacity duration-200 ml-4">❌</button>
+        </li>
+      </template>
+    </div>
+  </div>
+</body>
+
+
+
+</html>

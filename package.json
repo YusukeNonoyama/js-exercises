@@ -35,9 +35,11 @@
     "webpack-cli": "^6.0.1"
   },
   "dependencies": {
+    "@tailwindcss/cli": "^4.1.13",
     "date-fns": "^4.1.0",
     "dayjs": "^1.11.13",
     "luxon": "^3.6.1",
+    "tailwindcss": "^4.1.13",
     "zod": "^3.25.67"
   }
 }
