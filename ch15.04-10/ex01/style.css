@@ -1,6 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600&display=swap');
 
-/* 全体レイアウト：砂漠王国風 */
+/* 幅 800px、外側余白 50px、内側余白 20px */
+/* 背景画像を100%サイズで上部から繰り返し挿入 */
+/* フォント 'Cinzel'、黒、ボーダー黄土色で影と丸み付け */
 body {
     max-width: 800px;
     margin: 50px auto;
@@ -16,25 +18,17 @@ body {
     box-shadow: 0 0 30px rgba(194, 150, 87, 0.6);
 }
 
-/* 見出しを王国風に */
-#logo {
-    text-align: center;
-    font-size: 32px;
-    font-family: 'Cinzel', serif;
-    color: #004e7c;
-    margin-bottom: 30px;
-    text-shadow: 2px 2px #fef5e7;
-    border-bottom: 2px dashed #004e7c;
-    padding-bottom: 10px;
-}
-
-/* フォーム */
+/* flex container 適用（配置、方向、サイズを簡単に調整できる） */
+/* flex item (flex container の中身) を均等に配置、下に 20px 余白 */
 #new-todo-form {
     display: flex;
     justify-content: space-between;
     margin-bottom: 20px;
 }
 
+/* flex conteiner 中の大きさと配置は通常設定 */
+/* 内側余白 10px、ボーダー 2px で黄土色、角丸み */
+/* 背景色薄い黄色、フォント 16px、 'Cinzel'、黒*/
 #new-todo {
     flex: 1;
     padding: 10px;
@@ -46,6 +40,11 @@ body {
     color: #3e2f1c;
 }
 
+/* 外側余白 10px、内側余白 上下10px 左右 20px */
+/* ボタン背景色 青系でグラデーション */
+/* ボーダー幅2 px、丸み付与 */
+/* フォント 'Cinzel'、白、16px、 */
+/* ホバー時カーソル変更と形状変化時間指定 */
 button {
     margin-left: 10px;
     padding: 10px 20px;
@@ -64,12 +63,14 @@ button:hover {
     transform: scale(1.05);
 }
 
-/* ToDoリスト */
+/* 内側余白 0 */
 #todo-list {
-    list-style: none;
     padding: 0;
 }
 
+/* 背景色薄黄色、ボーダー線黄色で丸みと影を付与 */
+/* 外側余白下のみ 10px、内側余白 10px */
+/* flex container 適用（配置、方向、サイズを簡単に調整できる） */
 li {
     background-color: rgba(255, 253, 230, 0.9);
     border: 2px solid #d2b48c;
@@ -77,10 +78,11 @@ li {
     margin-bottom: 10px;
     padding: 10px;
     display: flex;
-    align-items: center;
     box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
 }
 
+/* flex container 適用（配置、方向、サイズを簡単に調整できる） */
+/* センター配置で100%のスペースを使用、flex item を均等に配置*/
 .view {
     display: flex;
     align-items: center;
@@ -88,6 +90,8 @@ li {
     justify-content: space-between;
 }
 
+/* 幅 20px、高さ 20px、外側余白右のみ 10px */
+/* 背景色青 */
 .toggle {
     width: 20px;
     height: 20px;
@@ -95,20 +99,23 @@ li {
     margin-right: 10px;
 }
 
+/* flex conteiner 中の大きさと配置は通常設定 */
+/* フォントサイズ 18px、長い文の場合の単語分割 */
 label.content {
     flex: 1;
     font-size: 18px;
     word-break: break-word;
 }
 
-/* 完了済み */
+
+/* 取り消し線追加、フォントグレー、不透明度0.6 */
 .completed label.content {
     text-decoration: line-through;
     color: #888;
     opacity: 0.6;
 }
 
-/* 削除ボタン：王国風宝石っぽく */
+/* 背景色透明（buttonの設定と同じ）、フォント 20px で 赤、ボーダー線なし、ホバー時のポインタ形状(cursor)とボタン形状変化時間(transform)の指定 */
 button.destroy {
     background-color: transparent;
     border: none;
@@ -118,6 +125,7 @@ button.destroy {
     transition: transform 0.2s;
 }
 
+/* ホバー時のボタン形状を1.2倍 -5deg傾け */
 button.destroy:hover {
     transform: scale(1.2) rotate(-5deg);
 }
