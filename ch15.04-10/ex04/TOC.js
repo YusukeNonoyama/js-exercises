@@ -79,7 +79,9 @@
             }
 
             /* NOTE: scrollTo または scrollIntoView でスムーズにスクロールしなさい  */
-            target.scrollIntoView();
+            target.scrollIntoView({
+                behavior: "smooth"
+            });
         });
 
 
