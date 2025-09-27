@@ -63,7 +63,7 @@ class TodoApp extends HTMLElement {
     }
 
     attributeChangedCallback(name, oldValue, newValue) {
-        // 
+        // TodoAPP には
     }
 }
 
