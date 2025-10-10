@@ -5,14 +5,14 @@ import {
 } from "./index.ts";
 
 test("Unwritable and unconfigurable object", () => {
-  const a: { a?: number } = unwritableAndUnconfigurableObj();
+  const a: any = unwritableAndUnconfigurableObj();
   expect(a).toStrictEqual({ a: 1 });
   expect(() => (a.a = 3)).toThrow();
   expect(() => delete a.a).toThrow();
 });
 
 test("Writable and unconfigurable object", () => {
-  const b: { b?: number } = writableAndUnconfigurableObj();
+  const b: any = writableAndUnconfigurableObj();
   expect(b).toStrictEqual({ b: 2 });
   b.b = 3;
   expect(b.b).toBe(3);
