@@ -7,9 +7,6 @@ export const writableAndUnconfigurableObj = function () {
 };
 
 export const nestedUnwritableObj = function () {
-  const o = { c: { d: { e: 3 } } };
-  Object.freeze(o);
-  Object.freeze(o.c);
-  Object.freeze(o.c.d);
-  return o;
+  // 生成したオブジェクトを返すことを利用
+  return Object.freeze({ c: Object.freeze({ d: Object.freeze({ e: 3 }) }) });
 };
