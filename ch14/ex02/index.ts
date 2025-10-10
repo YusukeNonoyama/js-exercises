@@ -3,7 +3,7 @@ export class MyArrayLike {
   constructor(...items: any[]) {
     this.#items = new Array(...items);
   }
-  // lengthのセッターとゲッターを追加
+  // lengthのセッターとゲッターを追加、Arrayを継承していないため
   get length() {
     return this.#items.length;
   }
