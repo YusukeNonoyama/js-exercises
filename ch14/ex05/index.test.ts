@@ -2,9 +2,7 @@ import { templateToStringWithType } from "./index.ts";
 
 describe("templateToStringWithType()", () => {
   test("補完値なし", () => {
-    expect(templateToStringWithType`no interpolations`).toBe(
-      "no interpolations",
-    );
+    expect(templateToStringWithType`no interpolations`).toBe("no interpolations");
   });
   test("補完値がstring", () => {
     expect(templateToStringWithType`${"A"}`).toBe("string");
