@@ -22,7 +22,7 @@
 3563行目に定義されている。
 ES3以前の仕様では undefined の値が書き換え可能だったために、上書きされて意図通りに動かなくなる問題があった。現在では undefined プロパティは undefined に設定されて、書き込み不可、再定義負荷になっている。
 
-// 確認コードコード
+// 確認コード
 console.log(Object.getOwnPropertyDescriptor(window, "undefined"));
 // 結果
 
