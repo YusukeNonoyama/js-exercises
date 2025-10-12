@@ -4,7 +4,8 @@ const input = document.querySelector("#new-todo");
 
 form.addEventListener("submit", (e) => {
   // TODO: ここで form のイベントのキャンセルを実施しなさい (なぜでしょう？)
-  e.preventDefault(); // これがないと実行後に元のhtmlにってしまう
+  // → submit イベントが実行されたあと、ページがリロードされてしまう
+  e.preventDefault();
   // 両端からホワイトスペースを取り除いた文字列を取得する
   if (input.value.trim() === "") {
     return;
@@ -21,6 +22,7 @@ form.addEventListener("submit", (e) => {
   label.style.textDecorationLine = "none";
 
   const toggle = document.createElement("input");
+  // TODO: toggle が変化 (change) した際に label.style.textDecorationLine を変更しなさい
   toggle.type = "checkbox";
   toggle.onchange = function () {
     if (toggle.checked) {
@@ -29,18 +31,15 @@ form.addEventListener("submit", (e) => {
       label.style.textDecorationLine = "none";
     }
   };
-  // TODO: toggle が変化 (change) した際に label.style.textDecorationLine を変更しなさい
   const destroy = document.createElement("button");
-  destroy.textContent = "❌";
   // TODO: destroy がクリック (click) された場合に elem を削除しなさい
+  destroy.textContent = "❌";
   destroy.onclick = function () {
-    // elem.remove();
     elem.style.display = "none";
-
   };
-  const div = document.createElement("div");
 
   // TODO: elem 内に toggle, label, destroy を追加しなさい
+  const div = document.createElement("div");
   div.append(toggle, label, destroy);
   elem.append(div);
   list.prepend(elem);
