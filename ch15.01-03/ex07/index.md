@@ -1,10 +1,10 @@
 ## Clickjacking
 
-- Webサイトのリンクやボタンなどの要素を隠蔽したり偽装したりしてクリックを誘い、利用者の意図しない動作をさせる方法。意図せずにiframe内のいいねボタンを押すなど。
+- Webサイトのリンクやボタンなどの要素を隠蔽したり偽装したりしてクリックを誘い、利用者の意図しない動作をさせる方法。意図せずに iframe 内のいいねボタンを押すなど。
 
 ## なぜトップページを読み込むをエラーになるか
 
-- HTMLヘッダにX-Frame-OptionsやContent-Security-Policy: frame-ancestorsを設定することで、自分のサイトが他ドメインでiframeに表示されることを禁止している。
+- HTML ヘッダに X-Frame-Options や Content-Security-Policy: frame-ancestors を設定することで、自分のサイトが他ドメインでiframeに表示されることを禁止している。
 
 ## 同一オリジンポリシーがなく、iframe内の他サイトのDOM変更が可能な仕様を想定し、どのような重大な問題が発生しうるか
 
