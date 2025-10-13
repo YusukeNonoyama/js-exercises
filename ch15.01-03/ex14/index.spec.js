@@ -10,7 +10,9 @@ test.describe("E2E test", () => {
     let count;
 
     await page.getByRole("combobox").selectOption("all");
-    expect(await page.getByRole("listitem").count()).toBe(3);
+    items = page.getByRole("listitem");
+    count = await items.count();
+    expect(count).toBe(3);
 
     await page.getByRole("combobox").selectOption("food");
     items = page.getByRole("listitem");
@@ -33,7 +35,9 @@ test.describe("E2E test", () => {
     }
 
     await page.getByRole("combobox").selectOption("all");
-    expect(await page.getByRole("listitem").count()).toBe(3);
+    items = page.getByRole("listitem");
+    count = await items.count();
+    expect(count).toBe(3);
   });
 
   test("all => stationery=> food => all", async ({ page }) => {
@@ -41,7 +45,9 @@ test.describe("E2E test", () => {
     let count;
 
     await page.getByRole("combobox").selectOption("all");
-    expect(await page.getByRole("listitem").count()).toBe(3);
+    items = page.getByRole("listitem");
+    count = await items.count();
+    expect(count).toBe(3);
 
     await page.getByRole("combobox").selectOption("stationery");
     items = page.getByRole("listitem");
@@ -64,6 +70,8 @@ test.describe("E2E test", () => {
     }
 
     await page.getByRole("combobox").selectOption("all");
-    expect(await page.getByRole("listitem").count()).toBe(3);
+    items = page.getByRole("listitem");
+    count = await items.count();
+    expect(count).toBe(3);
   });
 });
