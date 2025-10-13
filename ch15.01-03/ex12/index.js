@@ -1,3 +1,4 @@
+// 広告っぽいクラス名の要素を非表示にするブックマークレット
 javascript: (function () {
   const adSelectors = [
     '[id*="ad"]',
