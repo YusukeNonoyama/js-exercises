@@ -4,8 +4,9 @@
 console.log("1. nav 要素内のリンク (<a>)");
 const nav = document.querySelector("nav");
 const a = nav.querySelectorAll("a");
-console.log(a);
-Array.from(a).forEach((elem) => console.log(elem.href));
+Array.from(a).forEach((elem) => {
+  console.log(elem)
+});
 
 // 商品リスト (.product-list) 内の最初の商品 (.product-item)
 console.log("2. 商品リスト (.product-list) 内の最初の商品 (.product-item)");
@@ -25,9 +26,7 @@ const price = productList.querySelector(".price");
 console.log(price);
 
 // 商品リスト (.product-list) 内の全ての商品 (.product-item) の画像 (<img>)
-console.log(
-  "5. 商品リスト (.product-list) 内の全ての商品 (.product-item) の画像 (<img>)",
-);
+console.log("5. 商品リスト (.product-list) 内の全ての商品 (.product-item) の画像 (<img>)");
 const productItem = productList.querySelectorAll(".product-item");
 Array.from(productItem).forEach((item) =>
   console.log(item.querySelector("img")),
