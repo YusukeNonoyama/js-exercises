@@ -1,3 +1,6 @@
+// MyArrayはArrayを継承し、map(), slice()の結果としてMyArrayLikeのオブジェクトを返す。（結果の型を変更するにはSymbol.speciesを指定する）
+// MyArrayLikeは配列のようなクラスでArrayを継承しない
+
 export class MyArrayLike {
   #items: any[];
   constructor(...items: any[]) {

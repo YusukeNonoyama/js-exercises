@@ -20,6 +20,6 @@ export function createLoggingProxy(target) {
     },
   };
   const oproxy = new Proxy(target, handler);
-  return [oproxy, logArr];
+  return [oproxy, logArr]; // Proxy と 配列 双方への参照を返却する
 }
 
