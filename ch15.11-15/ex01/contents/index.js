@@ -113,4 +113,7 @@ function appendToDoItem(task) {
   div.append(toggle, label, destroy);
   elem.append(div);
   list.prepend(elem);
+
+  console.log("cookie: ", document.cookie);
+
 }

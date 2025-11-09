@@ -336,7 +336,8 @@ async function main() {
         ["GET", "/*", serveContentsHandler, authz],
       )(req, res);
     })
-    .listen(3000);
+    // .listen(3000);
+    .listen(3000, '0.0.0.0');
   console.log("Server running at http://localhost:3000/");
 }
 
