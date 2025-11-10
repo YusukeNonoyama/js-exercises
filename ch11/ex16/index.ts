@@ -29,21 +29,22 @@ export async function retryWithExponentialBackoff(
   await tryFunc();
 }
 
-// import { randomInt } from "crypto";
+import { randomInt } from "crypto";
 
-// function func() {
-//     let a = randomInt(0, 10);
-//     console.log(a);
-//     if (a < 1) {
-//         return true;
-//     } else {
-//         return false;
-//     }
-// }
+function func() {
+    let a = randomInt(0, 10);
+    console.log(a);
+    if (a < 1) {
+        return true;
+    } else {
+        return false;
+    }
+}
 
-// function callback(result: boolean) {
-//     console.log(result);
-// }
+function callback(result: boolean) {
+    console.log(result);
+    return result;
+}
 
 // let count = 0;
 // function func() {
@@ -55,4 +56,4 @@ export async function retryWithExponentialBackoff(
 //         return false;
 //     }
 // }
-// retryWithExponentialBackoff(func, 3, callback);
+retryWithExponentialBackoff(func, 3, callback);

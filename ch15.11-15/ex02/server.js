@@ -247,7 +247,7 @@ async function chaosMiddleware(_url, _req, res) {
   } else if (lottery < 2 / 3) {
     // 1/3 の確率で 60 秒待機
     console.error("drew the slow response");
-    await setTimeout(60 * 1000);
+    await setTimeout(5 * 1000);
     return true;
   } else {
     // 1/3 の確率で通常のレスポンス

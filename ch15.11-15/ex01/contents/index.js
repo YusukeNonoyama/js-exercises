@@ -9,6 +9,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const response = await fetch("/api/tasks"); // タスクの一覧を取得
     if (!response.ok) {
       alert(JSON.stringify(response.error.message));
+      return;
     }
     const body = await response.json();
     for (const item of body.items) {
@@ -39,6 +40,7 @@ form.addEventListener("submit", async (e) => {
     })
     if (!response.ok) {
       alert(JSON.stringify(response.error.message));
+      return;
     }
     const body = await response.json();
     appendToDoItem(body);
@@ -64,18 +66,19 @@ function appendToDoItem(task) {
     try {
       let response;
       if (toggle.checked) {
-        label.style.textDecorationLine = "line-through";
         response = await fetch(`/api/tasks/${task.id}`, { // APIで取り消し線付きに更新
           method: "PATCH", body: JSON.stringify({ "status": "completed" })
         })
+        label.style.textDecorationLine = "line-through";
       } else {
-        label.style.textDecorationLine = "none";
         response = await fetch(`/api/tasks/${task.id}`, {  // APIで取り消し線なしに更新
           method: "PATCH", body: JSON.stringify({ "status": "active" })
         })
+        label.style.textDecorationLine = "none";
       }
       if (!response.ok) {
         alert(JSON.stringify(response.error.message));
+        return;
       }
     } catch (err) {
       alert(JSON.stringify(err));
