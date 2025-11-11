@@ -8,7 +8,6 @@ body {
     margin: 50px auto;
     padding: 20px;
     background-image: url('/ch15.04-10/ex01/desertKingdom.jpg');
-    /* 砂壁っぽい背景（差し替えOK） */
     background-size: 100%;
     background-position: top;
     font-family: 'Cinzel', serif;
@@ -18,6 +17,7 @@ body {
     box-shadow: 0 0 30px rgba(194, 150, 87, 0.6);
 }
 
+/* 入力コンポーネント */
 /* flex container 適用（配置、方向、サイズを簡単に調整できる） */
 /* flex item (flex container の中身) を均等に配置、下に 20px 余白 */
 #new-todo-form {
@@ -26,6 +26,7 @@ body {
     margin-bottom: 20px;
 }
 
+/* 入力欄 */
 /* flex conteiner 中の大きさと配置は通常設定 */
 /* 内側余白 10px、ボーダー 2px で黄土色、角丸み */
 /* 背景色薄い黄色、フォント 16px、 'Cinzel'、黒*/
@@ -40,6 +41,7 @@ body {
     color: #3e2f1c;
 }
 
+/* 入力ボタン */
 /* 外側余白 10px、内側余白 上下10px 左右 20px */
 /* ボタン背景色 青系でグラデーション */
 /* ボーダー幅2 px、丸み付与 */
@@ -58,16 +60,20 @@ button {
     transition: background 0.3s, transform 0.2s;
 }
 
+/* ホバー時にボタンを大きくして色を変える */
 button:hover {
     background: linear-gradient(to bottom, #005f87, #003f5c);
     transform: scale(1.05);
 }
 
+/* 各ToDoアイテムの枠 */
 /* 内側余白 0 */
 #todo-list {
     padding: 0;
 }
 
+/* ToDoアイテム */
+/* 背景色薄黄色、ボーダー線黄色で丸みと影を付与 */
 /* 背景色薄黄色、ボーダー線黄色で丸みと影を付与 */
 /* 外側余白下のみ 10px、内側余白 10px */
 /* flex container 適用（配置、方向、サイズを簡単に調整できる） */
@@ -81,6 +87,7 @@ li {
     box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
 }
 
+/* 1つのToDoアイテムをまとめる枠 */
 /* flex container 適用（配置、方向、サイズを簡単に調整できる） */
 /* センター配置で100%のスペースを使用、flex item を均等に配置*/
 .view {
@@ -90,6 +97,7 @@ li {
     justify-content: space-between;
 }
 
+/* トグル */
 /* 幅 20px、高さ 20px、外側余白右のみ 10px */
 /* 背景色青 */
 .toggle {
@@ -99,6 +107,7 @@ li {
     margin-right: 10px;
 }
 
+/* ToDoアイテムの文字列 */
 /* flex conteiner 中の大きさと配置は通常設定 */
 /* フォントサイズ 18px、長い文の場合の単語分割 */
 label.content {
@@ -108,6 +117,7 @@ label.content {
 }
 
 
+/* ToDoアイテムを完了した時の文字列 */
 /* 取り消し線追加、フォントグレー、不透明度0.6 */
 .completed label.content {
     text-decoration: line-through;
@@ -115,6 +125,7 @@ label.content {
     opacity: 0.6;
 }
 
+/* ToDoアイテム削除ボタン */
 /* 背景色透明（buttonの設定と同じ）、フォント 20px で 赤、ボーダー線なし、ホバー時のポインタ形状(cursor)とボタン形状変化時間(transform)の指定 */
 button.destroy {
     background-color: transparent;
@@ -125,6 +136,7 @@ button.destroy {
     transition: transform 0.2s;
 }
 
+/* ToDoアイテム削除ボタン */
 /* ホバー時のボタン形状を1.2倍 -5deg傾け */
 button.destroy:hover {
     transform: scale(1.2) rotate(-5deg);
