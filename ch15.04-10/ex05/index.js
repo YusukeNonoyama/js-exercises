@@ -1,12 +1,11 @@
 customElements.define("inline-circle", class InlineCircle
     extends HTMLElement {
+    // カスタム要素のインスタンスがドキュメントに挿入されると呼び出される
     connectedCallback() {
         this.style.display = "inline-block";
         this.style.borderRadius = "50%";
         this.style.borderStyle = "solid";
         this.style.borderColor = "black";
-        // this.style.border = "solid black 1px";
-        // this.style.borderWidth = "1px";
         if (!this.style.borderWidth) {
             this.style.borderWidth = "1px";
         }
@@ -16,34 +15,27 @@ customElements.define("inline-circle", class InlineCircle
             this.style.height = "0.8em";
         }
     }
+    // この属性が変化した時にattributeChangedCallback()が呼び出される
     static get observedAttributes() {
         return ["diameter", "color", "border-width"];
     }
-    // This callback is invoked when one of the attributes listed above
-    // changes, either when the custom element is first parsed, or later.
+    // 上で指定した属性が変化した時に呼び出される
     attributeChangedCallback(name, oldValue, newValue) {
         switch (name) {
             case "diameter":
-                // If the diameter attribute changes, update the size styles
                 this.style.width = newValue;
                 this.style.height = newValue;
                 break;
             case "color":
-                // If the color attribute changes, update the color styles
                 console.log("hello color");
                 this.style.backgroundColor = newValue;
                 break;
-            case "border-width": // 加えた属性
+            case "border-width": // ボーダー線幅の属性を追加
                 console.log("hello border width");
                 this.style.borderWidth = newValue;
                 break;
         }
     }
-    // Define JavaScript properties that correspond to the element's
-    // attributes. These getters and setters just get and set the underlying
-    // attributes. If a JavaScript property is set, that sets the attribute
-    // which triggers a call to attributeChangedCallback() which updates
-    // the element styles.
     get diameter() { return this.getAttribute("diameter"); }
     set diameter(diameter) {
         this.setAttribute("diameter",
