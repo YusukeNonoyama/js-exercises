@@ -24,7 +24,7 @@ class TodoApp extends HTMLElement {
         this.input = this.shadowRoot.querySelector("#new-todo");
         this.list = this.shadowRoot.querySelector("#todo-list");
 
-        // li のテンプレートを追加
+        // TODO リストのアイテムのテンプレートを追加
         const templateLi = document.createElement("template");
         templateLi.innerHTML = `\
         <li>
@@ -44,6 +44,7 @@ class TodoApp extends HTMLElement {
             const todo = this.input.value.trim();
             this.input.value = "";
 
+            // TODO リストのアイテムをクローン
             const clone = templateLi.content.cloneNode(true);
             const li = clone.querySelector("li");
             const toggle = clone.querySelector("input");
@@ -62,11 +63,6 @@ class TodoApp extends HTMLElement {
         })
     }
 
-    attributeChangedCallback(name, oldValue, newValue) {
-        // TodoAPP には
-    }
 }
-
-TodoApp.observedAttributes = [""];
 
 customElements.define("todo-app", TodoApp);
