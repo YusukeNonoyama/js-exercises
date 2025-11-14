@@ -58,8 +58,6 @@ document.getElementById("image").addEventListener("change", (event) => {
         // (r, g, b, α) × 画素分の型付き配列
         const outputData = new Uint8ClampedArray(imageData.data.length);
 
-        console.log(outputData);
-
         // 開始点のオフセット分の除いたすべての画素をループ
         for (let y = kernelOffset; y < height - kernelOffset; y++) {
             for (let x = kernelOffset; x < width - kernelOffset; x++) {
@@ -70,7 +68,9 @@ document.getElementById("image").addEventListener("change", (event) => {
                 // 計算対象の画素からカーネルのサイズ分をループしてr, g, b をそれぞれ計算
                 for (let ky = -kernelOffset; ky <= kernelOffset; ky++) {
                     for (let kx = -kernelOffset; kx <= kernelOffset; kx++) {
-                        // 計算対象の画素 (x, y)、に対してカーネルサイズ（kx, ky）の範囲の座標を計算
+                        // (x, y)：計算対象の画素座標 
+                        //（kx, ky）：カーネルの座標（カーネル中心が（0, 0））
+                        //（px, py）：このループの変数
                         const px = x + kx;
                         const py = y + ky;
                         // カーネルのウエイトを参照
@@ -96,14 +96,6 @@ document.getElementById("image").addEventListener("change", (event) => {
         const outputImageData = new ImageData(outputData, img.width, img.height);
         filteredCtx.putImageData(outputImageData, 0, 0);
 
-        // for (let i = 0; i < data.length; i += 4) {
-        //     const avg = (data[i] + data[i + 1] + data[i + 2]) / 3;
-        //     data[i] = avg;
-        //     data[i + 1] = avg;
-        //     data[i + 2] = avg;
-        // }
-
-        // filteredCtx.putImageData(imageData, 0, 0);
     });
 
     reader.readAsDataURL(file);
