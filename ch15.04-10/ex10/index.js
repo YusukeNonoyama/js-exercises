@@ -52,13 +52,12 @@ function updateGrid(grid) {
             let numOfAlive = 0;
             neighbours.forEach((nPos) => {
                 const pos = [row + nPos[0], col + nPos[1]];
-                // 境界セルの場合は定義されていないセルをスキップ
+                // 計算対象のセルがグリッドの中のものだけを計算対象にして生存数を加算
                 if (pos.every(e => e >= 0 && e < 50)) {
-                    // if (pos.every(e => e >= 0)) {
                     numOfAlive += grid[pos[0]][pos[1]]
                 }
             })
-            // 対象セイルが生存の場合の周囲のセルの生存数
+            // 対象セルが生存の場合の周囲のセルの生存数
             // * ２未満なら or ４以上なら false(dead)
             // * ２、３なら true(alive)
             // 対象セイルが死の場合の周囲のセルの生存数
