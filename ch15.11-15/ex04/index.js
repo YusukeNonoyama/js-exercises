@@ -46,6 +46,10 @@ form.addEventListener("submit", (e) => {
   id += 1;
 });
 
+window.addEventListener("storage", () => {
+  location.reload();
+})
+
 function appendToDoItem(todoList, id) {
 
   // ここから #todo-list に追加する要素を構築する1
