@@ -46,10 +46,6 @@ form.addEventListener("submit", (e) => {
   id += 1;
 });
 
-// window.addEventListener("storage", () => {
-//   location.reload();
-// })
-
 function appendToDoItem(todoList, id) {
   const item = todoList.find(o => o.id === id);
 

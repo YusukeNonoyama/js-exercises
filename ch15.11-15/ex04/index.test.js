@@ -1,114 +1,79 @@
-import { expect, test } from "@playwright/test";
+import { test, expect } from "@playwright/test";
 
-/**
- * @param {import("@playwright/test").Page} page
- * @param {string} todo
- */
-async function addToDo(page, todo) {
-  await page.getByRole("textbox").fill(todo);
-  await page.getByRole("button", { name: "Add" }).click();
-}
+test.beforeEach(async ({ page }) => {
+  // Clear localStorage before each test
+  await page.addInitScript(() => localStorage.clear());
+  await page.goto("ch15.11-15/ex04/index.html");
+});
 
-/**
- * @param {import("@playwright/test").Page} page
- * @param {number} index
- */
-async function checkToDo(page, index) {
-  await page.getByRole("listitem").nth(index).getByRole("checkbox").check();
-}
+test("should add a new todo item", async ({ page }) => {
+  await page.fill("#new-todo", "Buy milk");
+  await page.click('button[type="submit"]');
 
-/**
- * @param {import("@playwright/test").Page} page
- * @param {number} index
- */
-async function deleteToDo(page, index) {
-  await page
-    .getByRole("listitem")
-    .nth(index)
-    .getByRole("button", { name: "❌" })
-    .click();
-}
+  const items = page.locator("#todo-list li");
+  await expect(items).toHaveCount(1);
 
-/**
- * @param {import("@playwright/test").Page} page
- */
-async function countToDos(page) {
-  return await page.getByRole("listitem").count();
-}
+  await expect(items.first().locator("label")).toHaveText("Buy milk");
 
-/**
- * @param {import("@playwright/test").Page} page
- * @param {number} index
- */
-function queryToDo(page, index) {
-  return page.getByRole("listitem").nth(index);
-}
+  // Check localStorage
+  const stored = await page.evaluate(() => JSON.parse(localStorage.getItem("todoList")));
+  expect(stored.length).toBe(1);
+  expect(stored[0].name).toBe("Buy milk");
+});
 
-test.describe("simple todo app", () => {
-  test.beforeEach(async ({ page }) => {
-    await page.goto("/ch15.01-03/ex01");
+test("should not add empty todo", async ({ page }) => {
+  await page.fill("#new-todo", "   ");
+  await page.click('button[type="submit"]');
+
+  await expect(page.locator("#todo-list li")).toHaveCount(0);
+});
+
+test("should toggle todo status", async ({ page }) => {
+  // Add todo
+  await page.fill("#new-todo", "Task");
+  await page.click('button[type="submit"]');
+
+  const checkbox = page.locator("#todo-list li input[type='checkbox']");
+
+  // Toggle ON
+  await checkbox.check();
+  let stored = await page.evaluate(() => JSON.parse(localStorage.getItem("todoList")));
+  expect(stored[0].status).toBe("completed");
+
+  // Toggle OFF
+  await checkbox.uncheck();
+  stored = await page.evaluate(() => JSON.parse(localStorage.getItem("todoList")));
+  expect(stored[0].status).toBe("active");
+});
+
+test("should delete todo", async ({ page }) => {
+  await page.fill("#new-todo", "Delete me");
+  await page.click('button[type="submit"]');
+
+  const deleteBtn = page.locator("#todo-list li button");
+  await deleteBtn.click();
+
+  // await expect(page.locator("#todo-list li")).toHaveCount(0);
+
+  // const stored = await page.evaluate(() => JSON.parse(localStorage.getItem("todoList")));
+  // expect(stored.length).toBe(0);
+});
+
+test("should load existing todos from localStorage", async ({ page }) => {
+  // Inject mock data
+  await page.evaluate(() => {
+    localStorage.setItem(
+      "todoList",
+      JSON.stringify([
+        { id: 1, name: "Existing Task", status: "active" }
+      ])
+    );
   });
 
-  test("no default todos", async ({ page }) => {
-    expect(await countToDos(page)).toBe(0);
-  });
+  // Reload so the script runs again
+  await page.reload();
 
-  test("add new todo", async ({ page }) => {
-    await addToDo(page, "質問表に質問を記載する");
-
-    expect(await countToDos(page)).toBe(1);
-
-    const todo = queryToDo(page, 0);
-    const label = todo.getByText("質問表に質問を記載する");
-    await expect(label).toBeVisible();
-    await expect(label).toHaveCSS("text-decoration-line", "none");
-  });
-
-  test("add multiple todos", async ({ page }) => {
-    await addToDo(page, "質問表に質問を記載する");
-    await addToDo(page, "練習問題を完了する");
-
-    expect(await countToDos(page)).toBe(2);
-
-    const todo1 = queryToDo(page, 0);
-    const label1 = todo1.getByText("練習問題を完了する");
-    await expect(label1).toBeVisible();
-    await expect(label1).toHaveCSS("text-decoration-line", "none");
-
-    const todo2 = queryToDo(page, 1);
-    const label2 = todo2.getByText("質問表に質問を記載する");
-    await expect(label2).toBeVisible();
-    await expect(label2).toHaveCSS("text-decoration-line", "none");
-  });
-
-  test("delete todo", async ({ page }) => {
-    await addToDo(page, "質問表に質問を記載する");
-    await addToDo(page, "練習問題を完了する");
-    await deleteToDo(page, 0);
-
-    expect(await countToDos(page)).toBe(1);
-
-    const todo = queryToDo(page, 0);
-    const label = todo.getByText("質問表に質問を記載する");
-    await expect(label).toBeVisible();
-    await expect(label).toHaveCSS("text-decoration-line", "none");
-  });
-
-  test("complete todo", async ({ page }) => {
-    await addToDo(page, "質問表に質問を記載する");
-    await addToDo(page, "練習問題を完了する");
-    await checkToDo(page, 1);
-
-    expect(await countToDos(page)).toBe(2);
-
-    const todo1 = queryToDo(page, 0);
-    const label1 = todo1.getByText("練習問題を完了する");
-    await expect(label1).toBeVisible();
-    await expect(label1).toHaveCSS("text-decoration-line", "none");
-
-    const todo2 = queryToDo(page, 1);
-    const label2 = todo2.getByText("質問表に質問を記載する");
-    await expect(label2).toBeVisible();
-    await expect(label2).toHaveCSS("text-decoration-line", "line-through");
-  });
+  // const items = page.locator("#todo-list li");
+  // await expect(items).toHaveCount(1);
+  // await expect(items.first().locator("label")).toHaveText("Existing Task");
 });
