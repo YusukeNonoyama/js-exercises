@@ -51,16 +51,16 @@ window.addEventListener("storage", () => {
 })
 
 function appendToDoItem(todoList, id) {
-
-  // ここから #todo-list に追加する要素を構築する1
   const item = todoList.find(o => o.id === id);
 
   const elem = document.createElement("li");
   const label = document.createElement("label");
+  const toggle = document.createElement("input");
+  const destroy = document.createElement("button");
+  const div = document.createElement("div");
+
   label.textContent = item["name"];
   label.style.textDecorationLine = "none";
-
-  const toggle = document.createElement("input");
 
   if (item.status === "completed") {
     label.style.textDecorationLine = "line-through";
@@ -70,7 +70,6 @@ function appendToDoItem(todoList, id) {
     toggle.checked = false;
   }
 
-  // TODO: toggle が変化 (change) した際に label.style.textDecorationLine を変更しなさい
   toggle.type = "checkbox";
   toggle.onchange = function () {
     if (toggle.checked) {
@@ -84,8 +83,6 @@ function appendToDoItem(todoList, id) {
     console.log("toggle: ", todoList);
   };
 
-  const destroy = document.createElement("button");
-  // TODO: destroy がクリック (click) された場合に elem を削除しなさい
   destroy.textContent = "❌";
   destroy.onclick = function () {
     const index = todoList.findIndex(o => o.id === id);
@@ -97,8 +94,6 @@ function appendToDoItem(todoList, id) {
 
   };
 
-  // TODO: elem 内に toggle, label, destroy を追加しなさい
-  const div = document.createElement("div");
   div.append(toggle, label, destroy);
   elem.append(div);
   list.prepend(elem);
