@@ -51,7 +51,6 @@ test("ToDoアイテムの削除", async ({ page }) => {
 });
 
 test("リロード時にlocalStorageにあるデータを読込み", async ({ page }) => {
-  // Inject mock data
   await page.evaluate(() => {
     localStorage.setItem(
       "todoList",
@@ -61,9 +60,7 @@ test("リロード時にlocalStorageにあるデータを読込み", async ({ pa
     );
   });
 
-  // Reload so the script runs again
   await page.reload();
-  // await page.addInitScript(() => localStorage.clear());
 
   const items = page.locator("#todo-list li");
   await expect(items).toHaveCount(1);
@@ -71,25 +68,19 @@ test("リロード時にlocalStorageにあるデータを読込み", async ({ pa
 });
 
 test("変更内容を他のタブへ自動反映する", async ({ browser }) => {
-  // Create a shared browser context
   const context = await browser.newContext();
 
-  // Page A (first window)
   const pageA = await context.newPage();
   await pageA.goto("/ch15.11-15/ex04/index.html");
   await pageA.evaluate(() => localStorage.clear());
 
-  // Page B (second window)
   const pageB = await context.newPage();
   await pageB.goto("/ch15.11-15/ex04/index.html");
 
-  // ---- Add a todo in Page A ----
   await pageA.fill("#new-todo", "アンケートを書く");
   await pageA.click('button[type="submit"]');
 
-  // ---- Page B should receive storage event and reload ----
   const itemInB = pageB.locator("#todo-list li label");
 
-  // Wait for reload + render
   await expect(itemInB).toHaveText("アンケートを書く");
 });

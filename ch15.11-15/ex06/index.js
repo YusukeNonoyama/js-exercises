@@ -85,7 +85,8 @@ function appendToDoItem(todoList, id) {
     todoList.splice(index, 1);
     console.log("deleted:", todoList);
 
-    elem.style.display = "none";
+    // elem.style.display = "none";
+    elem.remove();
     sessionStorage.setItem("todoList", JSON.stringify(todoList));
 
   };
