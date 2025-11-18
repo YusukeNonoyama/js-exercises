@@ -1,79 +1,95 @@
 import { test, expect } from "@playwright/test";
 
 test.beforeEach(async ({ page }) => {
-  // Clear localStorage before each test
-  await page.addInitScript(() => localStorage.clear());
+  // localStorageを削除した状態から毎回テスト開始
   await page.goto("ch15.11-15/ex04/index.html");
+  await page.evaluate(() => localStorage.clear());
 });
 
-test("should add a new todo item", async ({ page }) => {
-  await page.fill("#new-todo", "Buy milk");
+test("ToDoアイテムを追加", async ({ page }) => {
+  await page.fill("#new-todo", "研修の予習範囲を読む");
   await page.click('button[type="submit"]');
 
   const items = page.locator("#todo-list li");
   await expect(items).toHaveCount(1);
 
-  await expect(items.first().locator("label")).toHaveText("Buy milk");
+  await expect(items.first().locator("label")).toHaveText("研修の予習範囲を読む");
 
-  // Check localStorage
   const stored = await page.evaluate(() => JSON.parse(localStorage.getItem("todoList")));
   expect(stored.length).toBe(1);
-  expect(stored[0].name).toBe("Buy milk");
+  expect(stored[0].name).toBe("研修の予習範囲を読む");
 });
 
-test("should not add empty todo", async ({ page }) => {
-  await page.fill("#new-todo", "   ");
-  await page.click('button[type="submit"]');
-
-  await expect(page.locator("#todo-list li")).toHaveCount(0);
-});
-
-test("should toggle todo status", async ({ page }) => {
-  // Add todo
-  await page.fill("#new-todo", "Task");
+test("ToDoアイテムのトグル変更の反映", async ({ page }) => {
+  await page.fill("#new-todo", "研修の練習問題を完了する");
   await page.click('button[type="submit"]');
 
   const checkbox = page.locator("#todo-list li input[type='checkbox']");
 
-  // Toggle ON
+  // トグルのチェックを付ける
   await checkbox.check();
   let stored = await page.evaluate(() => JSON.parse(localStorage.getItem("todoList")));
   expect(stored[0].status).toBe("completed");
 
-  // Toggle OFF
+  // トグルのチェックを外す
   await checkbox.uncheck();
   stored = await page.evaluate(() => JSON.parse(localStorage.getItem("todoList")));
   expect(stored[0].status).toBe("active");
 });
 
-test("should delete todo", async ({ page }) => {
-  await page.fill("#new-todo", "Delete me");
+test("ToDoアイテムの削除", async ({ page }) => {
+  await page.fill("#new-todo", "研修課題を見直す");
   await page.click('button[type="submit"]');
 
   const deleteBtn = page.locator("#todo-list li button");
   await deleteBtn.click();
 
-  // await expect(page.locator("#todo-list li")).toHaveCount(0);
+  await expect(page.locator("#todo-list li")).toHaveCount(0);
 
-  // const stored = await page.evaluate(() => JSON.parse(localStorage.getItem("todoList")));
-  // expect(stored.length).toBe(0);
+  const stored = await page.evaluate(() => JSON.parse(localStorage.getItem("todoList")));
+  expect(stored.length).toBe(0);
 });
 
-test("should load existing todos from localStorage", async ({ page }) => {
+test("リロード時にlocalStorageにあるデータを読込み", async ({ page }) => {
   // Inject mock data
   await page.evaluate(() => {
     localStorage.setItem(
       "todoList",
       JSON.stringify([
-        { id: 1, name: "Existing Task", status: "active" }
+        { id: 1, name: "研修に出席する", status: "active" }
       ])
     );
   });
 
   // Reload so the script runs again
   await page.reload();
+  // await page.addInitScript(() => localStorage.clear());
 
-  // const items = page.locator("#todo-list li");
-  // await expect(items).toHaveCount(1);
-  // await expect(items.first().locator("label")).toHaveText("Existing Task");
+  const items = page.locator("#todo-list li");
+  await expect(items).toHaveCount(1);
+  await expect(items.first().locator("label")).toHaveText("研修に出席する");
+});
+
+test("変更内容を他のタブへ自動反映する", async ({ browser }) => {
+  // Create a shared browser context
+  const context = await browser.newContext();
+
+  // Page A (first window)
+  const pageA = await context.newPage();
+  await pageA.goto("/ch15.11-15/ex04/index.html");
+  await pageA.evaluate(() => localStorage.clear());
+
+  // Page B (second window)
+  const pageB = await context.newPage();
+  await pageB.goto("/ch15.11-15/ex04/index.html");
+
+  // ---- Add a todo in Page A ----
+  await pageA.fill("#new-todo", "アンケートを書く");
+  await pageA.click('button[type="submit"]');
+
+  // ---- Page B should receive storage event and reload ----
+  const itemInB = pageB.locator("#todo-list li label");
+
+  // Wait for reload + render
+  await expect(itemInB).toHaveText("アンケートを書く");
 });

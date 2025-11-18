@@ -90,6 +90,7 @@ function appendToDoItem(todoList, id) {
     console.log("deleted:", todoList);
 
     elem.style.display = "none";
+    elem.remove();
     localStorage.setItem("todoList", JSON.stringify(todoList));
 
   };
