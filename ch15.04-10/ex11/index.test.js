@@ -13,7 +13,7 @@ test.describe("Todo App hashchange", () => {
         const items = page.locator("#todo-list li");
         await expect(items).toHaveCount(1);
         await expect(items.nth(0).locator("label")).toHaveText("研修の予習範囲を読む");
-        await expect(items.nth(0)).not.toHaveClass(/completed/);
+        await expect(items.nth(0)).not.toHaveClass("completed");
     });
 
     test("トグルをチェックするとcompletedになる", async ({ page }) => {
@@ -23,10 +23,10 @@ test.describe("Todo App hashchange", () => {
         const firstToggle = page.locator("#todo-list li input.toggle").first();
 
         await firstToggle.check();
-        await expect(page.locator("#todo-list li").first()).toHaveClass(/completed/);
+        await expect(page.locator("#todo-list li").first()).toHaveClass("completed");
 
         await firstToggle.uncheck();
-        await expect(page.locator("#todo-list li").first()).not.toHaveClass(/completed/);
+        await expect(page.locator("#todo-list li").first()).not.toHaveClass("completed");
     });
 
     test("todoを削除する", async ({ page }) => {
