@@ -3,25 +3,24 @@ import { test, expect } from "@playwright/test";
 /**
  * Helper: read all todos from IndexedDB inside the browser context
  */
+
 async function readIndexedDB(page) {
   return await page.evaluate(async () => {
-    const DB_NAME = "todoDB";
     const STORE_NAME = "todos";
 
     return new Promise((resolve, reject) => {
-      const request = indexedDB.open(DB_NAME);
-
-      request.onsuccess = (event) => {
-        const db = event.target.result;
-        const tx = db.transaction([STORE_NAME], "readonly");
-        const store = tx.objectStore(STORE_NAME);
-        const getAllReq = store.getAll();
-
-        getAllReq.onsuccess = () => resolve(getAllReq.result);
-        getAllReq.onerror = () => reject(getAllReq.error);
-      };
+      const request = indexedDB.open("todoDB");
 
       request.onerror = () => reject(request.error);
+      request.onsuccess = () => {
+        const db = request.result;
+        const transaction = db.transaction([STORE_NAME], "readonly");
+        const store = transaction.objectStore(STORE_NAME);
+        const getAllReq = store.getAll();
+
+        getAllReq.onerror = () => reject(getAllReq.error);
+        getAllReq.onsuccess = () => resolve(getAllReq.result);
+      };
     });
   });
 }
@@ -116,10 +115,10 @@ test("リロード時にIndexedDBにあるデータを読込み", async ({ page 
 
       req.onsuccess = (event) => {
         const db = event.target.result;
-        const tx = db.transaction(["todos"], "readwrite");
-        const store = tx.objectStore("todos");
+        const transaction = db.transaction(["todos"], "readwrite");
+        const store = transaction.objectStore("todos");
         store.put({ id: 1, name: "研修に出席する", status: "active" });
-        tx.oncomplete = resolve;
+        transaction.oncomplete = resolve;
       };
 
       req.onerror = reject;

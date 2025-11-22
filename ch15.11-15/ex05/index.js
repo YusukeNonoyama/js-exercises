@@ -22,15 +22,12 @@ function withDB(callback) {
 function initdb(db, callback) {
   const store = db.createObjectStore(STORE_NAME, {
     keyPath: "id",
-    autoIncrement: true,  // TODO：なぜ必要？
+    autoIncrement: true,  // 自動でid設定
   });
   store.createIndex("status", "status", { unique: false });
-  // テキストのようにデータ取得はここでは不要
 }
 
-/**
- * ToDo を読み込んでレンダリング
- */
+
 function loadTodos() {
   withDB((db) => {
     const transaction = db.transaction([STORE_NAME]);
@@ -50,55 +47,23 @@ function loadTodos() {
   });
 }
 
-/**
- * ToDo を追加
- */
-function addTodo(name) {
-  withDB((db) => {
-    const transaction = db.transaction([STORE_NAME], "readwrite");
-    const store = transaction.objectStore(STORE_NAME);
-
-    const newItem = {
-      name,
-      status: "active",
-    };
-
-    const request = store.add(newItem);
-
-    request.onsuccess = (event) => {
-      const newId = event.target.result;
-      const addedItem = { ...newItem, id: newId };
-
-      todoList.push(addedItem);
-      appendToDoItem(addedItem);
-
-      todoChannel.postMessage('update');
-    };
-
-    request.onerror = (event) => {
-      console.error("Error adding todo:", event.target.errorCode);
-    };
-  });
-}
-
-/**
- * ToDo のステータスを更新
- */
 function updateTodoStatus(id, newStatus) {
   withDB((db) => {
     const transaction = db.transaction([STORE_NAME], "readwrite");
     const store = transaction.objectStore(STORE_NAME);
 
-    const getRequest = store.get(id);
+    const request = store.get(id);
 
-    getRequest.onsuccess = (event) => {
-      const item = event.target.result;
+    request.onerror = console.error;
+    request.onsuccess = () => {
+      const item = request.result;
       if (!item) return;
 
       item.status = newStatus;
 
       const updateRequest = store.put(item);
 
+      updateRequest.onerror = console.error;
       updateRequest.onsuccess = () => {
         const idx = todoList.findIndex(o => o.id === id);
         if (idx !== -1) {
@@ -107,21 +72,10 @@ function updateTodoStatus(id, newStatus) {
 
         todoChannel.postMessage('update');
       };
-
-      updateRequest.onerror = (event) => {
-        console.error("Error updating todo:", event.target.errorCode);
-      };
-    };
-
-    getRequest.onerror = (event) => {
-      console.error("Error getting todo:", event.target.errorCode);
     };
   });
 }
 
-/**
- * ToDo を削除
- */
 function deleteTodo(id, elem) {
   withDB((db) => {
     const transaction = db.transaction([STORE_NAME], "readwrite");
@@ -129,16 +83,13 @@ function deleteTodo(id, elem) {
 
     const request = store.delete(id);
 
+    request.onerror = console.error;
     request.onsuccess = () => {
       const index = todoList.findIndex(o => o.id === id);
       if (index !== -1) todoList.splice(index, 1);
 
       elem.remove();
       todoChannel.postMessage('update');
-    };
-
-    request.onerror = (event) => {
-      console.error("Error deleting todo:", event.target.errorCode);
     };
   });
 }
@@ -181,11 +132,35 @@ form.addEventListener("submit", (e) => {
   e.preventDefault();
   const todoName = input.value.trim();
   if (todoName === "") return;
-  addTodo(todoName);
+  addTodotoDB(todoName);
   input.value = "";
 });
 
-// 初回ロード
+function addTodotoDB(name) {
+  withDB((db) => {
+    const transaction = db.transaction([STORE_NAME], "readwrite");
+    const store = transaction.objectStore(STORE_NAME);
+
+    const newItem = {
+      name,
+      status: "active",
+    };
+
+    const request = store.add(newItem);
+
+    request.onerror = console.error;
+    request.onsuccess = (event) => {
+      const newId = event.target.result;
+      const addedItem = { ...newItem, id: newId };
+
+      todoList.push(addedItem);
+      appendToDoItem(addedItem);
+
+      todoChannel.postMessage('update');
+    };
+  });
+}
+
 loadTodos();
 
 todoChannel.onmessage = (event) => {
