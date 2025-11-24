@@ -75,6 +75,7 @@ test("ToDoアイテムのトグル変更の反映", async ({ page }) => {
   let stored = await readIndexedDB(page);
   expect(stored[0].status).toBe("completed");
 
+
   // toggle OFF
   await checkbox.uncheck();
   stored = await readIndexedDB(page);

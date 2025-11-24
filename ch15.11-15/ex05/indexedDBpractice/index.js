@@ -27,12 +27,11 @@ btnCreateDB.addEventListener("click", () => {
     request.onupgradeneeded = () => {
         const db = request.result;
         const store = db.createObjectStore(dbName, { keyPath: "id", autoIncrement: true });
-        store.createIndex("id", "text");
+        store.createIndex("status", "status");
         console.log(`${dbName} created`);
     }
     inputCreateDB.value = "";
 });
-
 
 btnDeleteDB.addEventListener("click", () => {
     const deleteDB = inputDeleteDB.value.trim();
@@ -42,6 +41,20 @@ btnDeleteDB.addEventListener("click", () => {
         console.log("database is successfully deleted")
     }
     inputDeleteDB.value = "";
+});
+
+btnReadItems.addEventListener("click", () => {
+    const request = indexedDB.open(dbName, 1);
+    request.onerror = console.error;
+    request.onsuccess = () => {
+        const db = request.result;
+        const transaction = db.transaction([dbName], "readwrite");
+        const store = transaction.objectStore(dbName);
+        const getRequest = store.getAll();
+        getRequest.onsuccess = () => {
+            console.log(`all items for: ${dbName}`, getRequest.result);
+        }
+    }
 });
 
 btnAddItem.addEventListener("click", () => {
@@ -56,22 +69,6 @@ btnAddItem.addEventListener("click", () => {
         console.log("item added:", newItem);
     }
     inputAddItem.value = "";
-});
-
-btnReadItems.addEventListener("click", () => {
-    const request = indexedDB.open(dbName, 1);
-    request.onerror = console.error;
-    request.onsuccess = () => {
-        const db = request.result;
-        const transaction = db.transaction([dbName], "readwrite");
-        const store = transaction.objectStore(dbName);
-        const getRequest = store.getAll();
-        getRequest.onsuccess = () => {
-            console.log(`all items for: ${dbName}`, getRequest.result);
-        }
-
-        // console.log("objectStore: ", transaction.objectStore("myTestDB")).index("id");
-    }
 });
 
 btnDeleteItem.addEventListener("click", () => {

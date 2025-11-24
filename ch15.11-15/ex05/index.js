@@ -2,98 +2,53 @@ const form = document.querySelector("#new-todo-form");
 const list = document.querySelector("#todo-list");
 const input = document.querySelector("#new-todo");
 
-const todoChannel = new BroadcastChannel('todo-channel');
-
-let todoList = [];
+const DB_NAME = "todoDB"
 const STORE_NAME = "todos";
 
-// DBを開いてコンテキストを渡すcallbackに渡す関数
+// 同一オリジンのチャネルへのインターフェース（変更を別タブに反映するために追加）
+const todoChannel = new BroadcastChannel('todo-channel');
+
+// DBを開いてDBインスタンスをcallbackに渡す関数
 function withDB(callback) {
-  const request = indexedDB.open("todoDB", 1);
+  const request = indexedDB.open(DB_NAME, 1);
   request.onerror = console.error;
   request.onsuccess = () => {
     const db = request.result;
     callback(db);
   };
-
-  request.onupgradeneeded = () => { initdb(request.result, callback); };
+  // DBがなければ新規作成する
+  request.onupgradeneeded = () => {
+    const db = request.result;
+    const store = db.createObjectStore(STORE_NAME, {
+      keyPath: "id",
+      autoIncrement: true,  // 自動でid設定
+    });
+    // statusをインデックスに追加する（TODO：テストで使えてない）
+    store.createIndex("status", "status", { unique: false });
+  };
 }
 
-function initdb(db, callback) {
-  const store = db.createObjectStore(STORE_NAME, {
-    keyPath: "id",
-    autoIncrement: true,  // 自動でid設定
-  });
-  store.createIndex("status", "status", { unique: false });
-}
-
+// DBを読んでレンダーする
 function loadTodos() {
   withDB((db) => {
     const transaction = db.transaction([STORE_NAME]);
     const store = transaction.objectStore(STORE_NAME);
 
-    const request = store.getAll();
+    const request = store.getAll(); // DB内の全てのアイテムを取得
 
     request.onerror = console.error;
     request.onsuccess = () => {
-      todoList = request.result;
-
+      // 取得したアイテムをループしてDOMに追加
       list.innerHTML = "";
-      for (const item of todoList) {
-        appendToDoItem(item);
+      for (const item of request.result) {
+        appendItemToDom(item);
       }
     };
   });
 }
 
-function updateTodoStatus(id, newStatus) {
-  withDB((db) => {
-    const transaction = db.transaction([STORE_NAME], "readwrite");
-    const store = transaction.objectStore(STORE_NAME);
-
-    const request = store.get(id);
-
-    request.onerror = console.error;
-    request.onsuccess = () => {
-      const item = request.result;
-      if (!item) return;
-
-      item.status = newStatus;
-
-      const updateRequest = store.put(item);
-
-      updateRequest.onerror = console.error;
-      updateRequest.onsuccess = () => {
-        const idx = todoList.findIndex(o => o.id === id);
-        if (idx !== -1) {
-          todoList[idx].status = newStatus;
-        }
-
-        todoChannel.postMessage('update');
-      };
-    };
-  });
-}
-
-function deleteTodo(id, elem) {
-  withDB((db) => {
-    const transaction = db.transaction([STORE_NAME], "readwrite");
-    const store = transaction.objectStore(STORE_NAME);
-
-    const request = store.delete(id);
-
-    request.onerror = console.error;
-    request.onsuccess = () => {
-      const index = todoList.findIndex(o => o.id === id);
-      if (index !== -1) todoList.splice(index, 1);
-
-      elem.remove();
-      todoChannel.postMessage('update');
-    };
-  });
-}
-
-function appendToDoItem(item) {
+// アイテムをDOMに追加
+function appendItemToDom(item) {
   const elem = document.createElement("li");
   const label = document.createElement("label");
   const toggle = document.createElement("input");
@@ -101,7 +56,10 @@ function appendToDoItem(item) {
   const div = document.createElement("div");
 
   label.textContent = item.name;
+  toggle.type = "checkbox";
+  destroy.textContent = "❌";
 
+  // アイテムの状態をDOMに反映
   if (item.status === "completed") {
     label.style.textDecorationLine = "line-through";
     toggle.checked = true;
@@ -110,16 +68,16 @@ function appendToDoItem(item) {
     toggle.checked = false;
   }
 
-  toggle.type = "checkbox";
+  // トグル変更時の挙動を定義
   toggle.onchange = function () {
     const newStatus = toggle.checked ? "completed" : "active";
     label.style.textDecorationLine = toggle.checked ? "line-through" : "none";
     updateTodoStatus(item.id, newStatus);
   };
 
-  destroy.textContent = "❌";
+  // アイテム削除時の挙動を定義
   destroy.onclick = function () {
-    deleteTodo(item.id, elem);
+    deleteItem(item.id, elem);
   };
 
   div.append(toggle, label, destroy);
@@ -127,15 +85,57 @@ function appendToDoItem(item) {
   list.prepend(elem);
 }
 
+// ToDoアイテムのステータスを変更（active/completed）
+function updateTodoStatus(id, newStatus) {
+  withDB((db) => {
+    const transaction = db.transaction([STORE_NAME], "readwrite");
+    const store = transaction.objectStore(STORE_NAME);
+
+    const request = store.get(id);  // 特定のidのアイテムを取得
+
+    request.onerror = console.error;
+    request.onsuccess = () => {
+      const item = request.result;
+      if (!item) return;
+
+      // ステータスを変更
+      item.status = newStatus;
+      const updateRequest = store.put(item);
+
+      updateRequest.onerror = console.error;
+      updateRequest.onsuccess = () => {
+        todoChannel.postMessage('update');
+      };
+    };
+  });
+}
+
+// ToDoアイテムの削除
+function deleteItem(id, elem) {
+  withDB((db) => {
+    const transaction = db.transaction([STORE_NAME], "readwrite");
+    const store = transaction.objectStore(STORE_NAME);
+
+    const request = store.delete(id); // 特定のidのアイテムを削除
+
+    request.onerror = console.error;
+    request.onsuccess = () => {
+      elem.remove(); // DOMからも削除
+      todoChannel.postMessage('update');
+    };
+  });
+}
+
+// アイテムの追加の挙動を定義
 form.addEventListener("submit", (e) => {
   e.preventDefault();
   const todoName = input.value.trim();
   if (todoName === "") return;
-  addTodotoDB(todoName);
+  addItemToDB(todoName);
   input.value = "";
 });
 
-function addTodotoDB(name) {
+function addItemToDB(name) {
   withDB((db) => {
     const transaction = db.transaction([STORE_NAME], "readwrite");
     const store = transaction.objectStore(STORE_NAME);
@@ -152,19 +152,18 @@ function addTodotoDB(name) {
       const newId = event.target.result;
       const addedItem = { ...newItem, id: newId };
 
-      todoList.push(addedItem);
-      appendToDoItem(addedItem);
-
+      appendItemToDom(addedItem);
       todoChannel.postMessage('update');
     };
   });
 }
 
-loadTodos();
-
+// チャネルに更新があったときにトリガーされ、メッセージが"update"の場合にloadTodosする（DBを読んでレンダー）
 todoChannel.onmessage = (event) => {
   if (event.data === 'update') {
-    console.log("Received update from another tab. Reloading...");
     loadTodos();
   }
 };
+
+// ブラウザロード時の初回レンダー
+loadTodos();
