@@ -65,7 +65,7 @@ btnAddItem.addEventListener("click", () => {
         const db = request.result;
         const transaction = db.transaction([dbName], "readwrite");
         const store = transaction.objectStore(dbName);
-        store.add({ text: newItem });
+        store.add({ status: newItem });
         console.log("item added:", newItem);
     }
     inputAddItem.value = "";
@@ -86,3 +86,22 @@ btnDeleteItem.addEventListener("click", () => {
 });
 
 
+const btnTest = document.querySelector("#btn-test")
+btnTest.addEventListener("click", () => {
+    const request = indexedDB.open(dbName, 1);
+    request.onerror = console.error;
+    request.onsuccess = () => {
+        const db = request.result;
+        const transaction = db.transaction([dbName], "readwrite");
+        const store = transaction.objectStore(dbName);
+        console.log("test script run");
+
+        const index = store.index("status");
+        const requestGetAll = index.getAll("aaa");
+        requestGetAll.onerror = console.error;
+        requestGetAll.onsuccess = () => {
+            console.log("index: aaa", requestGetAll.result);
+        }
+        console.log(index);
+    }
+});
