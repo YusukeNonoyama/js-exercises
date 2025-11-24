@@ -27,7 +27,6 @@ function initdb(db, callback) {
   store.createIndex("status", "status", { unique: false });
 }
 
-
 function loadTodos() {
   withDB((db) => {
     const transaction = db.transaction([STORE_NAME]);
