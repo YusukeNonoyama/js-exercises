@@ -4,14 +4,17 @@ const btnSend = document.querySelector("#ws-send");
 let socket = new WebSocket("ws://localhost:3003");
 
 let requestId = 0;
+
+// リクエストIDとプロミスのresolve関数を保持するマップ
 const pendingRequests = new Map();
 
-// 共通メッセージハンドラ（1つだけ！）
+// メッセージのハンドラ（リクエスト受け取り、レスポンス受け取り）
 socket.addEventListener("message", (event) => {
     const msg = JSON.parse(event.data);
 
-    // 受け取ったら返事する
+    // メッセージがリクエストの場合
     if (msg.type === "request") {
+        // レスポンスを送り返す
         socket.send(JSON.stringify({
             type: "response",
             requestId: msg.requestId,
@@ -20,21 +23,31 @@ socket.addEventListener("message", (event) => {
         return;
     }
 
-    // これはレスポンス
+    // メッセージがレスポンスの場合、タイムアウトしていたら実行しない
     if (msg.type === "response" && pendingRequests.has(msg.requestId)) {
-        pendingRequests.get(msg.requestId)(msg.data);
-        pendingRequests.delete(msg.requestId);
+        // 該当するIDのプロミスを解決する
+        pendingRequests.get(msg.requestId).resolve(msg.data);
+        pendingRequests.delete(msg.requestId); // プロミスが解決したら消す（エラー時に再び呼ばれないよ）
         return;
     }
 });
 
+// WebSocketの接続が切断した場合、その時点で残っているリクエストを全てrejectする
+socket.addEventListener("close", () => {
+    for (const request of pendingRequests) {
+        pendingRequests.get(request[0]).reject("connection closed");;
+        pendingRequests.delete(request[0]);
+    }
+});
+
+// TODO: あとで削除
 btnCheck.addEventListener("click", () => {
     console.log("connection state: ", socket.readyState);
 });
 
+// 送信ボタンを押すとsendRequestが非同期で呼ばれる
 btnSend.addEventListener("click", async () => {
-    requestId++;
-    const id = requestId;
+    const id = ++requestId;
 
     try {
         console.log(`request sent for id ${id}`);
@@ -47,8 +60,9 @@ btnSend.addEventListener("click", async () => {
 
 function sendRequest(data, reqId) {
     return new Promise((resolve, reject) => {
-        pendingRequests.set(reqId, resolve);
+        pendingRequests.set(reqId, { resolve, reject });
 
+        // タイムアウト時にrejectしマップから対象IDの情報を消す。
         setTimeout(() => {
             if (pendingRequests.has(reqId)) {
                 pendingRequests.delete(reqId);
@@ -63,53 +77,3 @@ function sendRequest(data, reqId) {
         }));
     });
 }
-
-
-// const btnCheck = document.querySelector("#ws-check");
-// const btnSend = document.querySelector("#ws-send");
-
-// let socket = new WebSocket("ws://localhost:3003");
-
-// // リクエストを受け取ったブラウザで実行される
-// socket.addEventListener("message", (event) => {
-//     socket.send(`hello, ${event.data}`);
-// });
-
-// btnCheck.addEventListener("click", async () => {
-//     console.log("connection state: ", socket.readyState);
-// });
-
-// let requestId = 0
-
-// btnSend.addEventListener("click", async () => {
-//     requestId++;
-//     let id = requestId;
-
-//     const inputText = "Yuss";
-//     console.log("connected to ws://localhost:3003");
-
-//     try {
-//         console.log(`request sent for id ${id}`);
-//         const response = await sendRequest(inputText);
-//         console.log(`message recieved for id ${id}:`, response);
-//     } catch (e) {
-//         console.log(`error occured for id ${id}: `, e);
-//     }
-//     function sendRequest(text) {
-//         return new Promise((resolve, reject) => {
-
-//             function handleMessage(event) {
-//                 resolve(event.data);
-//                 socket.removeEventListener("message", handleMessage);  // イベントリスナーは毎回削除
-//             }
-
-//             socket.addEventListener("message", handleMessage);
-//             socket.addEventListener("close", () => {
-//                 reject("connection closed");
-//             });
-//             setTimeout(() => reject("timeout"), 8000);
-//             socket.send(text);
-//         })
-//     }
-// });
-
