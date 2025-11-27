@@ -46,7 +46,7 @@ canvas.addEventListener("click", function (evt) {
     const col = Math.floor(pos.x / RESOLUTION);
     sound.cloneNode().play();
 
-    // cクリックされたcanvasのセルをサーバーに送る
+    // クリックされたcanvasのセルをサーバーに送る
     socket.send(JSON.stringify({
         "type": "toggle",
         "row": row,
@@ -58,22 +58,22 @@ canvas.addEventListener("click", function (evt) {
 
 // start情報をサーバーに送る
 btnStart.addEventListener("click", () => {
-    console.log("started");
-    socket.send(JSON.stringify({ "type": "start" }));
+    socket.send(JSON.stringify({
+        "type": "start"
+    }));
 })
 
 // pause情報をサーバーに送る
 btnPause.addEventListener("click", () => {
-    console.log("pause");
-    socket.send(JSON.stringify({ "type": "pause" }));
+    socket.send(JSON.stringify({
+        "type": "pause"
+    }));
 })
 
 // update情報を受け取ったときにgridを更新する
 socket.addEventListener("message", (event) => {
     const msg = JSON.parse(event.data);
-
     if (msg.type === "update") {
-        // console.log("message received for update: ", msg.grid);
         const grid = msg.grid;
         renderGrid(grid);
     }
