@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <title>Canvas Demo</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <script type="module" src="/ch15.11-15/ex10/index.js"></script>
+
+    <!-- inline で以下に css かく-->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0;
+            padding: 20px;
+            background-color: #f0f0f0;
+        }
+
+        input#image {
+            margin-bottom: 20px;
+        }
+
+        .canvas-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 10px 0;
+        }
+
+        canvas {
+            border: 1px solid #ccc;
+        }
+
+        p {
+            margin: 5px 0;
+            font-size: 14px;
+            color: #333;
+        }
+
+        #clock {
+            font-size: 48px;
+            font-family: sans-serif;
+            text-align: center;
+            margin-top: 5%;
+            margin-bottom: 5%;
+        }
+
+        #sub {
+            font-size: 32px;
+        }
+    </style>
+</head>
+
+<body>
+    <button id="worker-start">Worker</button>
+    <div id="clock">--:--:--.<span id="sub">---</span></div>
+    <input id="image" type="file" accept="image/*" />
+    <div class="canvas-container">
+        <canvas id="original"></canvas>
+        <p>元画像</p>
+    </div>
+    <div class="canvas-container">
+        <canvas id="filtered"></canvas>
+        <p>フィルタ適用画像</p>
+    </div>
+    <script>
+        function updateClock() {
+            const now = new Date();
+            const h = String(now.getHours()).padStart(2, "0");
+            const m = String(now.getMinutes()).padStart(2, "0");
+            const s = String(now.getSeconds()).padStart(2, "0");
+            const ms = String(Math.floor(now.getMilliseconds() / 10)).padStart(2, "0");
+
+            document.getElementById("clock").innerHTML =
+                `${h}:${m}:${s}.<span id="sub">${ms}</span>`;
+        }
+
+        setInterval(updateClock, 16);
+        updateClock();
+    </script>
+</body>
+
+</html>
