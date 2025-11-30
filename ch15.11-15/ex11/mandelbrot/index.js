@@ -169,8 +169,7 @@ class PageState {
 }
 // These constants control the parallelism of the Mandelbrot set computation.
 // You may need to adjust them to get optimum performance on your computer.
-const ROWS = 3, COLS = 4, NUMWORKERS =
-    navigator.hardwareConcurrency || 2;
+const ROWS = 3, COLS = 4, NUMWORKERS = navigator.hardwareConcurrency || 2;
 // This is the main class of our Mandelbrot set program. Simply invoke the
 // constructor function with the <canvas> element to render into.The program
 // assumes that this <canvas> element is styled so that it i always as big
