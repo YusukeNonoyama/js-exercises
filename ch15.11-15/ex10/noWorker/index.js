@@ -1,15 +1,3 @@
-const dataCruncher = new Worker("utils/cruncher.js");
-
-const btnWorker = document.querySelector("#worker-start");
-
-btnWorker.addEventListener("click", () => {
-    dataCruncher.postMessage("Can you see me?")
-});
-
-dataCruncher.addEventListener("message", (event) => {
-    console.log(event);
-});
-
 document.getElementById("image").addEventListener("change", (event) => {
     const file = event.target.files[0];
     if (!file) {
