@@ -172,7 +172,7 @@ class PageState {
 const ROWS = 3, COLS = 4, NUMWORKERS = navigator.hardwareConcurrency || 2;
 // This is the main class of our Mandelbrot set program. Simply invoke the
 // constructor function with the <canvas> element to render into.The program
-// assumes that this <canvas> element is styled so that it i always as big
+// assumes that this <canvas> element is styled so that it is always as big
 // as the browser window.
 class MandelbrotCanvas {
     constructor(canvas) {

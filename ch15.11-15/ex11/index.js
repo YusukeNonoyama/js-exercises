@@ -1,24 +1,22 @@
-
 class Tile {
     constructor(x, y, width, height) {
-        this.x = x; // The properties of a Tile object
-        this.y = y; // represent the position and size
-        this.width = width; // of the tile within a larger
-        this.height = height; // rectangle.
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = height;
     }
     static * tiles(width, height, numRows, numCols) {
         let columnWidth = Math.ceil(width / numCols);
         let rowHeight = Math.ceil(height / numRows);
         for (let row = 0; row < numRows; row++) {
             let tileHeight = (row < numRows - 1)
-                ? rowHeight // height of most rows
-                : height - rowHeight * (numRows - 1); // height of last row
+                ? rowHeight
+                : height - rowHeight * (numRows - 1);
             for (let col = 0; col < numCols; col++) {
                 let tileWidth = (col < numCols - 1)
-                    ? columnWidth // width of most columns
-                    : width - columnWidth * (numCols - 1); // and last column
-                yield new Tile(col * columnWidth, row * rowHeight,
-                    tileWidth, tileHeight);
+                    ? columnWidth
+                    : width - columnWidth * (numCols - 1);
+                yield new Tile(col * columnWidth, row * rowHeight, tileWidth, tileHeight);
             }
         }
     }
@@ -98,8 +96,9 @@ class PageState {
         return u.href;
     }
 }
+
 const ROWS = 3, COLS = 4, NUMWORKERS = navigator.hardwareConcurrency || 2;
-console.log("hardwareConcurrency: ", navigator.hardwareConcurrency);
+
 class MandelbrotCanvas {
     constructor(canvas) {
         this.canvas = canvas;
