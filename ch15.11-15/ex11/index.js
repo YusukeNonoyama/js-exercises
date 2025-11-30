@@ -98,8 +98,8 @@ class PageState {
         return u.href;
     }
 }
-const ROWS = 3, COLS = 4, NUMWORKERS =
-    navigator.hardwareConcurrency || 2;
+const ROWS = 3, COLS = 4, NUMWORKERS = navigator.hardwareConcurrency || 2;
+console.log("hardwareConcurrency: ", navigator.hardwareConcurrency);
 class MandelbrotCanvas {
     constructor(canvas) {
         this.canvas = canvas;
