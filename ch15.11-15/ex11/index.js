@@ -103,7 +103,7 @@ class MandelbrotCanvas {
     constructor(canvas) {
         this.canvas = canvas;
         this.context = canvas.getContext("2d");
-        this.workerPool = new WorkerPool(NUMWORKERS, "utils/worker.js");
+        this.workerPool = new WorkerPool(NUMWORKERS, "utils/burningShipWorker.js");
         this.tiles = null; // Subregions of the canvas
         this.pendingRender = null; // We're not currently rendering
         this.wantsRerender = false; // No render is currently requested
