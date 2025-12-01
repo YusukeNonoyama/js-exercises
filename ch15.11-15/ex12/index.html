@@ -6,17 +6,104 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script type="module" src="index.js"></script>
     <title>Access OneDrive</title>
+    <style>
+        /* CSSは生成AIに書いてもらった */
+        /* General Styles */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f6f8;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            padding-top: 50px;
+        }
+
+        /* Container */
+        .container {
+            background-color: #fff;
+            padding: 30px 40px;
+            border-radius: 10px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            width: 350px;
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        /* Form Elements */
+        div {
+            margin-bottom: 15px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #555;
+        }
+
+        input[type="file"],
+        input[type="text"] {
+            padding: 8px 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        button {
+            background-color: #0078d4;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 15px;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #005a9e;
+        }
+
+        /* Section Spacing */
+        .section {
+            margin-bottom: 30px;
+        }
+    </style>
 </head>
 
 <body>
-    <div>
-        <button id="get-file-list">Get File List</button>
-    </div>
-    <div>
-        <button id="post-file">Post File</button>
-    </div>
-    <input id="token">
+    <div class="container">
+        <div class="section">
+            <h1>Access to OneDrive</h1>
+            <h3>ファイル転送</h3>
+            <div>
+                <label for="fileInput">FILE</label>
+                <input type="file" id="fileInput">
+            </div>
+            <div>
+                <label for="token">TOKEN</label>
+                <input type="text" id="token">
+            </div>
+            <div>
+                <button id="post-file">Post File</button>
+            </div>
+        </div>
 
+        <div class="section">
+            <h3>アクセス確認</h3>
+            <div>
+                <button id="get-file-list">Get File List</button>
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>
