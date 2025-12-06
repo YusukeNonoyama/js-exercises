@@ -13,13 +13,17 @@
     * https://business.ntt-west.co.jp/glossary/words-00262.html
 * スレッド数確認
   * WSLだとリソースモニタ上でスレッド数がわからなかったためhtopで確認
-    * スレッド数２指定　⇒　Total execution time: 15.650s
+    * スレッド数２指定　⇒　Total execution time: 18.073s
     ![alt text]({6B29A50C-B794-41E6-A29F-341D93E30E0E}.png)
-    * スレッド数４指定　⇒　Total execution time: 14.024s
+    * スレッド数４指定　⇒　Total execution time: 14.558s
     ![alt text]({6F2F053B-3BD8-4D58-953A-37C216DB4B90}.png)
-    * スレッド数６指定　⇒　Total execution time: 12.275s
+    * スレッド数６指定　⇒　Total execution time: 13.189s
     ![alt text]({E6570792-1C0C-4CFB-8CAC-285812B57839}.png)
-    * スレッド数８指定　⇒　Total execution time: 11.940s
+    * スレッド数８指定　⇒　Total execution time: 12.538s
     ![alt text]({1C5A69C5-AA36-42A1-A9C4-6760B6FD0F62}.png)
-    * スレッド数12指定　⇒　Total execution time: 11.878s
+    * スレッド数10指定　⇒　Total execution time: 12.310s
+    ![alt text]({5743EBD4-3580-48BF-9C30-8D8BF0643B58}.png)
+    * スレッド数12指定　⇒　Total execution time: 12.643s
     ![alt text]({6D91AEE4-2725-446A-96B0-52DC8C1D61CC}.png)
+  * コア数10で、これ以上のスレッドが同時に実行されることは確認できなかったため、CPUのコア数前後が最適なスレッド数となる
+    ![alt text](image.png)
