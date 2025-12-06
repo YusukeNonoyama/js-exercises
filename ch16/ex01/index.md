@@ -11,4 +11,15 @@
   * 補足： 一般的なマルチスレッドはメモリを共有して、共有リソースへの排他制御などで並列処理を実現する。JavaScriptのWeb Workerはリソース共有はせず、完全に独立な環境が用意され、終了時のメッセージングをイベントリスナーで受け取ることで並列処理を実現している。
   * 参考リンク
     * https://business.ntt-west.co.jp/glossary/words-00262.html
-* 
+* スレッド数確認
+  * WSLだとリソースモニタ上でスレッド数がわからなかったためhtopで確認
+    * スレッド数２指定　⇒　Total execution time: 15.650s
+    ![alt text]({6B29A50C-B794-41E6-A29F-341D93E30E0E}.png)
+    * スレッド数４指定　⇒　Total execution time: 14.024s
+    ![alt text]({6F2F053B-3BD8-4D58-953A-37C216DB4B90}.png)
+    * スレッド数６指定　⇒　Total execution time: 12.275s
+    ![alt text]({E6570792-1C0C-4CFB-8CAC-285812B57839}.png)
+    * スレッド数８指定　⇒　Total execution time: 11.940s
+    ![alt text]({1C5A69C5-AA36-42A1-A9C4-6760B6FD0F62}.png)
+    * スレッド数12指定　⇒　Total execution time: 11.878s
+    ![alt text]({6D91AEE4-2725-446A-96B0-52DC8C1D61CC}.png)
