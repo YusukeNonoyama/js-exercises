@@ -4,14 +4,14 @@ const input = document.querySelector("#new-todo");
 const button = document.querySelector("#submit-button");
 let destroy;
 
+// fetch実行中にボタン/入力を無効化する関数
 function disableActions() {
-  // fetch実行中はボタンを無効化
   button.disabled = true;
   input.disabled = true;
 }
 
+// fetch実行が終わったときにボタン/入力を有効化する関数
 function enableActions() {
-  // fetch実行中はボタンを無効化
   button.disabled = false;
   input.disabled = false;
 }
@@ -33,21 +33,21 @@ async function fetchRetryWithExponentialBackoff(url, options) {
     return tryFunc();
   }
 
-  return await tryFunc(); // Return the final response
+  return await tryFunc();
 }
 
 // 一定時間経つとfetchをabortする関数
 async function fetchWithTimeout(url, options = {}) {
 
+  // fetchを開始したらボタン/入力を無効化する
   disableActions();
 
+  // optionsに時間が設定されていたらキャンセルの設定をする
   if (options.timeout) {
     const controller = new AbortController();
     options.signal = controller.signal;
-    setTimeout(() => {
-      controller.abort();
-    },
-      options.timeout);
+    // 制限時間後にfetchをキャンセルする
+    setTimeout(() => controller.abort(), options.timeout);
   }
   return await fetchRetryWithExponentialBackoff(url, options);
 }
@@ -56,10 +56,15 @@ document.addEventListener("DOMContentLoaded", async () => {
   // TODO: ここで API を呼び出してタスク一覧を取得し、
   // 成功したら取得したタスクを appendToDoItem で ToDo リストの要素として追加しなさい
   try {
-    const response = await fetchWithTimeout("/api/tasks", { timeout: 3000 }); // タスクの一覧を取得
+    // タスクの一覧を取得
+    // const response = await fetchWithTimeout("/api/tasks", { timeout: 3000 });
+    const response = await fetch("/api/tasks");
 
     if (!response.ok) {
-      alert("error");
+      const body = await response.json();
+      alert(`${response.status}: ${body.message}`);
+
+      // alert("error");
       return;
     }
     const body = await response.json();
@@ -69,24 +74,23 @@ document.addEventListener("DOMContentLoaded", async () => {
   } catch (err) {
     alert("fetch timeout");
   } finally {
+    // fetchが終わったらボタン/入力を有効化
     enableActions()
   }
 });
 
 form.addEventListener("submit", async (e) => {
-  // TODO: ここで form のイベントのキャンセルを実施しなさい (なぜでしょう？)
   e.preventDefault();
-  // 両端からホワイトスペースを取り除いた文字列を取得する
   const todo = input.value.trim();
   if (todo === "") {
     return;
   }
 
-  // new-todo の中身は空にする
   input.value = "";
 
   try {
-    const response = await fetchWithTimeout("/api/tasks", {  // APIでアイテム追加
+    // APIでアイテム追加
+    const response = await fetchWithTimeout("/api/tasks", {
       method: "POST",
       headers: new Headers({ "Content-Type": "application/json; charset=UTF-8" }),
       body: JSON.stringify({ "name": todo }),
@@ -117,7 +121,6 @@ function appendToDoItem(task) {
   label.textContent = task.name;
 
   const toggle = document.createElement("input");
-  // TODO: toggle が変化 (change) した際に label.style.textDecorationLine を変更しなさい
   toggle.type = "checkbox";
   toggle.onchange = async function () {
     try {
@@ -127,7 +130,8 @@ function appendToDoItem(task) {
       destroy.disabled = true;
 
       if (toggle.checked) {
-        response = await fetchWithTimeout(`/api/tasks/${task.id}`, { // APIで取り消し線付きに更新
+        // APIで取り消し線付きに更新
+        response = await fetchWithTimeout(`/api/tasks/${task.id}`, {
           method: "PATCH",
           body: JSON.stringify({ "status": "completed" }),
           timeout: 3000
@@ -136,7 +140,8 @@ function appendToDoItem(task) {
         label.style.textDecorationLine = "line-through";
 
       } else {
-        response = await fetchWithTimeout(`/api/tasks/${task.id}`, {  // APIで取り消し線なしに更新
+        // APIで取り消し線なしに更新
+        response = await fetchWithTimeout(`/api/tasks/${task.id}`, {
           method: "PATCH",
           body: JSON.stringify({ "status": "active" }),
           timeout: 3000
@@ -156,7 +161,6 @@ function appendToDoItem(task) {
     }
   };
   const destroy = document.createElement("button");
-  // TODO: destroy がクリック (click) された場合に elem を削除しなさい
 
   destroy.textContent = "❌";
 
@@ -165,7 +169,8 @@ function appendToDoItem(task) {
     toggle.disabled = true;
 
     try {
-      const response = await fetchWithTimeout(  // APIで削除
+      const response = await fetchWithTimeout(
+        // APIで削除
         `/api/tasks/${task.id}`,
         {
           method: "DELETE",
