@@ -244,9 +244,13 @@ function cookieAuthzMiddleware(_url, req, res, params) {
 function corsMiddleware(_url, _req, res) {
   // TODO: CORS に必要なヘッダを複数設定する
   // res.setHeader("TODO", "TODO");
-  res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000"); // URL＋ポートを許可
-  res.setHeader("Access-Control-Allow-Credentials", "true"); // Cookieなど認証情報を許可
+  // contents serverのオリジンを許可
+  res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
+  // Cookieなど認証情報の共有を許可
+  res.setHeader("Access-Control-Allow-Credentials", "true");
+  // リクエストメソッドの許可
   res.setHeader("Access-Control-Allow-Methods", "GET, POST, PATCH, DELETE, OPTIONS");
+  // ヘッダーの許可。明示的にヘッダーを書いていなくても付与されることはあるため必要
   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
   return true;
 }
@@ -351,7 +355,7 @@ async function main() {
   http
     .createServer(async function (req, res) {
       await routes(
-        // TODO: この行のコメントを外す
+        // TODO: この行のコメントを外す ⇒ プリフライトで使うOPTIONSメソッドの許可
         ["OPTIONS", "/api/*", nopHandler, cors],
         ["GET", "/api/tasks", listTasksHandler, authz, cors],
         ["GET", "/api/tasks/{id}", getTaskHandler, authz, cors],
