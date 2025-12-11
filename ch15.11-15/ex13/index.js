@@ -28,7 +28,9 @@ start.addEventListener("click", async (event) => {
 
     let outputText = "";
     while (true) {
+        // チャンクの読み出し
         const { value, done } = await reader.read();
+        // 最後のチャンクならループを抜ける
         if (done) break;
 
         // Unit8Array形式のvalueをテキストにする
