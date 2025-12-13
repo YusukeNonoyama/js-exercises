@@ -76,7 +76,7 @@ function appendToDoItem(todoList, id) {
   }
 
   toggle.type = "checkbox";
-  toggle.onchange = function () {
+  toggle.addEventListener("click", () => {
     if (toggle.checked) {
       item.status = "completed";
       label.style.textDecorationLine = "line-through";
@@ -86,10 +86,10 @@ function appendToDoItem(todoList, id) {
     }
     localStorage.setItem("todoList", JSON.stringify(todoList));
     console.log("toggle: ", todoList);
-  };
+  });
 
   destroy.textContent = "❌";
-  destroy.onclick = function () {
+  destroy.addEventListener("click", () => {
     // リスト内の該当idのインデックスを取得
     const index = todoList.findIndex(o => o.id === id);
     todoList.splice(index, 1);
@@ -97,8 +97,7 @@ function appendToDoItem(todoList, id) {
 
     elem.remove();
     localStorage.setItem("todoList", JSON.stringify(todoList));
-
-  };
+  });
 
   div.append(toggle, label, destroy);
   elem.append(div);

@@ -9,37 +9,39 @@ const input = document.querySelector("#new-todo");
 //   status: "active" | "completed";
 // };
 
-const todoList = []; // ToDoを格納するリスト
-let id; // ToDoアイテムのインデックス
+// ToDoを格納するリスト
+const todoList = [];
+// ToDoアイテムのインデックス
+let id;
+// 既存のSessionStrageを読み込む
 const todoListSessionStorage = JSON.parse(sessionStorage.getItem("todoList"));
 
-if (!todoListSessionStorage) {  // 初期化
+if (!todoListSessionStorage) {
+  // SessionStorageがない場合は初期化
   id = 1;
   sessionStorage.setItem("todoList", JSON.stringify(todoList));
-} else {  // localStrageにデータがある場合
-  id = Math.max(...todoListSessionStorage.map(item => item.id)) + 1;  // 既存の最大idより1大きいidを設定
+} else {
+  //SessionnStrageにデータがある場合は中のアイテムをtodoListに保存してレンダー
   for (const item of todoListSessionStorage) {
     todoList.push(item);
     appendToDoItem(todoList, item.id);
   }
+  // 既存の最大idより1大きいidを設定
+  id = Math.max(...todoListSessionStorage.map(item => item.id)) + 1;
 }
 
 form.addEventListener("submit", (e) => {
-  // TODO: ここで form のイベントのキャンセルを実施しなさい (なぜでしょう？)
-  // → submit イベントが実行されたあと、ページがリロードされてしまう
   e.preventDefault();
-  // 両端からホワイトスペースを取り除いた文字列を取得する
   if (input.value.trim() === "") {
     return;
   }
   const todo = input.value.trim();
-
-  // new-todo の中身は空にする
   input.value = "";
 
   // リストにアイテムを挿入
   const currentId = id;
   todoList.push({ "id": currentId, "name": todo, status: "active" });
+  // SessionStorageを更新
   sessionStorage.setItem("todoList", JSON.stringify(todoList));
 
   appendToDoItem(todoList, id);
@@ -47,6 +49,7 @@ form.addEventListener("submit", (e) => {
 });
 
 function appendToDoItem(todoList, id) {
+  // 既存のリスト内の該当idのアイテムを取得
   const item = todoList.find(o => o.id === id);
 
   const elem = document.createElement("li");
@@ -67,7 +70,7 @@ function appendToDoItem(todoList, id) {
   }
 
   toggle.type = "checkbox";
-  toggle.onchange = function () {
+  toggle.addEventListener("click", () => {
     if (toggle.checked) {
       item.status = "completed";
       label.style.textDecorationLine = "line-through";
@@ -77,19 +80,18 @@ function appendToDoItem(todoList, id) {
     }
     sessionStorage.setItem("todoList", JSON.stringify(todoList));
     console.log("toggle: ", todoList);
-  };
+  });
 
   destroy.textContent = "❌";
-  destroy.onclick = function () {
+  destroy.addEventListener("click", () => {
+    // リスト内の該当idのインデックスを取得
     const index = todoList.findIndex(o => o.id === id);
     todoList.splice(index, 1);
     console.log("deleted:", todoList);
 
-    // elem.style.display = "none";
     elem.remove();
     sessionStorage.setItem("todoList", JSON.stringify(todoList));
-
-  };
+  });
 
   div.append(toggle, label, destroy);
   elem.append(div);
