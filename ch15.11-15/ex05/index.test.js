@@ -29,7 +29,8 @@ async function clearIndexedDB(page) {
       const req = indexedDB.deleteDatabase("todoDB");
       req.onsuccess = () => resolve();
       req.onerror = () => reject();
-      req.onblocked = () => resolve(); // 他のブラウザ等が使用中でも強制消去。TODO:なぜこれがないと止まる？
+      // 他のブラウザ等が使用中でも強制消去（なぜこれがないとうまくいかない）
+      req.onblocked = () => resolve();
     });
   });
 }
@@ -44,12 +45,12 @@ test("ToDoアイテムを追加", async ({ page }) => {
   await page.fill("#new-todo", "研修の予習範囲を読む");
   await page.click('button[type="submit"]');
 
-  // DOMへの追加
+  // DOMへの追加確認
   const items = page.locator("#todo-list li");
   await expect(items).toHaveCount(1);
   await expect(items.first().locator("label")).toHaveText("研修の予習範囲を読む");
 
-  // IndexedDBへの追加
+  // IndexedDBへの追加確認
   const stored = await readIndexedDB(page);
   expect(stored.length).toBe(1);
   expect(stored[0].name).toBe("研修の予習範囲を読む");
@@ -61,7 +62,9 @@ test("ToDoアイテムのトグル変更の反映", async ({ page }) => {
 
   const checkbox = page.locator("#todo-list li input[type='checkbox']");
 
+  // チェック操作
   await checkbox.check();
+  // IndexedDBからの削除確認
   let stored = await readIndexedDB(page);
   expect(stored[0].status).toBe("completed");
 
@@ -74,11 +77,14 @@ test("ToDoアイテムの削除", async ({ page }) => {
   await page.fill("#new-todo", "研修課題を見直す");
   await page.click('button[type="submit"]');
 
+  // 削除操作
   const deleteBtn = page.locator("#todo-list li button");
   await deleteBtn.click();
 
+  // DOMからの削除確認
   await expect(page.locator("#todo-list li")).toHaveCount(0);
 
+  // IndexedDBからの削除確認
   const stored = await readIndexedDB(page);
   expect(stored.length).toBe(0);
 });
@@ -105,8 +111,8 @@ test("リロード時にIndexedDBにあるデータを読込み", async ({ page 
     });
   });
 
+  // リロードしてDOMに反映されていることを確認
   await page.reload();
-
   const items = page.locator("#todo-list li");
   await expect(items).toHaveCount(1);
   await expect(items.first().locator("label")).toHaveText("研修に出席する");

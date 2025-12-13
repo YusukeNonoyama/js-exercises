@@ -5,7 +5,7 @@ const input = document.querySelector("#new-todo");
 const DB_NAME = "todoDB"
 const STORE_NAME = "todos";
 
-// 同一オリジンのチャネルへのインターフェース（変更を別タブに反映するために追加）
+// 同一オリジンのチャネルのコンテキスト（変更を別タブに反映するために追加）
 const todoChannel = new BroadcastChannel('todo-channel');
 
 // DBを開いてDBインスタンスをcallbackに渡す関数
@@ -23,7 +23,7 @@ function withDB(callback) {
       keyPath: "id",
       autoIncrement: true,  // 自動でid設定
     });
-    // statusをインデックスに追加する（TODO：テストで使えてない）
+    // statusをインデックスに追加する（なくても動作はする）
     store.createIndex("status", "status", { unique: false });
   };
 }
@@ -69,61 +69,50 @@ function appendItemToDom(item) {
   }
 
   // トグル変更時の挙動を定義
-  toggle.onchange = function () {
-    const newStatus = toggle.checked ? "completed" : "active";
-    label.style.textDecorationLine = toggle.checked ? "line-through" : "none";
-    updateTodoStatus(item.id, newStatus);
-  };
+  toggle.addEventListener("click", () => {
+    withDB((db) => {
+      const transaction = db.transaction([STORE_NAME], "readwrite");
+      const store = transaction.objectStore(STORE_NAME);
 
-  // アイテム削除時の挙動を定義
-  destroy.onclick = function () {
-    deleteItem(item.id, elem);
-  };
+      const request = store.get(item.id);  // 特定のidのアイテムを取得
 
+      request.onerror = console.error;
+      request.onsuccess = () => {
+        const item = request.result;
+        if (!item) return;
+
+        // ステータスを変更
+        item.status = toggle.checked ? "completed" : "active";
+
+        const updateRequest = store.put(item);
+
+        updateRequest.onerror = console.error;
+        updateRequest.onsuccess = () => {
+          todoChannel.postMessage('update');
+        };
+      };
+    });
+  })
+
+  // 対象アイテム削除時の挙動を定義
+  destroy.addEventListener("click", () => {
+    withDB((db) => {
+      const transaction = db.transaction([STORE_NAME], "readwrite");
+      const store = transaction.objectStore(STORE_NAME);
+
+      // 特定のidのアイテムを削除
+      const request = store.delete(item.id);
+
+      request.onerror = console.error;
+      request.onsuccess = () => {
+        loadTodos();
+        todoChannel.postMessage('update');
+      };
+    });
+  });
   div.append(toggle, label, destroy);
   elem.append(div);
   list.prepend(elem);
-}
-
-// ToDoアイテムのステータスを変更（active/completed）
-function updateTodoStatus(id, newStatus) {
-  withDB((db) => {
-    const transaction = db.transaction([STORE_NAME], "readwrite");
-    const store = transaction.objectStore(STORE_NAME);
-
-    const request = store.get(id);  // 特定のidのアイテムを取得
-
-    request.onerror = console.error;
-    request.onsuccess = () => {
-      const item = request.result;
-      if (!item) return;
-
-      // ステータスを変更
-      item.status = newStatus;
-      const updateRequest = store.put(item);
-
-      updateRequest.onerror = console.error;
-      updateRequest.onsuccess = () => {
-        todoChannel.postMessage('update');
-      };
-    };
-  });
-}
-
-// ToDoアイテムの削除
-function deleteItem(id, elem) {
-  withDB((db) => {
-    const transaction = db.transaction([STORE_NAME], "readwrite");
-    const store = transaction.objectStore(STORE_NAME);
-
-    const request = store.delete(id); // 特定のidのアイテムを削除
-
-    request.onerror = console.error;
-    request.onsuccess = () => {
-      elem.remove(); // DOMからも削除
-      todoChannel.postMessage('update');
-    };
-  });
 }
 
 // アイテムの追加の挙動を定義
@@ -131,17 +120,15 @@ form.addEventListener("submit", (e) => {
   e.preventDefault();
   const todoName = input.value.trim();
   if (todoName === "") return;
-  addItemToDB(todoName);
-  input.value = "";
-});
 
-function addItemToDB(name) {
+  const name = todoName;
+
   withDB((db) => {
     const transaction = db.transaction([STORE_NAME], "readwrite");
     const store = transaction.objectStore(STORE_NAME);
 
     const newItem = {
-      name,
+      name: todoName,
       status: "active",
     };
 
@@ -156,7 +143,9 @@ function addItemToDB(name) {
       todoChannel.postMessage('update');
     };
   });
-}
+
+  input.value = "";
+});
 
 // チャネルに更新があったときにトリガーされ、メッセージが"update"の場合にloadTodosする（DBを読んでレンダー）
 todoChannel.onmessage = (event) => {
