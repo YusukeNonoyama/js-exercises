@@ -50,7 +50,7 @@ test("ToDoアイテムの削除", async ({ page }) => {
     expect(stored.length).toBe(0);
 });
 
-test("リロード時にlocalStorageにあるデータを読込み", async ({ page }) => {
+test("リロード時にsessionStorageにあるデータを読込み", async ({ page }) => {
     await page.evaluate(() => {
         sessionStorage.setItem(
             "todoList",

@@ -9,48 +9,53 @@ const input = document.querySelector("#new-todo");
 //   status: "active" | "completed";
 // };
 
-const todoList = []; // ToDoを格納するリスト
-let id; // ToDoアイテムのインデックス
+// ToDoを格納するリスト
+const todoList = [];
+// ToDoアイテムのインデックス
+let id;
+// 既存のLocalStrageを読み込む
 const todoListLocalStorage = JSON.parse(localStorage.getItem("todoList"));
 
-if (!todoListLocalStorage) {  // 初期化
+if (!todoListLocalStorage) {
+  // LocalStorageがない場合は初期化
   id = 1;
   localStorage.setItem("todoList", JSON.stringify(todoList));
-} else {  // localStrageにデータがある場合
-  id = Math.max(...todoListLocalStorage.map(item => item.id)) + 1;  // 既存の最大idより1大きいidを設定
+} else {
+  // localStrageにデータがある場合は中のアイテムをtodoListに保存してレンダー
   for (const item of todoListLocalStorage) {
     todoList.push(item);
     appendToDoItem(todoList, item.id);
   }
+  // 既存リストの最大idより1大きいidを設定
+  id = Math.max(...todoListLocalStorage.map(item => item.id)) + 1;
 }
 
 form.addEventListener("submit", (e) => {
-  // TODO: ここで form のイベントのキャンセルを実施しなさい (なぜでしょう？)
-  // → submit イベントが実行されたあと、ページがリロードされてしまう
   e.preventDefault();
-  // 両端からホワイトスペースを取り除いた文字列を取得する
   if (input.value.trim() === "") {
     return;
   }
   const todo = input.value.trim();
-
-  // new-todo の中身は空にする
   input.value = "";
 
   // リストにアイテムを挿入
   const currentId = id;
   todoList.push({ "id": currentId, "name": todo, status: "active" });
+  // LocalStrageを更新
   localStorage.setItem("todoList", JSON.stringify(todoList));
 
   appendToDoItem(todoList, id);
   id += 1;
 });
 
+// LocalStrageが変更されたときに、同一オリジンのページにイベントを発生
 window.addEventListener("storage", () => {
   location.reload();
 })
 
+// ToDoアイテムをレンダーする関数
 function appendToDoItem(todoList, id) {
+  // リスト内の該当idのアイテムを取得
   const item = todoList.find(o => o.id === id);
 
   const elem = document.createElement("li");
@@ -85,11 +90,11 @@ function appendToDoItem(todoList, id) {
 
   destroy.textContent = "❌";
   destroy.onclick = function () {
+    // リスト内の該当idのインデックスを取得
     const index = todoList.findIndex(o => o.id === id);
     todoList.splice(index, 1);
     console.log("deleted:", todoList);
 
-    elem.style.display = "none";
     elem.remove();
     localStorage.setItem("todoList", JSON.stringify(todoList));
 
