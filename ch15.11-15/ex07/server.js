@@ -46,7 +46,9 @@ function cspMiddleware(_url, req, res) {
   // TODO: CSP ヘッダを設定する
   res.setHeader(
     "Content-Security-Policy",
-    "script-src http://localhost:3000/hello.js 'unsafe-inline'",
+    // URLによる指定とスクリプトのハッシュの指定で許可する
+    "script-src http://localhost:3000/hello.js 'sha256-ZGKMbT3NegX077yZeKmChVXljdKkjnessl0/j4RVvtA='",
+    // "script-src http://localhost:3000/hello.js 'unsafe-inline'", // これでもできるが非推奨
   );
   return true;
 }
