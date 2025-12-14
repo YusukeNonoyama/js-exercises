@@ -5,20 +5,25 @@ const inputToken = document.querySelector("#token");
 // OneDriveへファイルを送るPUTリクエストのボタン
 btnPostFile.addEventListener("click", async (event) => {
 
+    // ファイル指定をバリデーション
     const FILE = document.querySelector("#fileInput").files[0];
     if (!FILE) {
         console.log("no file was selected");
         return;
     }
 
+    // TOKEN指定のバリデーション
+    // TOKENはこちらから取得： https://developer.microsoft.com/en-us/graph/graph-explorer
     const TOKEN = inputToken.value.trim();
     if (!TOKEN) {
         console.log("no TOKEN was selected");
         return;
     }
 
+    // OneDriveの自分のアカウントのルートに配置
     const URL = `https://graph.microsoft.com/v1.0/me/drive/root:/${FILE.name}:/content`;
 
+    // OneDriveへPUTリクエスト送信
     const response = await fetch(URL, {
         method: "PUT",
         headers: {

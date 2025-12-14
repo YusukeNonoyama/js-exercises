@@ -99,10 +99,12 @@ class PageState {
 
 const ROWS = 3, COLS = 4, NUMWORKERS = navigator.hardwareConcurrency || 2;
 
+// クラス名変更
 class FractalCanvas {
     constructor(canvas) {
         this.canvas = canvas;
         this.context = canvas.getContext("2d");
+        // Web Workerへの参照を変更
         this.workerPool = new WorkerPool(NUMWORKERS, "utils/burningShipWorker.js");
         this.tiles = null;
         this.pendingRender = null;
