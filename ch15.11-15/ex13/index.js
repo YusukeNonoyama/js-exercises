@@ -3,9 +3,13 @@ const responseLabel = document.querySelector("#response");
 const start = document.querySelector("#start");
 const input = document.querySelector("#input");
 
+// 送信ボタンを押したときのイベント
 start.addEventListener("click", async (event) => {
+
     requestLabel.textContent = input.value.trim();
     const URL = "http://127.0.0.1:11434/api/chat";
+
+    // リクエストボディの設定
     const requestBody = {
         "model": "gemma:2b",
         "messages": [
@@ -13,6 +17,7 @@ start.addEventListener("click", async (event) => {
         ]
     };
 
+    // リクエストの送信
     const response = await fetch(URL, {
         method: 'POST',
         headers: {
