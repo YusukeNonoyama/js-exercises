@@ -11,52 +11,79 @@ const label3 = document.querySelector("#label-3");
 const label4 = document.querySelector("#label-4");
 const label5 = document.querySelector("#label-5");
 
-// TODO: あとで削除
-btnCheck.addEventListener("click", () => {
-    console.log("connection state: ", socket.readyState);
-});
-
-
+// WebSocketオブジェクトを作成
 let socket = new WebSocket("ws://localhost:3003");
-
-let requestId = 0;
 
 // リクエストIDとリクエストのプロミスを保持するマップ
 const pendingRequests = new Map();
+
+// WebSocketサーバに文字列データを含むリクエストメッセージを送信する
+function sendRequest(data, requestId) {
+    return new Promise((resolve, reject) => {
+        // マップにPromiseをresolve/rejectする関数を登録する
+        pendingRequests.set(requestId, { resolve, reject });
+
+        // WebSocketサーバにリクエストメッセージ送信
+        socket.send(JSON.stringify({
+            type: "request",
+            requestId,
+            data
+        }));
+
+        // タイムアウト時にrejectしマップから対象IDの情報を消す
+        setTimeout(() => {
+            if (pendingRequests.has(requestId)) {
+                pendingRequests.delete(requestId);
+                reject("timeout");
+            }
+        }, 5000);
+    });
+}
 
 // メッセージ受信時のハンドラ
 socket.addEventListener("message", (event) => {
     const msg = JSON.parse(event.data);
 
-    // メッセージがリクエストの場合、レスポンスを送り返す
+    // メッセージがリクエストの場合、レスポンスメッセージをWebSocketサーバーに送る
     if (msg.type === "request") {
         socket.send(JSON.stringify({
             type: "response",
             requestId: msg.requestId,
+            // `hello`をつける
             data: `hello, ${msg.data}`
         }));
         return;
     }
 
-    // メッセージがレスポンスの場合、該当するIDのプロミスを解決する、タイムアウトしていたら実行しない
+    // メッセージがレスポンスで、かつタイムアウトしていない場合
     if (msg.type === "response" && pendingRequests.has(msg.requestId)) {
+
+        // 該当するIDのプロミスを解決しマップから削除
         pendingRequests.get(msg.requestId).resolve(msg.data);
         pendingRequests.delete(msg.requestId);
         return;
+
     }
 });
 
-// WebSocketの接続が切断した場合、その時点で残っているリクエストを全てrejectする
+// WebSocketの接続が切断した場合
 socket.addEventListener("close", () => {
+
+    // その時点で残っているリクエストを全てrejectする
     for (const request of pendingRequests) {
         pendingRequests.get(request[0]).reject("connection closed");;
         pendingRequests.delete(request[0]);
     }
+
 });
 
-// 送信ボタンを押すとsendRequestが非同期で呼ばれる
+// シリアルに処理する場合に必要
+// let requestId = 0;
+
+// WebSocketにメッセージを送るボタン
 btnSend.addEventListener("click", async () => {
     console.log("message sent...")
+    // シリアルに処理する場合に必要
     // const id = ++requestId;
 
     const promises = [
@@ -67,6 +94,7 @@ btnSend.addEventListener("click", async () => {
         sendRequest(input5.value.trim(), 5)
     ]
 
+    // sendRequestを一斉送信して全てresolve/rejectされるまで待つ
     Promise.allSettled(promises).then(results => {
         label1.textContent = results[0].value || results[0].reason
         label2.textContent = results[1].value || results[1].reason
@@ -80,7 +108,7 @@ btnSend.addEventListener("click", async () => {
         console.log(results[4]);
     })
 
-    // 連続クリックをidでトラックできるようにしたコード
+    // シリアルに処理する場合に必要
     // try {
     //     console.log(`request sent for id ${id}`);
     //     const response = await sendRequest(input, id);
@@ -88,26 +116,11 @@ btnSend.addEventListener("click", async () => {
     // } catch (e) {
     //     console.log(`error occurred for id ${id}: `, e);
     // }
-
-
 });
 
-function sendRequest(data, requestId) {
-    return new Promise((resolve, reject) => {
-        pendingRequests.set(requestId, { resolve, reject });
+// WebSocket接続確認用のボタン
+btnCheck.addEventListener("click", () => {
+    console.log("connection state: ", socket.readyState);
+});
 
-        // タイムアウト時にrejectしマップから対象IDの情報を消す。
-        setTimeout(() => {
-            if (pendingRequests.has(requestId)) {
-                pendingRequests.delete(requestId);
-                reject("timeout");
-            }
-        }, 8000);
 
-        socket.send(JSON.stringify({
-            type: "request",
-            requestId,
-            data
-        }));
-    });
-}
