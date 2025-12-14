@@ -2,6 +2,8 @@
 
 const button = document.querySelector("#send-button");
 const messageContainer = document.getElementById("message-container");
+
+// 送信ボタンクリック時のイベント
 button.addEventListener("click", (e) => {
   e.preventDefault();
 
@@ -10,6 +12,7 @@ button.addEventListener("click", (e) => {
 
   getMessageFromServer();
 });
+
 async function getMessageFromServer() {
   const messageElement = document.createElement("div");
   messageElement.className = "message";
@@ -22,6 +25,8 @@ async function getMessageFromServer() {
   const message = new EventSource("/message");
 
   // サーバーからの送信を受け取る
+  // * ２秒後に「こんにちは」、５秒後に「さようなら」が送られてくる
+  // * 「さようなら」を受け取ったときにresponseのdoneがtrueになる 
   message.addEventListener("message", (event) => {
 
     // 内容を表示
