@@ -24,9 +24,9 @@ class Tile {
 
 class WorkerPool {
     constructor(numWorkers, workerSource) {
-        this.idleWorkers = []; // Workers that are not currently working
-        this.workQueue = []; // Work not currently being processed
-        this.workerMap = new Map(); // Map workers to resolve and reject funcs
+        this.idleWorkers = [];
+        this.workQueue = [];
+        this.workerMap = new Map();
         for (let i = 0; i < numWorkers; i++) {
             let worker = new Worker(workerSource);
             worker.onmessage = message => {
@@ -77,7 +77,7 @@ class PageState {
     }
     static fromURL(url) {
         let s = new PageState();
-        let u = new URL(url); // Initialize state from the url's search params.
+        let u = new URL(url);
         s.cx = parseFloat(u.searchParams.get("cx"));
         s.cy = parseFloat(u.searchParams.get("cy"));
         s.perPixel = parseFloat(u.searchParams.get("pp"));
@@ -99,16 +99,16 @@ class PageState {
 
 const ROWS = 3, COLS = 4, NUMWORKERS = navigator.hardwareConcurrency || 2;
 
-class MandelbrotCanvas {
+class FractalCanvas {
     constructor(canvas) {
         this.canvas = canvas;
         this.context = canvas.getContext("2d");
         this.workerPool = new WorkerPool(NUMWORKERS, "utils/burningShipWorker.js");
-        this.tiles = null; // Subregions of the canvas
-        this.pendingRender = null; // We're not currently rendering
-        this.wantsRerender = false; // No render is currently requested
-        this.resizeTimer = null; // Prevents us from resizing too frequently
-        this.colorTable = null; // For converting raw data to pixel values.
+        this.tiles = null;
+        this.pendingRender = null;
+        this.wantsRerender = false;
+        this.resizeTimer = null;
+        this.colorTable = null;
         this.canvas.addEventListener("pointerdown", e => this.handlePointer(e));
         window.addEventListener("keydown", e => this.handleKey(e));
         window.addEventListener("resize", e => this.handleResize(e));
@@ -141,9 +141,9 @@ class MandelbrotCanvas {
         }
     }
     render() {
-        if (this.pendingRender) { // If we're already rendering,
-            this.wantsRerender = true; // make a note to rerender later
-            return; // and don't do anything more now.
+        if (this.pendingRender) {
+            this.wantsRerender = true;
+            return;
         }
         let { cx, cy, perPixel, maxIterations } = this.state;
         let x0 = cx - perPixel * this.width / 2;
@@ -168,10 +168,10 @@ class MandelbrotCanvas {
                     this.colorTable = new
                         Uint32Array(maxIterations + 1);
                 }
-                if (min === max) { // If all the pixels are the same,
-                    if (min === maxIterations) { // Then make them all black
+                if (min === max) {
+                    if (min === maxIterations) {
                         this.colorTable[min] = 0xFF000000;
-                    } else { // Or all transparent.
+                    } else {
                         this.colorTable[min] = 0;
                     }
                 } else {
@@ -211,42 +211,42 @@ class MandelbrotCanvas {
     handleResize(event) {
         if (this.resizeTimer) clearTimeout(this.resizeTimer);
         this.resizeTimer = setTimeout(() => {
-            this.resizeTimer = null; // Note that resize has been handled
-            this.setSize(); // Resize canvas and tiles
-            this.render(); // Rerender at the new size
+            this.resizeTimer = null;
+            this.setSize();
+            this.render();
         }, 200);
     }
     handleKey(event) {
         switch (event.key) {
-            case "Escape": // Type Escape to go back to the initial state
+            case "Escape":
                 this.setState(PageState.initialState());
                 break;
-            case "+": // Type + to increase the number of iterations
+            case "+":
                 this.setState(s => {
                     s.maxIterations =
                         Math.round(s.maxIterations * 1.5);
                 });
                 break;
-            case "-": // Type - to decrease the number of iterations
+            case "-":
                 this.setState(s => {
                     s.maxIterations =
                         Math.round(s.maxIterations / 1.5);
                     if (s.maxIterations < 1) s.maxIterations = 1;
                 });
                 break;
-            case "o": // Type o to zoom out
+            case "o":
                 this.setState(s => s.perPixel *= 2);
                 break;
-            case "ArrowUp": // Up arrow to scroll up
+            case "ArrowUp":
                 this.setState(s => s.cy -= this.height / 10 * s.perPixel);
                 break;
-            case "ArrowDown": // Down arrow to scroll down
+            case "ArrowDown":
                 this.setState(s => s.cy += this.height / 10 * s.perPixel);
                 break;
-            case "ArrowLeft": // Left arrow to scroll left
+            case "ArrowLeft":
                 this.setState(s => s.cx -= this.width / 10 * s.perPixel);
                 break;
-            case "ArrowRight": // Right arrow to scroll right
+            case "ArrowRight":
                 this.setState(s => s.cx += this.width / 10 * s.perPixel);
                 break;
         }
@@ -293,9 +293,9 @@ class MandelbrotCanvas {
             pointerUpHandler);
     }
 }
-let canvas = document.createElement("canvas"); // Create a canvas element
-document.body.append(canvas); // Insert it into the body
-document.body.style = "margin:0"; // No margin for the < body >
-canvas.style.width = "100%"; // Make canvas as wide as body
-canvas.style.height = "100%"; // and as high as the body.
-new MandelbrotCanvas(canvas); // And start rendering into it!
+let canvas = document.createElement("canvas");
+document.body.append(canvas);
+document.body.style = "margin:0";
+canvas.style.width = "100%";
+canvas.style.height = "100%";
+new FractalCanvas(canvas); 
