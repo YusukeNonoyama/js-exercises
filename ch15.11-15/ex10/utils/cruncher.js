@@ -3,10 +3,8 @@ console.log("Worker started...");
 addEventListener("message", (event) => {
     if (event.data.type === "request") {
 
-        // 画像データをrequestから取得
+        // 画像データをメッセージから取得
         const data = event.data.value;
-
-        // 画像サイズをrequestから取得
         const width = Number(event.data.image.width);
         const height = Number(event.data.image.height);
 

@@ -1,5 +1,8 @@
-const dataCruncher = new Worker("utils/cruncher.js");
+// Web Workerオブジェクトを作成
+// const dataCruncher = new Worker("utils/cruncher.js");
+const dataCruncher = new Worker("/ch15.11-15/ex10/utils/cruncher.js");
 
+// ファイル選択を押したときにイベント
 document.getElementById("image").addEventListener("change", (event) => {
     const file = event.target.files[0];
     if (!file) {
