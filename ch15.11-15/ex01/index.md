@@ -13,10 +13,11 @@ contents/index.js を変更し、上記の API を fetchを使って呼び出す
   * 結果： `cookie:  csrftoken=oFgs3yq9X4tVep9o2EZtPPSTltXr7QN1`
   * 理由： 同一オリジンのため
 * ブラウザの開発者コンソールで http://localhost:3000/ の Cookie を表示する
-  * `oFgs3yq9X4tVep9o2EZtPPSTltXr7QN1`
+  * 結果： `cookie:  csrftoken=oFgs3yq9X4tVep9o2EZtPPSTltXr7QN1`
+  * 理由（追記）：サーバーから送られたcsrftokenのみがが表示される。HttpOnlyによりJavaScriptからcookieが読めなくなっているのでsidは表示されない。（csrftokenが表示できるのはなぜ？）
 * ToDo アプリのタブをリロードする
   * 結果： 変化なし
-  * 理由： 同一オリジンのため
+  * 理由： 同上
 * 同一ブラウザの異なるタブやウィンドウで http://localhost:3000/ を開いて ToDo リストの状態を確認する
   * 結果： ↑と同じ
   * 理由： 同一オリジンのため

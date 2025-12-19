@@ -121,5 +121,6 @@ function appendToDoItem(task) {
   list.prepend(elem);
 
   console.log("cookie: ", document.cookie);
+  // console.log("cookie end");
 
 }

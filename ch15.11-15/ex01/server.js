@@ -231,6 +231,8 @@ function cookieAuthzMiddleware(_url, req, res, params) {
   res.setHeader(
     "Set-Cookie",
     `sid=${encodeURIComponent(sid)}; SameSite=Lax; Path=/; HttpOnly;`,
+    // `sid=${encodeURIComponent(sid)}; Path=/; HttpOnly;`,
+    // `sid=${encodeURIComponent(sid)};`,
   );
   return true;
 }
