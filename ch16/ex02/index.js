@@ -30,4 +30,5 @@ async function startChild() {
   });
 }
 
+startChild();
 // TODO: ここに処理を書く
