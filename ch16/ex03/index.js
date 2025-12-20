@@ -22,7 +22,7 @@ function encrypt64(text, key) {
 
     // 暗号化とBase64エンコード
     // ここを埋める
-    const cipher = crypto.createCipheriv("aes-256-cbc", key, iv);
+    const cipher = crypto.createCipheriv("aes-256-cbc", key, iv); //crypto.Cipherに相当?
     let encryptedBase64 = cipher.update(text, "utf8", "base64");
     encryptedBase64 += cipher.final("base64");
 
@@ -66,7 +66,7 @@ function decrypt64(data, key) {
     const iv = Buffer.from(data.iv, "base64");
     const encrypted = Buffer.from(data.value, "base64");
 
-    const decipher = crypto.createDecipheriv("aes-256-cbc", key, iv);
+    const decipher = crypto.createDecipheriv("aes-256-cbc", key, iv); //crypto.Cipherに相当?
     let decrypted = decipher.update(encrypted);
     decrypted += decipher.final("utf8");
 
