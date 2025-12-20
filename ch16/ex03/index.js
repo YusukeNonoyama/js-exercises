@@ -2,6 +2,10 @@ import crypto from "crypto";
 // ここを埋める
 import fs from "fs/promises";
 
+const keyPath = "";
+const dataPath = "";
+
+
 // 鍵を生成する
 function generateKey() {
     // 32バイトの暗号論的疑似乱数を生成する
@@ -32,7 +36,7 @@ function encrypt64(text, key) {
 // generateKeyの返り値を、JSON形式でファイルに保存する(非同期)
 async function writeKey(key) {
     // ここを埋める（fsで鍵を保存）
-    await fs.writeFile("ch16/ex03/key.json", JSON.stringify({ key }));
+    await fs.writeFile("ch16/ex03/key.json", JSON.stringify({ key: key.toString("base64") }));
 }
 
 // encrypt64の返り値を、JSON形式でファイルに保存する(非同期)
