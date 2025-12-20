@@ -36,6 +36,7 @@ function encrypt64(text, key) {
 // generateKeyの返り値を、JSON形式でファイルに保存する(非同期)
 async function writeKey(key) {
     // ここを埋める（fsで鍵を保存）
+    // そのままシリアライズするとファイルサイズが大きくなるためbase64変換する
     await fs.writeFile("ch16/ex03/key.json", JSON.stringify({ key: key.toString("base64") }));
 }
 
@@ -50,7 +51,7 @@ async function readKey() {
     const json = await fs.readFile("ch16/ex03/key.json");
     const data = JSON.parse(json);
     // ArrayBufferに戻して返す
-    return Buffer.from(data.key);
+    return Buffer.from(data.key, "base64");
 }
 
 // ファイルから暗号データを読み込む (非同期)
@@ -67,7 +68,7 @@ function decrypt64(data, key) {
 
     const decipher = crypto.createDecipheriv("aes-256-cbc", key, iv);
     let decrypted = decipher.update(encrypted);
-    decrypted += decipher.final();
+    decrypted += decipher.final("utf8");
 
     return decrypted;
 }
