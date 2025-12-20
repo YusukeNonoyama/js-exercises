@@ -12,3 +12,5 @@
     * https://business.ntt-west.co.jp/glossary/words-00213.html
 * Base64
   * 
+  * 参考リンク
+    * https://ja.wikipedia.org/wiki/Base64
