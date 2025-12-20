@@ -32,49 +32,31 @@ async function startChild() {
 
 // TODO: ここに処理を書く
 
-// startChild();
-// while (true) {
-// const res = await startChild();
-
-// if (res[0]) {
-//   startChild()
-// };
-// }
-
-// console.log(res);
-
-let isShuttingDown = false;
-
-// メインルーチン
-async function main() {
-  while (!isShuttingDown) {
-    console.log("pid:", process.pid);
-    console.log("子プロセスを起動します...");
+// startChild()が正常終了しなかった場合は次のループで再起動するループ
+async function processLoop() {
+  while (true) {
+    // 子プロセスの起動
     const [code, signal] = await startChild();
 
-    if (isShuttingDown) {
-      console.log(`子プロセスがシグナル ${signal} により終了しました。親プロセスも終了します。`);
+    // 子プロセスが正常終了したら（code=0）、親プロセスも終了
+    if (!code) {
+      console.log(`child process terminated with signal: ${signal}`);
       break;
     }
-
-    if (code !== 0) {
-      console.error(`子プロセスが異常終了しました (コード: ${code})。再起動します...`);
-    } else {
-      console.log("子プロセスが正常終了しました。");
-      break;
-    }
+    // ループから出て親プロセスも終了
+    console.log("child process terminated");
   }
 }
 
-// シグナルのトラップ
+// シグナルの２種類以上トラップ
 ["SIGINT", "SIGTERM"].forEach((signal) => {
+  // シグナルを受け取るイベントリスナー
   process.on(signal, () => {
-    console.log(`\n親プロセスが ${signal} を受信しました。子プロセスに通知します。`);
-    isShuttingDown = true;
-    if (child) {
-      child.kill(signal); // 子プロセスに同じシグナルを送信
-    }
+    console.log(`\nsignal received: ${signal} `);
+    // 子プロセスに同じシグナルを送信して終了させる（デフォルトは`SIGINT`）
+    child.kill(signal);
   });
 });
 
-main().catch(console.error);
+// プロセス開始
+processLoop();

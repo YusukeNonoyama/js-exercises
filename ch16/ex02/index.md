@@ -17,3 +17,4 @@ index.js は一定確率で終了する子プロセスを spawn するように�
 * `SIGINT`のトリガは CTRL + C
 * `SIGTERM`のトリガはターミナルから `kill -TERM {pid}`
   * pidは`process.pid`で出力
+* [Node.js v24.12.0 documentation](https://nodejs.org/docs/latest-v24.x/api/child_process.html)
