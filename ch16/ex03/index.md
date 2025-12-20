@@ -11,6 +11,8 @@
     * https://ja.wikipedia.org/wiki/Advanced_Encryption_Standard
     * https://business.ntt-west.co.jp/glossary/words-00213.html
 * Base64
-  * 
+  * バイナリデータを安全に（壊さずに）送信できる文字に変換する方法
+  * A-Z, a-z, 0-9 （62 の文字と数字）、+ と / （2 つの特殊文字）、= （パディングに使用される）が使用される
   * 参考リンク
+    * https://developer.mozilla.org/ja/docs/Glossary/Base64
     * https://ja.wikipedia.org/wiki/Base64
