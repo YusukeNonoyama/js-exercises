@@ -1,5 +1,18 @@
-import fs from "fs";
+import * as fs from "fs";
 
-function checkEntry(file: string) {
-  const stats = fs.statSync(file);
+export function checkEntry(file: string) {
+  let stats: fs.Stats | undefined;
+  try {
+    stats = fs.statSync(file);
+  } catch (e) {
+    throw new Error("invalid input");
+  }
+
+  if (stats.isFile()) {
+    return "file";
+  } else if (stats.isDirectory()) {
+    return "directory";
+  } else {
+    return "something else";
+  }
 }
