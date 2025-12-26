@@ -4,7 +4,7 @@ import fs from "fs";
 
 const app = express();
 
-const rootDirectory = path.resolve(process.argv[2] || "ch16/ex09/original/");
+const rootDirectory = process.argv[2] || "ch16/ex09/original/";
 const port = parseInt(process.argv[3], 10) || 8000;
 
 // パスに一致するGETメソッドのみに対応
