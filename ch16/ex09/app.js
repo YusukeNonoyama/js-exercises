@@ -2,10 +2,9 @@ import express from "express";
 import path from "path";
 import fs from "fs";
 
-const app = express();
+export const app = express();
 
-const rootDirectory = process.argv[2] || "ch16/ex09/original/";
-const port = parseInt(process.argv[3], 10) || 8000;
+const rootDirectory = "ch16/ex09/";
 
 // パスに一致するGETメソッドのみに対応
 app.get("/test/mirror", (req, res) => {
@@ -28,7 +27,6 @@ app.use((req, res) => {
     let filename = req.path.substring(1);
 
     filename = filename.replace(/\.\.\//g, "");
-
     const absolutePath = path.resolve(rootDirectory, filename);
 
     let type;
@@ -67,6 +65,3 @@ app.use((req, res) => {
     });
 });
 
-app.listen(port, () => {
-    console.log("Listening on port", port);
-});
