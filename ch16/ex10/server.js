@@ -68,6 +68,11 @@ function serve(rootDirectory, port) {
                     response.writeHead(404);
                     response.end(err.message);
                 });
+            } else if (request.method === "POST") { // 非ストリームコピー（ストリームと非ストリームのメモリ使用量検証用）
+                fs.copyFile("ch16/ex10/file.txt", "ch16/ex10/file_copy_non_stream.txt", () => { })
+                response.setHeader("Content-Type", "text/plain; charset=UTF-8");
+                response.writeHead(200);
+                response.end(`successfully uploaded to "ch16/ex10/file_copy_non_stream.txt"`)
             }
         }
     });
