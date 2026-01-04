@@ -2,6 +2,7 @@ import threads from "worker_threads";
 
 console.log("Worker started...");
 
+// メインスレッドからメッセージを受け取るイベントハンドラ
 threads.parentPort.once("message", ({ inputPixel, width, height }) => {
 
     // 以下は前回課題からのほぼコピー（変数名だけ変更）**********************
@@ -47,6 +48,6 @@ threads.parentPort.once("message", ({ inputPixel, width, height }) => {
     }
     // ここまで前回課題からのコピー**********************
 
-    // メインスレッドへresponseを返す
-    threads.parentPort.postMessage({ outputPixel, width, height })
+    // メインスレッドへメッセージを返す
+    threads.parentPort.postMessage({ outputPixel, width, height }, [outputPixel.buffer])
 })
