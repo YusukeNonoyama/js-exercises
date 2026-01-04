@@ -2,10 +2,9 @@ import threads from "worker_threads";
 
 console.log("Worker started...");
 
-threads.parentPort.once("message", ({ data, width, height }) => {
-    console.log(data);
+threads.parentPort.once("message", ({ inputPixel, width, height }) => {
 
-    // 以下は前回課題からのコピー**********************
+    // 以下は前回課題からのほぼコピー（変数名だけ変更）**********************
     const gaussianKernel = [
         [1, 4, 6, 4, 1],
         [4, 16, 24, 16, 4],
@@ -17,7 +16,7 @@ threads.parentPort.once("message", ({ data, width, height }) => {
     const kernelOffset = Math.floor(kernelSize / 2);
     const kernelSum = 256;
 
-    const dataPixel = new Uint8ClampedArray(data);
+    const outputPixel = new Uint8ClampedArray(inputPixel.length);
 
     for (let y = kernelOffset; y < height - kernelOffset; y++) {
         for (let x = kernelOffset; x < width - kernelOffset; x++) {
@@ -33,21 +32,21 @@ threads.parentPort.once("message", ({ data, width, height }) => {
                     const weight = gaussianKernel[ky + kernelOffset][kx + kernelOffset];
 
                     const i = (py * width + px) * 4;
-                    rSum += data[i] * weight;
-                    gSum += data[i + 1] * weight;
-                    bSum += data[i + 2] * weight;
+                    rSum += inputPixel[i] * weight;
+                    gSum += inputPixel[i + 1] * weight;
+                    bSum += inputPixel[i + 2] * weight;
                 }
             }
 
             const j = (y * width + x) * 4;
-            dataPixel[j] = rSum / kernelSum;
-            dataPixel[j + 1] = gSum / kernelSum;
-            dataPixel[j + 2] = bSum / kernelSum;
-            dataPixel[j + 3] = data[j + 3];
+            outputPixel[j] = rSum / kernelSum;
+            outputPixel[j + 1] = gSum / kernelSum;
+            outputPixel[j + 2] = bSum / kernelSum;
+            outputPixel[j + 3] = inputPixel[j + 3];
         }
     }
     // ここまで前回課題からのコピー**********************
 
     // メインスレッドへresponseを返す
-    threads.parentPort.postMessage({ dataPixel, width, height })
+    threads.parentPort.postMessage({ outputPixel, width, height })
 })

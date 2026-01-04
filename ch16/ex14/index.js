@@ -12,16 +12,18 @@ const { data, info } = await sharp(filepath)
     .toBuffer({ resolveWithObject: true })
 const { width, height, channels } = info;
 
-worker.postMessage({ data, width, height });
-worker.on("message", async ({ dataPixel, width, height }) => {
+const inputPixel = new Uint8ClampedArray(data);
+
+// 第二引数に型付き配列のバッファを含めるとコピーせずに転送できる
+worker.postMessage({ inputPixel, width, height }, [inputPixel.buffer]);
+worker.on("message", async ({ outputPixel, width, height }) => {
     console.log("message received from Worker Thread...");
-    console.log(dataPixel);
 
     // JPGにencodeしてファイルとして保存
-    await sharp(Buffer.from(dataPixel),
+    await sharp(Buffer.from(outputPixel),
         { raw: { width, height, channels } })
-        .toFile("ch16/ex14/output.jpg");
+        .toFile("ch16/ex14/blurred.jpg");
 
-    console.log("Saved output.jpg");
+    console.log("Saved blurred.jpg");
 })
 
