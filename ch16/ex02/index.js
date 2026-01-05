@@ -31,23 +31,6 @@ async function startChild() {
 }
 
 // TODO: ここに処理を書く
-
-// startChild()が正常終了しなかった場合は次のループで再起動するループ
-async function processLoop() {
-  while (true) {
-    // 子プロセスの起動
-    const [code, signal] = await startChild();
-
-    // 子プロセスが正常終了したら（code=0）、親プロセスも終了
-    if (!code) {
-      console.log(`child process terminated with signal: ${signal}`);
-      break;
-    }
-    // ループから出て親プロセスも終了
-    console.log("child process terminated");
-  }
-}
-
 // シグナルの２種類以上トラップ
 ["SIGINT", "SIGTERM"].forEach((signal) => {
   // シグナルを受け取るイベントリスナー
@@ -58,5 +41,16 @@ async function processLoop() {
   });
 });
 
-// プロセス開始
-processLoop();
+// startChild()が正常終了しなかった場合は次のループで再起動するループ
+while (true) {
+  // 子プロセスの起動
+  const [code, signal] = await startChild();
+
+  // 子プロセスが正常終了の場合（code=0）、親プロセスも終了
+  if (!code) {
+    console.log(`child process terminated with signal: ${signal}`);
+    break;
+  }
+  // 子プロセスが異常終了の場合（code=1）、次のループで子プロセスを再起動
+  console.log("child process terminated");
+}
