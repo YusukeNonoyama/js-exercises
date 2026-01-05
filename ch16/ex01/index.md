@@ -7,23 +7,28 @@
 *2 OSがwindowsの場合"リソースモニター"（"Winキー+r"の後"resmon"で起動）で実行中プログラムのスレッド数を確認できる。
 
 ## 解答
-* マルチスレッドは「一つのコンピュータープログラムを実行する際に、アプリケーションのプロセス（タスク）を複数のスレッドに分けて並行処理する流れのこと」
-  * 補足： 一般的なマルチスレッドはメモリを共有して、共有リソースへの排他制御などで並列処理を実現する。JavaScriptのWeb Workerはリソース共有はせず、完全に独立な環境が用意され、終了時のメッセージングをイベントリスナーで受け取ることで並列処理を実現している。
-  * 参考リンク
-    * https://business.ntt-west.co.jp/glossary/words-00262.html
-* スレッド数確認
-  * WSLだとリソースモニタ上でスレッド数がわからなかったためhtopで確認
-    * スレッド数２指定　⇒　Total execution time: 18.073s
-    ![alt text]({6B29A50C-B794-41E6-A29F-341D93E30E0E}.png)
-    * スレッド数４指定　⇒　Total execution time: 14.558s
-    ![alt text]({6F2F053B-3BD8-4D58-953A-37C216DB4B90}.png)
-    * スレッド数６指定　⇒　Total execution time: 13.189s
-    ![alt text]({E6570792-1C0C-4CFB-8CAC-285812B57839}.png)
-    * スレッド数８指定　⇒　Total execution time: 12.538s
-    ![alt text]({1C5A69C5-AA36-42A1-A9C4-6760B6FD0F62}.png)
-    * スレッド数10指定　⇒　Total execution time: 12.310s
-    ![alt text]({5743EBD4-3580-48BF-9C30-8D8BF0643B58}.png)
-    * スレッド数12指定　⇒　Total execution time: 12.643s
-    ![alt text]({6D91AEE4-2725-446A-96B0-52DC8C1D61CC}.png)
-  * コア数10で、これ以上のスレッドが同時に実行されることは確認できなかったため、CPUのコア数前後が最適なスレッド数となる
-    ![alt text](image.png)
+* マルチスレッドは、１つの実行プログラムを複数のスレッドに分割してCPUが同時に実行できるということ
+* フィボナッチ数を計算するmFib.jsをスレッド数を変更しながら実行
+  * スレッド数８指定実行時のhtop画面キャプチャ（WSLだとリソースモニタ上でスレッド数がわからなかったためhtopで確認）
+    ![alt text](assets/{22461965-9741-4A95-8011-378904C527BF}.png)
+  * スレッド数10辺りで底打ち
+    ![alt text](assets/image-4.png)
+* 適切なスレッド数についての考察
+  * CPU構成としては、WSLで認識されているコア数は12個、Windowsでは物理CPU10個/論理CPU12個となっており、その付近で高速化は止まっている（物理CPUの個数が最も効率よくなっているように見えるがばらつきの範囲にも見えるため今回の実験だけだとわからない）
+    ```
+    $ lscpu
+    Architecture:             x86_64
+      CPU op-mode(s):         32-bit, 64-bit
+      Address sizes:          46 bits physical, 48 bits virtual
+      Byte Order:             Little Endian
+    CPU(s):                   12
+      On-line CPU(s) list:    0-11
+    Vendor ID:                GenuineIntel
+      Model name:             13th Gen Intel(R) Core(TM) i7-1365U
+        CPU family:           6
+        Model:                186
+        Thread(s) per core:   2
+        Core(s) per socket:   6
+        Socket(s):            1
+        Stepping:             3
+    ```

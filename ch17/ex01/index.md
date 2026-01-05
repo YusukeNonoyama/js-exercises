@@ -1,0 +1,2 @@
+## メモ
+* lintingはtsserverでやるのか、eslintコマンドでやるのか、どちらがよいのか？

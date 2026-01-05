@@ -35,6 +35,10 @@ for (let i = 0; i < numThreads; i++) {
     } else {
       console.timeEnd(`Worker ${i} execution time`);
       threadsCompleted++;
+
+      // 追加
+      worker.terminate();
+
       if (threadsCompleted === numThreads) {
         const finalResult = results.reduce((acc, val) => acc + val, 0);
         console.timeEnd("Total execution time");
