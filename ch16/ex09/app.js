@@ -6,7 +6,7 @@ export const app = express();
 
 const rootDirectory = "ch16/ex09/";
 
-// パスに一致するGETメソッドのみに対応
+// "GET /test/mirror"のエンドポイント
 app.get("/test/mirror", (req, res) => {
     res.setHeader("Content-Type", "text/plain; charset=UTF-8");
     res.writeHead(200);
@@ -22,7 +22,7 @@ app.get("/test/mirror", (req, res) => {
     req.pipe(res);
 });
 
-// ホストへの全てのメソッドで全てのパスを受け取る
+// "GET /test/mirror"以外のパスへの全てのリクエストのエンドポイント
 app.use((req, res) => {
     let filename = req.path.substring(1);
 
@@ -32,23 +32,13 @@ app.use((req, res) => {
     let type;
     switch (path.extname(absolutePath)) {
         case ".html":
-        case ".htm":
-            type = "text/html";
+        case ".htm": type = "text/html"; break;
+        case ".js": type = "text/javascript"; break;
+        case ".css": type = "text/css"; break;
+        case ".png": type = "image/png"; break;
+        case ".txt": type = "text/plain"; break;
+        default: type = "application/octet-stream";
             break;
-        case ".js":
-            type = "text/javascript";
-            break;
-        case ".css":
-            type = "text/css";
-            break;
-        case ".png":
-            type = "image/png";
-            break;
-        case ".txt":
-            type = "text/plain";
-            break;
-        default:
-            type = "application/octet-stream";
     }
 
     const stream = fs.createReadStream(absolutePath);
