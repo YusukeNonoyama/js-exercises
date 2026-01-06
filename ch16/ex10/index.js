@@ -15,7 +15,7 @@ if (option === "stream") {  // ストリーム形式でリクエストを送信
 } else if (option === "non-stream") {  // 非ストリームでファイルコピー
     const res = await fetch("http://localhost:8000", {
         method: "POST",
-        body: {},
+        body: "",
     });
     const text = await res.text();
     console.log(text);

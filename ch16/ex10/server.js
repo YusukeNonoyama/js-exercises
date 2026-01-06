@@ -53,28 +53,57 @@ function serve(rootDirectory, port) {
                     response.end(err.message);
                 });
             } else if (request.method === "PUT") {
+                // メモリのログ（rss: Resident Set Size、合プロセスが確保している物理メモリの使用量）
+                console.log("Stream Copy start:", Math.round(process.memoryUsage().rss / 1024 / 1024), "MB (rss)");
+
                 // リクエストURLで指定したパスでWritableストリームを作成
                 let streamWrite = fs.createWriteStream(filename);
                 // リクエストbodyのReadableストリームをリクエストURLから生成したWritableストリームに接続し書き込み開始
                 request.pipe(streamWrite);
+
                 // 書き込みが終了したらレスポンスを返す
                 streamWrite.on("finish", () => {
                     response.setHeader("Content-Type", "text/plain; charset=UTF-8");
                     response.writeHead(200);
                     response.end(`successfully uploaded to "${filename}"`)
+
+                    console.log("Stream Copy finish:", Math.round(process.memoryUsage().rss / 1024 / 1024), "MB (rss)");
+                    console.log("=================================");
+
                 });
                 streamWrite.on("error", (err) => {
                     response.setHeader("Content-Type", "text/plain; charset=UTF-8");
                     response.writeHead(404);
                     response.end(err.message);
                 });
-            } else if (request.method === "POST") { // 非ストリームコピー（ストリームと非ストリームのメモリ使用量検証用）
-                fs.copyFile("ch16/ex10/file.txt", "ch16/ex10/file_copy_non_stream.txt", () => { })
-                response.setHeader("Content-Type", "text/plain; charset=UTF-8");
-                response.writeHead(200);
-                response.end(`successfully uploaded to "ch16/ex10/file_copy_non_stream.txt"`)
+            } else if (request.method === "POST") {  // メモリ使用量検証のための非ストリームコピーをするエンドポイント
+                // メモリのログ
+                console.log("non-Stream Copy start:", Math.round(process.memoryUsage().rss / 1024 / 1024), "MB (rss)");
+
+                fs.readFile("ch16/ex10/file.txt", (err, data) => {
+                    if (err) {
+                        response.writeHead(500, { "Content-Type": "text/plain; charset=UTF-8" });
+                        response.end(err.message);
+                        return;
+                    }
+
+                    fs.writeFile("ch16/ex10/file_copy_non_stream.txt", data, err => {
+                        if (err) {
+                            response.writeHead(500, { "Content-Type": "text/plain; charset=UTF-8" });
+                            response.end(err.message);
+                            return;
+                        }
+
+                        response.writeHead(200, { "Content-Type": "text/plain; charset=UTF-8" });
+                        response.end('successfully uploaded to "ch16/ex10/file_copy_non_stream.txt"');
+
+                        console.log("non-Stream Copy finish:", Math.round(process.memoryUsage().rss / 1024 / 1024), "MB (rss)");
+                        console.log("=================================");
+                    });
+                });
             }
         }
     });
 }
+
 serve(process.argv[2] || "ch16/ex10/", parseInt(process.argv[3]) || 8000);
