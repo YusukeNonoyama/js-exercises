@@ -1,5 +1,5 @@
 import threads from "worker_threads";
-// Nodeのが画像処理でよくつかわれるライブラリ
+// Nodeの画像処理でよくつかわれるライブラリ
 import sharp from "sharp";
 
 // Web Workerオブジェクトを作成
@@ -15,7 +15,7 @@ const { width, height, channels } = info;
 // バッファをピクセルに変換
 const inputPixel = new Uint8ClampedArray(data);
 
-// 第二引数に型付き配列のバッファを含めるとコピーせずに転送できる（テキスト）
+// 第二引数に型付き配列のバッファを含めるとコピーせずに転送できる
 worker.postMessage({ inputPixel, width, height }, [inputPixel.buffer]);
 
 // workerからのメッセージを受け取るイベントハンドラ
