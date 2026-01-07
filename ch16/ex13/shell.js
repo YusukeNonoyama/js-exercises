@@ -120,7 +120,6 @@ async function main() {
       continue;
     }
     if (line.startsWith("cd ")) {
-      i
       const dir = line.slice(3).trim();
       try {
         process.chdir(dir.trim());
@@ -129,6 +128,7 @@ async function main() {
       }
     } else {
       const cmd = parsecmd(line);
+      console.log("cmd:", cmd);
       try {
         rl.pause();
         await runcmd(cmd);
