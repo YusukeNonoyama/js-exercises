@@ -22,7 +22,7 @@ if (threads.isMainThread) {
         worker.on("message", (message) => {
             // 3-2. メインスレッドではそのメッセージを受信したら num をインクリメントする
             // console.log(Atomics.load(sharedArray, 0));
-            if (message === "incrementNum") {
+            if (message === "increment num") {
                 num++
 
             } else if (message === "done") {
@@ -36,7 +36,7 @@ if (threads.isMainThread) {
 
         // 3-1. サブスレッドの for ループで Atomic.add の代わりにメインスレッドに"num をインクリメントせよ"というメッセージを送り、
         // Atomics.add(sharedArray, 0, 1); // Threadsafe atomic increment
-        threads.parentPort.postMessage("incrementNum");
+        threads.parentPort.postMessage("increment num");
 
     }
     threads.parentPort.postMessage("done");
