@@ -7,12 +7,7 @@
   * ブロック暗号の一種。鍵長が128／192／256bit。
     * ブロック暗号: 平文のデータを特定の長さに区切り、その区切った単位で暗号化するアルゴリズム。
   * 無線LANの暗号化、通信の暗号化（SSL/TLS）、ファイルやストレージの暗号化などに幅広く使われている。
-  * 参考リンク
-    * https://ja.wikipedia.org/wiki/Advanced_Encryption_Standard
-    * https://business.ntt-west.co.jp/glossary/words-00213.html
+
 * Base64
   * バイナリデータを安全に（壊さずに）送信できる文字に変換する方法
   * A-Z, a-z, 0-9 （62 の文字と数字）、+ と / （2 つの特殊文字）、= （パディングに使用される）が使用される
-  * 参考リンク
-    * https://developer.mozilla.org/ja/docs/Glossary/Base64
-    * https://ja.wikipedia.org/wiki/Base64

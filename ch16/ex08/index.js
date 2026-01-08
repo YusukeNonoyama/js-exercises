@@ -1,4 +1,3 @@
-import { response } from "express";
 import https from "https";
 
 const GITHUB_API_HOST = "api.github.com";
@@ -195,7 +194,7 @@ Options:
 `);
 }
 
-//// 実行フェーズ
+//// 実行開始
 // 標準入力の引数をパース
 const { command, args, options } = parseArgs(process.argv);
 
