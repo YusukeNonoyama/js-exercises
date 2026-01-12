@@ -68,10 +68,9 @@ function decrypt64(data, key) {
     // key = Buffer.from(key.data); // base64で保存しない場合
 
     // 復号
-    const decipher = crypto.createDecipheriv("aes-256-cbc", key, iv);
-    let decrypted = decipher.update(encrypted);
-    decrypted += decipher.final("utf8");
-
+    const decipher = crypto.createDecipheriv("aes-256-cbc", key, iv);  // デコーダ
+    let decrypted = decipher.update(encrypted); // デコード結果のバイト列を返す
+    decrypted += decipher.final("utf8");    // utf8エンコードを返す（finalメソッドを呼ぶとこのDecipherivオブジェクトはもう使えなくなる）
     return decrypted;
 }
 
