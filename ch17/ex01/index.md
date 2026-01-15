@@ -1,2 +1,3 @@
 ## メモ
-* lintingはtsserverでやるのか、eslintコマンドでやるのか、どちらがよいのか？
+
+- lintingはtsserverでやるのか、eslintコマンドでやるのか、どちらがよいのか？

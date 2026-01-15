@@ -10,11 +10,11 @@ export default defineConfig([
     plugins: { js },
     extends: ["js/recommended"],
     languageOptions: { globals: globals.browser },
-    // rules: {
-    //   semi: "error"
-    // }
+    "rules": {
+      semi: "error",
+      "react/react-in-jsx-scope": "on"
+  }
   },
   tseslint.configs.recommended,
   pluginReact.configs.flat.recommended,
-
 ]);
