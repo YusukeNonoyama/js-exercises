@@ -27,7 +27,7 @@ if (!todoListLocalStorage) {
     appendToDoItem(todoList, item.id);
   }
   // 既存リストの最大idより1大きいidを設定
-  id = Math.max(...todoListLocalStorage.map(item => item.id)) + 1;
+  id = Math.max(...todoListLocalStorage.map((item) => item.id)) + 1;
 }
 
 form.addEventListener("submit", (e) => {
@@ -40,7 +40,7 @@ form.addEventListener("submit", (e) => {
 
   // リストにアイテムを挿入
   const currentId = id;
-  todoList.push({ "id": currentId, "name": todo, status: "active" });
+  todoList.push({ id: currentId, name: todo, status: "active" });
   // LocalStrageを更新
   localStorage.setItem("todoList", JSON.stringify(todoList));
 
@@ -51,12 +51,12 @@ form.addEventListener("submit", (e) => {
 // LocalStrageが変更されたときに、同一オリジンのページにイベントを発生
 window.addEventListener("storage", () => {
   location.reload();
-})
+});
 
 // ToDoアイテムをレンダーする関数
 function appendToDoItem(todoList, id) {
   // リスト内の該当idのアイテムを取得
-  const item = todoList.find(o => o.id === id);
+  const item = todoList.find((o) => o.id === id);
 
   const elem = document.createElement("li");
   const label = document.createElement("label");
@@ -91,7 +91,7 @@ function appendToDoItem(todoList, id) {
   destroy.textContent = "❌";
   destroy.addEventListener("click", () => {
     // リスト内の該当idのインデックスを取得
-    const index = todoList.findIndex(o => o.id === id);
+    const index = todoList.findIndex((o) => o.id === id);
     todoList.splice(index, 1);
     console.log("deleted:", todoList);
 

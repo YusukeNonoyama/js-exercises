@@ -20,8 +20,7 @@ https://web.havincoffee.com/html/tag/script/integrity.html
 - そのまま integrity 属性に付加すれば 読込み OK
 
 - integrity を一文字変えると以下のエラー
+
 ```
 ex03/:1 Failed to find a valid digest in the 'integrity' attribute for resource 'http://localhost:5500/ch15.01-03/ex03/js/index.js' with computed SHA-384 integrity 'DRSAcJMekRstEv0i2Rpgr9YrF8qenjmVWDQbrUH8/qof9id/cpqT62uZSZYL/YLp'. The resource has been blocked.
 ```
-
-

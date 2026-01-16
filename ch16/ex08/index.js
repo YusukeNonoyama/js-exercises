@@ -1,7 +1,7 @@
 import https from "https";
 
 const GITHUB_API_HOST = "api.github.com";
-const BASE_PATH = "/repos/YusukeNonoyama/js-exercises/issues"
+const BASE_PATH = "/repos/YusukeNonoyama/js-exercises/issues";
 const TOKEN = process.env.GITHUB_TOKEN;
 
 if (!TOKEN) {
@@ -34,8 +34,8 @@ function request(method, path, body, verbose) {
     req.write(bodyText);
     req.end();
 
-    req.on("error", e => reject(e));
-    req.on("response", res => {
+    req.on("error", (e) => reject(e));
+    req.on("response", (res) => {
       if (res.statusCode >= 300) {
         reject(new Error(`HTTP status ${res.statusCode}`));
         // ストリームをフローイングモードにしてボディを破棄する、レスポンスはreadableストリーム
@@ -47,13 +47,13 @@ function request(method, path, body, verbose) {
 
       // レスポンスボディ全体を文字列に書き込む
       let body = "";
-      res.on("data", chunk => (body += chunk));
+      res.on("data", (chunk) => (body += chunk));
 
       // レスポンスが全て揃った時の処理
       res.on("end", () => {
         let parsedBody;
         try {
-          parsedBody = JSON.parse(body)
+          parsedBody = JSON.parse(body);
           resolve(parsedBody);
         } catch (e) {
           reject(e);
@@ -101,7 +101,7 @@ function parseArgs(argv) {
   return { command, args, options };
 }
 
-// optionとcommandを除いた引数の配列argsをオブジェクトに変換 
+// optionとcommandを除いた引数の配列argsをオブジェクトに変換（--title xxx とか--number yyy とか）
 function parseCommandOptions(args) {
   const opts = {};
 
@@ -126,14 +126,9 @@ function parseCommandOptions(args) {
 async function listIssues(options) {
   const path = `${BASE_PATH}?state=open`;
 
-  const issues = await request(
-    "GET",
-    path,
-    null,
-    options.verbose
-  );
+  const issues = await request("GET", path, null, options.verbose);
 
-  issues.forEach(issue => {
+  issues.forEach((issue) => {
     console.log(`#${issue.number}: ${issue.title}`);
   });
 }
@@ -151,7 +146,7 @@ async function createIssue(options) {
       title: options.title,
       body: options.body ?? "",
     },
-    options.verbose
+    options.verbose,
   );
 
   console.log(`Created issue #${issue.number}: ${issue.title}`);
@@ -167,7 +162,7 @@ async function closeIssue(options) {
     "PATCH",
     path,
     { state: "closed" },
-    options.verbose
+    options.verbose,
   );
   console.log(`Closed issue #${issue.number}: ${issue.title}`);
 }

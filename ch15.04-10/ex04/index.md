@@ -1,7 +1,7 @@
 1. 適当な Web サイトを開き、ブラウザの開発者ツールに TOC.js の内容を貼り付けて実行してみなさい
-![alt text]({9C27C2FA-84AD-4E3E-AADA-B82273D37045}.png)
+   ![alt text]({9C27C2FA-84AD-4E3E-AADA-B82273D37045}.png)
 
 2. TOC.js をブックマークレットにして簡単に実行できるようにしなさい (javascript:{TOC.js のコード} というブックマークを作成)
-![alt text]({B73915BA-5AD1-4469-A28F-B077767E9ADF}.png)
+   ![alt text]({B73915BA-5AD1-4469-A28F-B077767E9ADF}.png)
 
 3. 下記の例を参考にして目次を選択した時にスムーズに遷移するようにしなさい

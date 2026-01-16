@@ -1,11 +1,11 @@
-import https from "https";
+import https from 'https';
 
-const GITHUB_API_HOST = "api.github.com";
-const BASE_PATH = "/repos/YusukeNonoyama/js-exercises/issues";
+const GITHUB_API_HOST = 'api.github.com';
+const BASE_PATH = '/repos/YusukeNonoyama/js-exercises/issues';
 const TOKEN = process.env.GITHUB_TOKEN;
 
 if (!TOKEN) {
-  console.log("GITHUB_TOKEN is not set");
+  console.log('GITHUB_TOKEN is not set');
   process.exit(1);
 }
 
@@ -22,8 +22,8 @@ function request(method, path, body, verbose) {
       path,
       headers: {
         Authorization: `Bearer ${TOKEN}`,
-        Accept: "application/vnd.github+json",
-        "User-Agent": "gh-issue-cli",
+        Accept: 'application/vnd.github+json',
+        'User-Agent': 'gh-issue-cli',
       },
     };
 
@@ -34,8 +34,8 @@ function request(method, path, body, verbose) {
     req.write(bodyText);
     req.end();
 
-    req.on("error", (e) => reject(e));
-    req.on("response", (res) => {
+    req.on('error', (e) => reject(e));
+    req.on('response', (res) => {
       if (res.statusCode >= 300) {
         reject(new Error(`HTTP status ${res.statusCode}`));
         // ストリームをフローイングモードにしてボディを破棄する、レスポンスはreadableストリーム
@@ -43,14 +43,14 @@ function request(method, path, body, verbose) {
         return;
       }
 
-      res.setEncoding("utf-8");
+      res.setEncoding('utf-8');
 
       // レスポンスボディ全体を文字列に書き込む
-      let body = "";
-      res.on("data", (chunk) => (body += chunk));
+      let body = '';
+      res.on('data', (chunk) => (body += chunk));
 
       // レスポンスが全て揃った時の処理
-      res.on("end", () => {
+      res.on('end', () => {
         let parsedBody;
         try {
           parsedBody = JSON.parse(body);
@@ -63,7 +63,7 @@ function request(method, path, body, verbose) {
         if (verbose) {
           console.log(`response receieving...`);
           console.log(`Status: ${res.statusCode}`);
-          console.log("Response body:", parsedBody);
+          console.log('Response body:', parsedBody);
         }
       });
     });
@@ -72,7 +72,7 @@ function request(method, path, body, verbose) {
     if (verbose) {
       console.log(`request sending...`);
       console.log(`${method} https://${GITHUB_API_HOST}${path}`);
-      console.log("Request body:", body);
+      console.log('Request body:', body);
     }
   });
 }
@@ -81,7 +81,7 @@ function request(method, path, body, verbose) {
 export async function listIssues(options) {
   const path = `${BASE_PATH}?state=open`;
 
-  const issues = await request("GET", path, null, options.verbose);
+  const issues = await request('GET', path, null, options.verbose);
 
   issues.forEach((issue) => {
     console.log(`#${issue.number}: ${issue.title}`);
@@ -91,17 +91,17 @@ export async function listIssues(options) {
 // Issueを作成
 export async function createIssue(options) {
   if (!options.title) {
-    throw new Error("--title is required");
+    throw new Error('--title is required');
   }
   const path = BASE_PATH;
   const issue = await request(
-    "POST",
+    'POST',
     path,
     {
       title: options.title,
-      body: options.body ?? "",
+      body: options.body ?? '',
     },
-    options.verbose,
+    options.verbose
   );
 
   console.log(`Created issue #${issue.number}: ${issue.title}`);
@@ -110,14 +110,14 @@ export async function createIssue(options) {
 // Issueをクローズ
 export async function closeIssue(options) {
   if (!options.number) {
-    throw new Error("--number is required");
+    throw new Error('--number is required');
   }
   const path = `${BASE_PATH}/${options.number}`;
   const issue = await request(
-    "PATCH",
+    'PATCH',
     path,
-    { state: "closed" },
-    options.verbose,
+    {state: 'closed'},
+    options.verbose
   );
   console.log(`Closed issue #${issue.number}: ${issue.title}`);
 }

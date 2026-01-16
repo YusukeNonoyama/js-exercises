@@ -28,14 +28,12 @@ describe("retryWithExponentialBackoff", () => {
   });
 
   it("全て失敗", async () => {
-    const mockFunc = jest
-      .fn()
-      .mockRejectedValue(new Error("always fail"))
+    const mockFunc = jest.fn().mockRejectedValue(new Error("always fail"));
 
     const promise = retryWithExponentialBackoff(mockFunc, 3);
     // await jest.runAllTimersAsync();
 
-    console.log(promise)
+    console.log(promise);
     await expect(promise).rejects.toThrow("always fail"); // エラーになる => thrown: "fail always"
     expect(mockFunc).toHaveBeenCalledTimes(3); // 4回リトライ
   });

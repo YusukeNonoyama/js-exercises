@@ -32,18 +32,18 @@ export async function retryWithExponentialBackoff(
 import { randomInt } from "crypto";
 
 function func() {
-    let a = randomInt(0, 10);
-    console.log(a);
-    if (a < 1) {
-        return true;
-    } else {
-        return false;
-    }
+  let a = randomInt(0, 10);
+  console.log(a);
+  if (a < 1) {
+    return true;
+  } else {
+    return false;
+  }
 }
 
 function callback(result: boolean) {
-    console.log(result);
-    return result;
+  console.log(result);
+  return result;
 }
 
 // let count = 0;

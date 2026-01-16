@@ -17,10 +17,16 @@ test("ToDoアイテムを追加", async ({ page }) => {
 
   const labelList = ["研修の練習問題を完了する", "研修の予習範囲を読む"];
 
-  await expect(items.nth(0).locator("label")).toHaveText("研修の練習問題を完了する");
-  await expect(items.nth(1).locator("label")).toHaveText("研修の予習範囲を読む");
+  await expect(items.nth(0).locator("label")).toHaveText(
+    "研修の練習問題を完了する",
+  );
+  await expect(items.nth(1).locator("label")).toHaveText(
+    "研修の予習範囲を読む",
+  );
 
-  const stored = await page.evaluate(() => JSON.parse(localStorage.getItem("todoList")));
+  const stored = await page.evaluate(() =>
+    JSON.parse(localStorage.getItem("todoList")),
+  );
   expect(stored.length).toBe(2);
   expect(stored[0].name).toBe("研修の予習範囲を読む");
   expect(stored[1].name).toBe("研修の練習問題を完了する");
@@ -34,12 +40,16 @@ test("ToDoアイテムのトグル変更の反映", async ({ page }) => {
 
   // トグルのチェックを付ける
   await checkbox.check();
-  let stored = await page.evaluate(() => JSON.parse(localStorage.getItem("todoList")));
+  let stored = await page.evaluate(() =>
+    JSON.parse(localStorage.getItem("todoList")),
+  );
   expect(stored[0].status).toBe("completed");
 
   // トグルのチェックを外す
   await checkbox.uncheck();
-  stored = await page.evaluate(() => JSON.parse(localStorage.getItem("todoList")));
+  stored = await page.evaluate(() =>
+    JSON.parse(localStorage.getItem("todoList")),
+  );
   expect(stored[0].status).toBe("active");
 });
 
@@ -53,7 +63,9 @@ test("ToDoアイテムの削除", async ({ page }) => {
 
   await expect(page.locator("#todo-list li")).toHaveCount(0);
 
-  const stored = await page.evaluate(() => JSON.parse(localStorage.getItem("todoList")));
+  const stored = await page.evaluate(() =>
+    JSON.parse(localStorage.getItem("todoList")),
+  );
   expect(stored.length).toBe(0);
 });
 
@@ -62,9 +74,7 @@ test("リロード時にlocalStorageにあるデータを読込み", async ({ pa
   await page.evaluate(() => {
     localStorage.setItem(
       "todoList",
-      JSON.stringify([
-        { id: 1, name: "研修に出席する", status: "active" }
-      ])
+      JSON.stringify([{ id: 1, name: "研修に出席する", status: "active" }]),
     );
   });
 

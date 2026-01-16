@@ -29,7 +29,7 @@ for (let i = 0; i < foo.length; i++) bar(foo[i]);
 
 //  Nonempty blocks: K&R style
 class InnerClass {
-  constructor() {}
+  constructor() { }
 
   /** @param {number} foo */
   method(foo) {
@@ -45,7 +45,7 @@ class InnerClass {
 }
 
 // Empty blocks: may be concise
-function doNothing() {}
+function doNothing() { }
 
 if (condition) {
   // …
@@ -56,14 +56,14 @@ if (condition) {
 
 try {
   // …
-} catch (e) {}
+} catch (e) { }
 
 // Block indentation: +2 spaces
 
 class InnerClass {
-  constructor() {}
+  constructor() { }
 
-  method(foo) {}
+  method(foo) { }
 }
 
 // Array literals: optionally block-like (allowed example)
@@ -81,8 +81,8 @@ const a = {
   b: 1,
 };
 
-const b = {a: 0, b: 1};
-const c = {a: 0, b: 1};
+const b = { a: 0, b: 1 };
+const c = { a: 0, b: 1 };
 
 someMethod(
   foo,

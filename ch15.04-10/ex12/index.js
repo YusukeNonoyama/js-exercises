@@ -10,67 +10,66 @@ console.log("hash", document.location.hash);
 console.log("origin", document.location.origin);
 console.log("pathname", document.location.pathname);
 
-
 function renderTodos(todos) {
-    list.innerHTML = "";
-    todos.forEach((todo, index) => {
-        const clone = template.content.cloneNode(true);
-        const li = clone.querySelector("li");
-        const toggle = clone.querySelector("input");
-        const label = clone.querySelector("label");
-        const destroy = clone.querySelector("button");
+  list.innerHTML = "";
+  todos.forEach((todo, index) => {
+    const clone = template.content.cloneNode(true);
+    const li = clone.querySelector("li");
+    const toggle = clone.querySelector("input");
+    const label = clone.querySelector("label");
+    const destroy = clone.querySelector("button");
 
-        li.classList.toggle("completed", todo.completed);
-        toggle.addEventListener("change", () => {
-            todo.completed = toggle.checked;
-            renderTodos(todos);
-        });
-        label.textContent = todo.content;
-        toggle.checked = todo.completed;
-        destroy.addEventListener("click", () => {
-            todos.splice(index, 1);
-            renderTodos(todos);
-        });
-
-        list.appendChild(li);
+    li.classList.toggle("completed", todo.completed);
+    toggle.addEventListener("change", () => {
+      todo.completed = toggle.checked;
+      renderTodos(todos);
     });
+    label.textContent = todo.content;
+    toggle.checked = todo.completed;
+    destroy.addEventListener("click", () => {
+      todos.splice(index, 1);
+      renderTodos(todos);
+    });
+
+    list.appendChild(li);
+  });
 }
 
 form.addEventListener("submit", (e) => {
-    e.preventDefault();
-    if (input.value.trim() === "") {
-        return;
-    }
-    const todo = input.value.trim();
-    input.value = "";
+  e.preventDefault();
+  if (input.value.trim() === "") {
+    return;
+  }
+  const todo = input.value.trim();
+  input.value = "";
 
-    todos.push({ content: todo, completed: false });
-    renderTodos(todos);
+  todos.push({ content: todo, completed: false });
+  renderTodos(todos);
 });
 
 document.querySelector("#all").addEventListener("click", (e) => {
-    e.preventDefault();
-    window.history.pushState(null, "", "/ch15.04-10/ex12/all");
-    renderTodos(
-        /* TODO: ここは自分で考えてみて下さい (ex11 の答えに近いので) */
-        [...todos]
-    );
+  e.preventDefault();
+  window.history.pushState(null, "", "/ch15.04-10/ex12/all");
+  renderTodos(
+    /* TODO: ここは自分で考えてみて下さい (ex11 の答えに近いので) */
+    [...todos],
+  );
 });
 
 document.querySelector("#active").addEventListener("click", (e) => {
-    e.preventDefault();
-    window.history.pushState(null, "", "/ch15.04-10/ex12/active");
-    renderTodos(
-        /* TODO: ここは自分で考えてみて下さい (ex11 の答えに近いので) */
-        todos.filter((t) => t.completed === false)
-    );
+  e.preventDefault();
+  window.history.pushState(null, "", "/ch15.04-10/ex12/active");
+  renderTodos(
+    /* TODO: ここは自分で考えてみて下さい (ex11 の答えに近いので) */
+    todos.filter((t) => t.completed === false),
+  );
 });
 
 document.querySelector("#completed").addEventListener("click", (e) => {
-    e.preventDefault();
-    window.history.pushState(null, "", "/ch15.04-10/ex12/completed");
-    renderTodos(
-        /* TODO: ここは自分で考えてみて下さい (ex11 の答えに近いので) */
-        todos.filter((t) => t.completed === true)
-    );
+  e.preventDefault();
+  window.history.pushState(null, "", "/ch15.04-10/ex12/completed");
+  renderTodos(
+    /* TODO: ここは自分で考えてみて下さい (ex11 の答えに近いので) */
+    todos.filter((t) => t.completed === true),
+  );
 });

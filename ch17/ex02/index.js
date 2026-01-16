@@ -1,16 +1,16 @@
-import { listIssues, createIssue, closeIssue } from "./githubOperation.js";
+import {listIssues, createIssue, closeIssue} from './githubOperation.js';
 
 // オプション、コマンド、コマンド引数の配列に分割
 function parseArgs(argv) {
   const args = argv.slice(2);
-  const options = { verbose: false };
+  const options = {verbose: false};
 
   // optionがある場合はフラグをtrueにする
   while (args.length > 0) {
-    if (args[0] === "-h" || args[0] === "--help") {
+    if (args[0] === '-h' || args[0] === '--help') {
       options.help = true;
       args.shift();
-    } else if (args[0] === "-v" || args[0] === "--verbose") {
+    } else if (args[0] === '-v' || args[0] === '--verbose') {
       options.verbose = true;
       args.shift();
     } else {
@@ -21,7 +21,7 @@ function parseArgs(argv) {
   // コマンド： list,、create、close
   const command = args.shift();
 
-  return { command, args, options };
+  return {command, args, options};
 }
 
 // optionとcommandを除いた引数の配列argsをオブジェクトに変換
@@ -31,10 +31,10 @@ function parseCommandOptions(args) {
   for (let i = 0; i < args.length; i++) {
     const arg = args[i];
 
-    if (arg.startsWith("--")) {
+    if (arg.startsWith('--')) {
       const key = arg.slice(2);
       const value = args[i + 1];
-      if (!value || value.startsWith("-")) {
+      if (!value || value.startsWith('-')) {
         throw new Error(`Option --${key} requires a value`);
       }
       opts[key] = value;
@@ -47,7 +47,7 @@ function parseCommandOptions(args) {
 
 //// 実行開始
 // 標準入力の引数をパース
-const { command, args, options } = parseArgs(process.argv);
+const {command, args, options} = parseArgs(process.argv);
 
 // ヘルプのフラグがtrueか引数未指定の場合はヘルプを表示して終了
 if (options.help || !command) {
@@ -59,17 +59,17 @@ if (options.help || !command) {
 Object.assign(options, parseCommandOptions(args));
 
 switch (command) {
-  case "list": {
+  case 'list': {
     await listIssues(options);
     break;
   }
 
-  case "create": {
+  case 'create': {
     await createIssue(options);
     break;
   }
 
-  case "close": {
+  case 'close': {
     await closeIssue(options);
     break;
   }

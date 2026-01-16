@@ -1,45 +1,41 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-</head>
+  </head>
 
-<body>
-    <p>Motion Blur <canvas id="square" width=50 height=50></canvas></p>
+  <body>
+    <p>Motion Blur <canvas id="square" width="50" height="50"></canvas></p>
     <script>
-        function smear(c, n, x, y, w, h) {
-            let pixels = c.getImageData(x, y, w, h);
-            let width = pixels.width, height = pixels.height;
-            let data = pixels.data;
-            let m = n - 1;
-            for (let row = 0; row < height; row++) {
-                let i = row * width * 4 + 4;
-                for (let col = 1; col < width; col++, i += 4) {
-                    data[i] = (data[i] + data[i - 4] * m) / n;
-                    data[i + 1] = (data[i + 1] + data[i - 3] * m) / n;
-                    data[i + 2] = (data[i + 2] + data[i - 2] * m) / n;
-                    data[i + 3] = (data[i + 3] + data[i - 1] * m) / n;
-                }
-            }
-            c.putImageData(pixels, x, y);
+      function smear(c, n, x, y, w, h) {
+        let pixels = c.getImageData(x, y, w, h);
+        let width = pixels.width,
+          height = pixels.height;
+        let data = pixels.data;
+        let m = n - 1;
+        for (let row = 0; row < height; row++) {
+          let i = row * width * 4 + 4;
+          for (let col = 1; col < width; col++, i += 4) {
+            data[i] = (data[i] + data[i - 4] * m) / n;
+            data[i + 1] = (data[i + 1] + data[i - 3] * m) / n;
+            data[i + 2] = (data[i + 2] + data[i - 2] * m) / n;
+            data[i + 3] = (data[i + 3] + data[i - 1] * m) / n;
+          }
         }
+        c.putImageData(pixels, x, y);
+      }
 
-        let canvas = document.querySelector("#square"); // Get first canvas element
-        let context = canvas.getContext("2d"); // Get 2D drawing context
+      let canvas = document.querySelector("#square"); // Get first canvas element
+      let context = canvas.getContext("2d"); // Get 2D drawing context
 
-
-        context.fillStyle = "#f00"; // Set fill color to red
-        context.fillRect(0, 0, 50, 50); // Fill a square
-        context.fill(); // Fill the path
-        smear(context, 30, 0, 0, 100, 100);
-        context.stroke();
-
+      context.fillStyle = "#f00"; // Set fill color to red
+      context.fillRect(0, 0, 50, 50); // Fill a square
+      context.fill(); // Fill the path
+      smear(context, 30, 0, 0, 100, 100);
+      context.stroke();
     </script>
     <!-- <script src="motionBlur.js"></script> -->
-
-</body>
-
+  </body>
 </html>

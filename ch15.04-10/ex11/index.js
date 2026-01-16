@@ -7,57 +7,57 @@ const template = document.querySelector("#todo-template");
 let todos = [];
 
 function renderTodos(todos) {
-    list.innerHTML = "";
-    todos.forEach((todo, index) => {
-        const clone = template.content.cloneNode(true);
-        const li = clone.querySelector("li");
-        const toggle = clone.querySelector("input");
-        const label = clone.querySelector("label");
-        const destroy = clone.querySelector("button");
+  list.innerHTML = "";
+  todos.forEach((todo, index) => {
+    const clone = template.content.cloneNode(true);
+    const li = clone.querySelector("li");
+    const toggle = clone.querySelector("input");
+    const label = clone.querySelector("label");
+    const destroy = clone.querySelector("button");
 
-        li.classList.toggle("completed", todo.completed);
-        toggle.addEventListener("change", () => {
-            todo.completed = toggle.checked;
-            renderTodos(todos);
-        });
-        label.textContent = todo.content;
-        toggle.checked = todo.completed;
-        destroy.addEventListener("click", () => {
-            todos.splice(index, 1);
-            deleteTodo(todo.content);
-            renderTodos(todos);
-        });
-
-        list.appendChild(li);
+    li.classList.toggle("completed", todo.completed);
+    toggle.addEventListener("change", () => {
+      todo.completed = toggle.checked;
+      renderTodos(todos);
     });
+    label.textContent = todo.content;
+    toggle.checked = todo.completed;
+    destroy.addEventListener("click", () => {
+      todos.splice(index, 1);
+      deleteTodo(todo.content);
+      renderTodos(todos);
+    });
+
+    list.appendChild(li);
+  });
 }
 
 form.addEventListener("submit", (e) => {
-    e.preventDefault();
-    if (input.value.trim() === "") {
-        return;
-    }
-    const todo = input.value.trim();
-    input.value = "";
+  e.preventDefault();
+  if (input.value.trim() === "") {
+    return;
+  }
+  const todo = input.value.trim();
+  input.value = "";
 
-    todos.push({ content: todo, completed: false });
-    renderTodos(todos);
+  todos.push({ content: todo, completed: false });
+  renderTodos(todos);
 });
 
 window.addEventListener("hashchange", () => {
-    // ここを実装してね
-    let todoShow = [];
-    const pageHash = window.location.hash;
-    if (pageHash === "#/") {
-        todoShow = [...todos];
-    } else if (pageHash === "#/active") {
-        todoShow = todos.filter((t) => t.completed === false);
-    } else if (pageHash === "#/completed") {
-        todoShow = todos.filter((t) => t.completed === true);
-    }
-    renderTodos(todoShow);
+  // ここを実装してね
+  let todoShow = [];
+  const pageHash = window.location.hash;
+  if (pageHash === "#/") {
+    todoShow = [...todos];
+  } else if (pageHash === "#/active") {
+    todoShow = todos.filter((t) => t.completed === false);
+  } else if (pageHash === "#/completed") {
+    todoShow = todos.filter((t) => t.completed === true);
+  }
+  renderTodos(todoShow);
 });
 
 function deleteTodo(content) {
-    todos = todos.filter((t) => t.content !== content);
+  todos = todos.filter((t) => t.content !== content);
 }

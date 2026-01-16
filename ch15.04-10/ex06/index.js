@@ -14,19 +14,19 @@ template.innerHTML = `\
 `;
 
 class TodoApp extends HTMLElement {
-    constructor() {
-        super();
-        this.attachShadow({ mode: "open" });
-        this.shadowRoot.appendChild(template.content.cloneNode(true));
+  constructor() {
+    super();
+    this.attachShadow({ mode: "open" });
+    this.shadowRoot.appendChild(template.content.cloneNode(true));
 
-        this.form = this.shadowRoot.querySelector("#new-todo-form");
-        // TODO: 残りを実装
-        this.input = this.shadowRoot.querySelector("#new-todo");
-        this.list = this.shadowRoot.querySelector("#todo-list");
+    this.form = this.shadowRoot.querySelector("#new-todo-form");
+    // TODO: 残りを実装
+    this.input = this.shadowRoot.querySelector("#new-todo");
+    this.list = this.shadowRoot.querySelector("#todo-list");
 
-        // TODO リストのアイテムのテンプレートを追加
-        const templateLi = document.createElement("template");
-        templateLi.innerHTML = `\
+    // TODO リストのアイテムのテンプレートを追加
+    const templateLi = document.createElement("template");
+    templateLi.innerHTML = `\
         <li>
         <div class="view">
             <input class="toggle" type="checkbox" />
@@ -36,33 +36,32 @@ class TodoApp extends HTMLElement {
         </li>
         `;
 
-        this.form.addEventListener("submit", (e) => {
-            e.preventDefault();
-            if (this.input.value.trim() === "") {
-                return;
-            }
-            const todo = this.input.value.trim();
-            this.input.value = "";
+    this.form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      if (this.input.value.trim() === "") {
+        return;
+      }
+      const todo = this.input.value.trim();
+      this.input.value = "";
 
-            // TODO リストのアイテムをクローン
-            const clone = templateLi.content.cloneNode(true);
-            const li = clone.querySelector("li");
-            const toggle = clone.querySelector("input");
-            const label = clone.querySelector("label");
-            const destroy = clone.querySelector("button");
+      // TODO リストのアイテムをクローン
+      const clone = templateLi.content.cloneNode(true);
+      const li = clone.querySelector("li");
+      const toggle = clone.querySelector("input");
+      const label = clone.querySelector("label");
+      const destroy = clone.querySelector("button");
 
-            toggle.addEventListener("change", () => {
-                li.classList.toggle("completed", toggle.checked);
-            });
-            label.textContent = todo;
-            destroy.addEventListener("click", () => {
-                li.remove();
-            });
+      toggle.addEventListener("change", () => {
+        li.classList.toggle("completed", toggle.checked);
+      });
+      label.textContent = todo;
+      destroy.addEventListener("click", () => {
+        li.remove();
+      });
 
-            this.list.append(li);
-        })
-    }
-
+      this.list.append(li);
+    });
+  }
 }
 
 customElements.define("todo-app", TodoApp);

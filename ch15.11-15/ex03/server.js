@@ -249,7 +249,10 @@ function corsMiddleware(_url, _req, res) {
   // Cookieなど認証情報の共有を許可
   res.setHeader("Access-Control-Allow-Credentials", "true");
   // リクエストメソッドの許可
-  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PATCH, DELETE, OPTIONS");
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "GET, POST, PATCH, DELETE, OPTIONS",
+  );
   // ヘッダーの許可。明示的にヘッダーを書いていなくても付与されることはあるため必要
   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
   return true;

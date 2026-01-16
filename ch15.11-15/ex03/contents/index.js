@@ -6,9 +6,9 @@ document.addEventListener("DOMContentLoaded", async () => {
   try {
     const response = await fetch("http://localhost:3001/api/tasks", {
       // CORS モードでのリクエスト送信を許可
-      mode: 'cors',
+      mode: "cors",
       // クロスオリジンでの Cookie の送信を許可
-      credentials: 'include',
+      credentials: "include",
     });
     if (!response.ok) {
       const body = await response.json();
@@ -36,11 +36,13 @@ form.addEventListener("submit", async (e) => {
   try {
     const response = await fetch("http://localhost:3001/api/tasks", {
       method: "POST",
-      mode: 'cors',
-      credentials: 'include',
-      headers: new Headers({ "Content-Type": "application/json; charset=UTF-8" }),
-      body: JSON.stringify({ "name": todo })
-    })
+      mode: "cors",
+      credentials: "include",
+      headers: new Headers({
+        "Content-Type": "application/json; charset=UTF-8",
+      }),
+      body: JSON.stringify({ name: todo }),
+    });
     if (!response.ok) {
       const body = await response.json();
       alert(`${response.status}: ${body.message}`);
@@ -48,7 +50,6 @@ form.addEventListener("submit", async (e) => {
     }
     const body = await response.json();
     appendToDoItem(body);
-
   } catch (err) {
     alert(err);
   }
@@ -68,19 +69,19 @@ function appendToDoItem(task) {
       let response;
       if (toggle.checked) {
         response = await fetch(`http://localhost:3001/api/tasks/${task.id}`, {
-          mode: 'cors',
-          credentials: 'include',
+          mode: "cors",
+          credentials: "include",
           method: "PATCH",
-          body: JSON.stringify({ "status": "completed" })
-        })
+          body: JSON.stringify({ status: "completed" }),
+        });
         label.style.textDecorationLine = "line-through";
       } else {
         response = await fetch(`http://localhost:3001/api/tasks/${task.id}`, {
-          mode: 'cors',
-          credentials: 'include',
+          mode: "cors",
+          credentials: "include",
           method: "PATCH",
-          body: JSON.stringify({ "status": "active" })
-        })
+          body: JSON.stringify({ status: "active" }),
+        });
         label.style.textDecorationLine = "none";
       }
       if (!response.ok) {
@@ -101,10 +102,10 @@ function appendToDoItem(task) {
         `http://localhost:3001/api/tasks/${task.id}`,
         {
           method: "DELETE",
-          mode: 'cors',
-          credentials: 'include'
-        }
-      )
+          mode: "cors",
+          credentials: "include",
+        },
+      );
       if (!response.ok) {
         const body = await response.json();
         alert(`${response.status}: ${body.message}`);

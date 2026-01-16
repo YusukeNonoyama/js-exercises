@@ -27,7 +27,7 @@ if (!todoListSessionStorage) {
     appendToDoItem(todoList, item.id);
   }
   // 既存の最大idより1大きいidを設定
-  id = Math.max(...todoListSessionStorage.map(item => item.id)) + 1;
+  id = Math.max(...todoListSessionStorage.map((item) => item.id)) + 1;
 }
 
 form.addEventListener("submit", (e) => {
@@ -40,7 +40,7 @@ form.addEventListener("submit", (e) => {
 
   // リストにアイテムを挿入
   const currentId = id;
-  todoList.push({ "id": currentId, "name": todo, status: "active" });
+  todoList.push({ id: currentId, name: todo, status: "active" });
   // SessionStorageを更新
   sessionStorage.setItem("todoList", JSON.stringify(todoList));
 
@@ -50,7 +50,7 @@ form.addEventListener("submit", (e) => {
 
 function appendToDoItem(todoList, id) {
   // 既存のリスト内の該当idのアイテムを取得
-  const item = todoList.find(o => o.id === id);
+  const item = todoList.find((o) => o.id === id);
 
   const elem = document.createElement("li");
   const label = document.createElement("label");
@@ -85,7 +85,7 @@ function appendToDoItem(todoList, id) {
   destroy.textContent = "❌";
   destroy.addEventListener("click", () => {
     // リスト内の該当idのインデックスを取得
-    const index = todoList.findIndex(o => o.id === id);
+    const index = todoList.findIndex((o) => o.id === id);
     todoList.splice(index, 1);
     console.log("deleted:", todoList);
 

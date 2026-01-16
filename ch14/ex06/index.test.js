@@ -6,8 +6,12 @@ describe("createLoggingProxy", () => {
   let objLogArr;
   beforeEach(() => {
     obj = {
-      greet(name) { return `Hello, ${name}` },
-      add(a, b) { return a + b },
+      greet(name) {
+        return `Hello, ${name}`;
+      },
+      add(a, b) {
+        return a + b;
+      },
       value: 42,
     };
     [objProxy, objLogArr] = createLoggingProxy(obj);
@@ -20,7 +24,10 @@ describe("createLoggingProxy", () => {
     objProxy.greet("world");
     objProxy.add(10, 20);
     expect(objLogArr.length).toBe(2);
-    expect(objLogArr[0]).toMatchObject({ methodName: "greet", args: ["world"] });
+    expect(objLogArr[0]).toMatchObject({
+      methodName: "greet",
+      args: ["world"],
+    });
     expect(objLogArr[1]).toMatchObject({ methodName: "add", args: [10, 20] });
     const timeFormat = /^\d{1,2}:\d{2}:\d{2}$/;
     expect(objLogArr[0].invokedAt).toMatch(timeFormat);

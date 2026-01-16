@@ -14,7 +14,7 @@ const wss = new WebSocketServer({ port });
 let grid = new Array(ROWS)
   .fill(null)
   .map(() =>
-    new Array(COLS).fill(null).map(() => !!Math.floor(Math.random() * 2))
+    new Array(COLS).fill(null).map(() => !!Math.floor(Math.random() * 2)),
   );
 // 停止状態
 let paused = true;
@@ -63,16 +63,23 @@ function updateGrid(grid) {
       // 周囲のセルの生存数を数えて nextGrid[row][col] に true or false を設定する
       //（15.04-10.10の実装を利用）
       const neighbours = [
-        [-1, -1], [-1, 0], [-1, 1], [0, -1], [0, 1], [1, -1], [1, 0], [1, 1]
+        [-1, -1],
+        [-1, 0],
+        [-1, 1],
+        [0, -1],
+        [0, 1],
+        [1, -1],
+        [1, 0],
+        [1, 1],
       ];
       let numOfAlive = 0;
       neighbours.forEach((nPos) => {
         const pos = [row + nPos[0], col + nPos[1]];
         // 計算対象のセルがグリッドの中のものだけを計算対象にして生存数を加算
-        if (pos.every(e => e >= 0 && e < 50)) {
-          numOfAlive += grid[pos[0]][pos[1]]
+        if (pos.every((e) => e >= 0 && e < 50)) {
+          numOfAlive += grid[pos[0]][pos[1]];
         }
-      })
+      });
       // 対象セルが生存の場合の周囲のセルの生存数
       // * ２未満なら or ４以上なら false(dead)
       // * ２、３なら true(alive)

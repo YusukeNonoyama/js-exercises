@@ -29,7 +29,7 @@ async function fetchRetryWithExponentialBackoff(url, options) {
     const delay = 2 ** count * 1000;
     count++;
 
-    await new Promise(resolve => setTimeout(resolve, delay));
+    await new Promise((resolve) => setTimeout(resolve, delay));
     return tryFunc();
   }
 
@@ -38,7 +38,6 @@ async function fetchRetryWithExponentialBackoff(url, options) {
 
 // 一定時間経つとfetchをabortする関数
 async function fetchWithTimeout(url, options = {}) {
-
   // fetchを開始したらボタン/入力を無効化する
   disableActions();
 
@@ -75,7 +74,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     alert("fetch timeout");
   } finally {
     // fetchが終わったらボタン/入力を有効化
-    enableActions()
+    enableActions();
   }
 });
 
@@ -92,10 +91,12 @@ form.addEventListener("submit", async (e) => {
     // APIでアイテム追加
     const response = await fetchWithTimeout("/api/tasks", {
       method: "POST",
-      headers: new Headers({ "Content-Type": "application/json; charset=UTF-8" }),
-      body: JSON.stringify({ "name": todo }),
-      timeout: 3000
-    })
+      headers: new Headers({
+        "Content-Type": "application/json; charset=UTF-8",
+      }),
+      body: JSON.stringify({ name: todo }),
+      timeout: 3000,
+    });
 
     if (!response.ok) {
       alert("error");
@@ -103,11 +104,10 @@ form.addEventListener("submit", async (e) => {
     }
     const body = await response.json();
     appendToDoItem(body);
-
   } catch (err) {
     alert("fetch timeout");
   } finally {
-    enableActions()
+    enableActions();
   }
 });
 
@@ -133,19 +133,18 @@ function appendToDoItem(task) {
         // APIで取り消し線付きに更新
         response = await fetchWithTimeout(`/api/tasks/${task.id}`, {
           method: "PATCH",
-          body: JSON.stringify({ "status": "completed" }),
-          timeout: 3000
-        })
+          body: JSON.stringify({ status: "completed" }),
+          timeout: 3000,
+        });
 
         label.style.textDecorationLine = "line-through";
-
       } else {
         // APIで取り消し線なしに更新
         response = await fetchWithTimeout(`/api/tasks/${task.id}`, {
           method: "PATCH",
-          body: JSON.stringify({ "status": "active" }),
-          timeout: 3000
-        })
+          body: JSON.stringify({ status: "active" }),
+          timeout: 3000,
+        });
         label.style.textDecorationLine = "none";
       }
       if (!response.ok) {
@@ -155,7 +154,7 @@ function appendToDoItem(task) {
     } catch (err) {
       alert("fetch timeout");
     } finally {
-      enableActions()
+      enableActions();
       toggle.disabled = false;
       destroy.disabled = false;
     }
@@ -174,20 +173,19 @@ function appendToDoItem(task) {
         `/api/tasks/${task.id}`,
         {
           method: "DELETE",
-          timeout: 3000
-        }
-      )
+          timeout: 3000,
+        },
+      );
 
       if (!response.ok) {
         alert("error");
       }
 
       elem.style.display = "none";
-
     } catch (err) {
       alert("timeout");
     } finally {
-      enableActions()
+      enableActions();
       destroy.disabled = false;
       toggle.disabled = false;
     }

@@ -2,11 +2,11 @@ const form = document.querySelector("#new-todo-form");
 const list = document.querySelector("#todo-list");
 const input = document.querySelector("#new-todo");
 
-const DB_NAME = "todoDB"
+const DB_NAME = "todoDB";
 const STORE_NAME = "todos";
 
 // 同一オリジンのチャネルのコンテキスト（変更を別タブに反映するために追加）
-const todoChannel = new BroadcastChannel('todo-channel');
+const todoChannel = new BroadcastChannel("todo-channel");
 
 // DBを開いてDBインスタンスをcallbackに渡す関数
 function withDB(callback) {
@@ -21,7 +21,7 @@ function withDB(callback) {
     const db = request.result;
     const store = db.createObjectStore(STORE_NAME, {
       keyPath: "id",
-      autoIncrement: true,  // 自動でid設定
+      autoIncrement: true, // 自動でid設定
     });
     // statusをインデックスに追加する（なくても動作はする）
     store.createIndex("status", "status", { unique: false });
@@ -74,7 +74,7 @@ function appendItemToDom(item) {
       const transaction = db.transaction([STORE_NAME], "readwrite");
       const store = transaction.objectStore(STORE_NAME);
 
-      const request = store.get(item.id);  // 特定のidのアイテムを取得
+      const request = store.get(item.id); // 特定のidのアイテムを取得
 
       request.onerror = console.error;
       request.onsuccess = () => {
@@ -88,11 +88,11 @@ function appendItemToDom(item) {
 
         updateRequest.onerror = console.error;
         updateRequest.onsuccess = () => {
-          todoChannel.postMessage('update');
+          todoChannel.postMessage("update");
         };
       };
     });
-  })
+  });
 
   // 対象アイテム削除時の挙動を定義
   destroy.addEventListener("click", () => {
@@ -106,7 +106,7 @@ function appendItemToDom(item) {
       request.onerror = console.error;
       request.onsuccess = () => {
         loadTodos();
-        todoChannel.postMessage('update');
+        todoChannel.postMessage("update");
       };
     });
   });
@@ -140,7 +140,7 @@ form.addEventListener("submit", (e) => {
       const addedItem = { ...newItem, id: newId };
 
       appendItemToDom(addedItem);
-      todoChannel.postMessage('update');
+      todoChannel.postMessage("update");
     };
   });
 
@@ -149,7 +149,7 @@ form.addEventListener("submit", (e) => {
 
 // チャネルに更新があったときにトリガーされ、メッセージが"update"の場合にloadTodosする（DBを読んでレンダー）
 todoChannel.onmessage = (event) => {
-  if (event.data === 'update') {
+  if (event.data === "update") {
     loadTodos();
   }
 };

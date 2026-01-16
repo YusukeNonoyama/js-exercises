@@ -1,5 +1,5 @@
 // Mathライブラリをインポート
-import { PI, cos, sin } from "Math";
+import {PI, cos, sin} from 'Math';
 
 let a, x, y;
 const r = 10;

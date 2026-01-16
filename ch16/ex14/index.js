@@ -9,8 +9,9 @@ const worker = new threads.Worker("./ch16/ex14/worker.js");
 const filepath = process.argv[2];
 // ファイルをdecodeしてBufferを取得（sharp）
 const { data, info } = await sharp(filepath)
-    .ensureAlpha().raw()
-    .toBuffer({ resolveWithObject: true })
+  .ensureAlpha()
+  .raw()
+  .toBuffer({ resolveWithObject: true });
 const { width, height, channels } = info;
 // バッファをピクセルに変換
 const inputPixel = new Uint8ClampedArray(data);
@@ -20,11 +21,10 @@ worker.postMessage({ inputPixel, width, height }, [inputPixel.buffer]);
 
 // workerからのメッセージを受け取るイベントハンドラ
 worker.on("message", async ({ outputPixel, width, height }) => {
-    console.log("message received from Worker Thread...");
+  console.log("message received from Worker Thread...");
 
-    // JPGにencodeしてファイルとして保存
-    await sharp(Buffer.from(outputPixel),
-        { raw: { width, height, channels } })
-        .toFile("ch16/ex14/blurred.jpg");
-})
-
+  // JPGにencodeしてファイルとして保存
+  await sharp(Buffer.from(outputPixel), {
+    raw: { width, height, channels },
+  }).toFile("ch16/ex14/blurred.jpg");
+});

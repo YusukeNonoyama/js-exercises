@@ -1,29 +1,29 @@
-@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@600&display=swap");
 
 /* 幅 800px、外側余白 50px、内側余白 20px */
 /* 背景画像を100%サイズで上部から繰り返し挿入 */
 /* フォント 'Cinzel'、黒、ボーダー黄土色で影と丸み付け */
 body {
-    max-width: 800px;
-    margin: 50px auto;
-    padding: 20px;
-    background-image: url('/ch15.04-10/ex01/desertKingdom.jpg');
-    background-size: 100%;
-    background-position: top;
-    font-family: 'Cinzel', serif;
-    color: #3e2f1c;
-    border: 8px double #d2b48c;
-    border-radius: 20px;
-    box-shadow: 0 0 30px rgba(194, 150, 87, 0.6);
+  max-width: 800px;
+  margin: 50px auto;
+  padding: 20px;
+  background-image: url("/ch15.04-10/ex01/desertKingdom.jpg");
+  background-size: 100%;
+  background-position: top;
+  font-family: "Cinzel", serif;
+  color: #3e2f1c;
+  border: 8px double #d2b48c;
+  border-radius: 20px;
+  box-shadow: 0 0 30px rgba(194, 150, 87, 0.6);
 }
 
 /* 入力コンポーネント */
 /* flex container 適用（配置、方向、サイズを簡単に調整できる） */
 /* flex item (flex container の中身) を均等に配置、下に 20px 余白 */
 #new-todo-form {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
 }
 
 /* 入力欄 */
@@ -31,14 +31,14 @@ body {
 /* 内側余白 10px、ボーダー 2px で黄土色、角丸み */
 /* 背景色薄い黄色、フォント 16px、 'Cinzel'、黒*/
 #new-todo {
-    flex: 1;
-    padding: 10px;
-    font-size: 16px;
-    border: 2px solid #c2b280;
-    border-radius: 8px;
-    background-color: #fffbe6;
-    font-family: 'Cinzel', serif;
-    color: #3e2f1c;
+  flex: 1;
+  padding: 10px;
+  font-size: 16px;
+  border: 2px solid #c2b280;
+  border-radius: 8px;
+  background-color: #fffbe6;
+  font-family: "Cinzel", serif;
+  color: #3e2f1c;
 }
 
 /* 入力ボタン */
@@ -48,28 +48,30 @@ body {
 /* フォント 'Cinzel'、白、16px、 */
 /* ホバー時カーソル変更と形状変化時間指定 */
 button {
-    margin-left: 10px;
-    padding: 10px 20px;
-    background: linear-gradient(to bottom, #0077b6, #005f87);
-    border: 2px solid #004e7c;
-    border-radius: 8px;
-    font-family: 'Cinzel', serif;
-    color: white;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background 0.3s, transform 0.2s;
+  margin-left: 10px;
+  padding: 10px 20px;
+  background: linear-gradient(to bottom, #0077b6, #005f87);
+  border: 2px solid #004e7c;
+  border-radius: 8px;
+  font-family: "Cinzel", serif;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  transition:
+    background 0.3s,
+    transform 0.2s;
 }
 
 /* ホバー時にボタンを大きくして色を変える */
 button:hover {
-    background: linear-gradient(to bottom, #005f87, #003f5c);
-    transform: scale(1.05);
+  background: linear-gradient(to bottom, #005f87, #003f5c);
+  transform: scale(1.05);
 }
 
 /* 各ToDoアイテムの枠 */
 /* 内側余白 0 */
 #todo-list {
-    padding: 0;
+  padding: 0;
 }
 
 /* ToDoアイテム */
@@ -78,66 +80,65 @@ button:hover {
 /* 外側余白下のみ 10px、内側余白 10px */
 /* flex container 適用（配置、方向、サイズを簡単に調整できる） */
 li {
-    background-color: rgba(255, 253, 230, 0.9);
-    border: 2px solid #d2b48c;
-    border-radius: 10px;
-    margin-bottom: 10px;
-    padding: 10px;
-    display: flex;
-    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
+  background-color: rgba(255, 253, 230, 0.9);
+  border: 2px solid #d2b48c;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  padding: 10px;
+  display: flex;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
 }
 
 /* 1つのToDoアイテムをまとめる枠 */
 /* flex container 適用（配置、方向、サイズを簡単に調整できる） */
 /* センター配置で100%のスペースを使用、flex item を均等に配置*/
 .view {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    justify-content: space-between;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content: space-between;
 }
 
 /* トグル */
 /* 幅 20px、高さ 20px、外側余白右のみ 10px */
 /* 背景色青 */
 .toggle {
-    width: 20px;
-    height: 20px;
-    accent-color: #0077b6;
-    margin-right: 10px;
+  width: 20px;
+  height: 20px;
+  accent-color: #0077b6;
+  margin-right: 10px;
 }
 
 /* ToDoアイテムの文字列 */
 /* flex conteiner 中の大きさと配置は通常設定 */
 /* フォントサイズ 18px、長い文の場合の単語分割 */
 label.content {
-    flex: 1;
-    font-size: 18px;
-    word-break: break-word;
+  flex: 1;
+  font-size: 18px;
+  word-break: break-word;
 }
-
 
 /* ToDoアイテムを完了した時の文字列 */
 /* 取り消し線追加、フォントグレー、不透明度0.6 */
 .completed label.content {
-    text-decoration: line-through;
-    color: #888;
-    opacity: 0.6;
+  text-decoration: line-through;
+  color: #888;
+  opacity: 0.6;
 }
 
 /* ToDoアイテム削除ボタン */
 /* 背景色透明（buttonの設定と同じ）、フォント 20px で 赤、ボーダー線なし、ホバー時のポインタ形状(cursor)とボタン形状変化時間(transform)の指定 */
 button.destroy {
-    background-color: transparent;
-    border: none;
-    color: #c04000;
-    font-size: 20px;
-    cursor: pointer;
-    transition: transform 0.2s;
+  background-color: transparent;
+  border: none;
+  color: #c04000;
+  font-size: 20px;
+  cursor: pointer;
+  transition: transform 0.2s;
 }
 
 /* ToDoアイテム削除ボタン */
 /* ホバー時のボタン形状を1.2倍 -5deg傾け */
 button.destroy:hover {
-    transform: scale(1.2) rotate(-5deg);
+  transform: scale(1.2) rotate(-5deg);
 }

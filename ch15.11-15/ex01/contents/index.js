@@ -37,9 +37,11 @@ form.addEventListener("submit", async (e) => {
     // APIでアイテム追加
     const response = await fetch("/api/tasks", {
       method: "POST",
-      headers: new Headers({ "Content-Type": "application/json; charset=UTF-8" }),
-      body: JSON.stringify({ "name": todo })
-    })
+      headers: new Headers({
+        "Content-Type": "application/json; charset=UTF-8",
+      }),
+      body: JSON.stringify({ name: todo }),
+    });
     if (!response.ok) {
       const body = await response.json();
       alert(`${response.status}: ${body.message}`);
@@ -47,7 +49,6 @@ form.addEventListener("submit", async (e) => {
     }
     const body = await response.json();
     appendToDoItem(body);
-
   } catch (err) {
     alert(err);
   }
@@ -68,14 +69,16 @@ function appendToDoItem(task) {
       if (toggle.checked) {
         // APIで取り消し線付きに更新
         response = await fetch(`/api/tasks/${task.id}`, {
-          method: "PATCH", body: JSON.stringify({ "status": "completed" })
-        })
+          method: "PATCH",
+          body: JSON.stringify({ status: "completed" }),
+        });
         label.style.textDecorationLine = "line-through";
       } else {
         // APIで取り消し線なしに更新
         response = await fetch(`/api/tasks/${task.id}`, {
-          method: "PATCH", body: JSON.stringify({ "status": "active" })
-        })
+          method: "PATCH",
+          body: JSON.stringify({ status: "active" }),
+        });
         label.style.textDecorationLine = "none";
       }
       if (!response.ok) {
@@ -93,10 +96,9 @@ function appendToDoItem(task) {
     elem.style.display = "none";
     try {
       // APIで削除
-      const response = await fetch(
-        `/api/tasks/${task.id}`,
-        { method: "DELETE" }
-      )
+      const response = await fetch(`/api/tasks/${task.id}`, {
+        method: "DELETE",
+      });
       if (!response.ok) {
         const body = await response.json();
         alert(`${response.status}: ${body.message}`);
@@ -122,5 +124,4 @@ function appendToDoItem(task) {
 
   console.log("cookie: ", document.cookie);
   // console.log("cookie end");
-
 }

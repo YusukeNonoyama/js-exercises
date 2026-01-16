@@ -1,30 +1,33 @@
 ## 問題
 
 #### 1
+
 contents/index.js を変更し、上記の API を fetchを使って呼び出すことで、ToDo リストの状態をクライアントではなくサーバ側で管理する ToDo アプリケーションを完成させなさい。ただし index.html ファイルは編集してはいけない。サーバからエラーレスポンスが返却されたときは、ToDo リストの表示を更新させずエラーの内容を alert で表示する。
 
 #### 2
+
 このサーバでは Cookie を使ってクライアントのセッションを識別し、タスク一覧をセッションごとに分離して管理する簡易的な認証/認可を行っている。サーバが設定している Cookie の値は sid=<セッションに一意に割り当てた ID>; SameSite=Lax; Path=/; HttpOnly; である。ToDo アプリでいくつかのタスクを作成した後、以下に挙げる操作を実施したとき、それぞれどのような結果になるか記載し、その理由を説明しなさい。
 
 ## 解答
 
 #### ２の結果
-* index.js でdocument.cookie プロパティを console.logで表示する
-  * 結果： `cookie:  csrftoken=oFgs3yq9X4tVep9o2EZtPPSTltXr7QN1`
-  * 理由： 同一オリジンのため
-* ブラウザの開発者コンソールで http://localhost:3000/ の Cookie を表示する
-  * 結果： `cookie:  csrftoken=oFgs3yq9X4tVep9o2EZtPPSTltXr7QN1`
-  * 理由（追記）：サーバーから送られたcsrftokenのみがが表示される。HttpOnlyによりJavaScriptからcookieが読めなくなっているのでsidは表示されない。（csrftokenが表示できるのはなぜ？）
-* ToDo アプリのタブをリロードする
-  * 結果： 変化なし
-  * 理由： 同上
-* 同一ブラウザの異なるタブやウィンドウで http://localhost:3000/ を開いて ToDo リストの状態を確認する
-  * 結果： ↑と同じ
-  * 理由： 同一オリジンのため
-* シークレットウィンドウや異なるブラウザで http://localhost:3000/ を開いて ToDo リストの状態を確認する
-  * 結果： `cookie:  ` ※値が表示されない
-  * 理由： シークレットモードは同一オリジンであってもセッションが異なりCookieが共有されない
-* http://127.0.0.1:3000/ を開いて ToDo リストの状態を確認する
-  * 結果： `cookie:  ` ※値が表示されない
-    *  `.listen(3000);`だとアクセスできなかったため  `.listen(3000, '0.0.0.0');`へ変更した
-  * 理由： ドメインが異なりオリジンが異なるため
+
+- index.js でdocument.cookie プロパティを console.logで表示する
+  - 結果： `cookie:  csrftoken=oFgs3yq9X4tVep9o2EZtPPSTltXr7QN1`
+  - 理由： 同一オリジンのため
+- ブラウザの開発者コンソールで http://localhost:3000/ の Cookie を表示する
+  - 結果： `cookie:  csrftoken=oFgs3yq9X4tVep9o2EZtPPSTltXr7QN1`
+  - 理由（追記）：サーバーから送られたcsrftokenのみがが表示される。HttpOnlyによりJavaScriptからcookieが読めなくなっているのでsidは表示されない。（csrftokenが表示できるのはなぜ？）
+- ToDo アプリのタブをリロードする
+  - 結果： 変化なし
+  - 理由： 同上
+- 同一ブラウザの異なるタブやウィンドウで http://localhost:3000/ を開いて ToDo リストの状態を確認する
+  - 結果： ↑と同じ
+  - 理由： 同一オリジンのため
+- シークレットウィンドウや異なるブラウザで http://localhost:3000/ を開いて ToDo リストの状態を確認する
+  - 結果： `cookie:  ` ※値が表示されない
+  - 理由： シークレットモードは同一オリジンであってもセッションが異なりCookieが共有されない
+- http://127.0.0.1:3000/ を開いて ToDo リストの状態を確認する
+  - 結果： `cookie:  ` ※値が表示されない
+    - `.listen(3000);`だとアクセスできなかったため `.listen(3000, '0.0.0.0');`へ変更した
+  - 理由： ドメインが異なりオリジンが異なるため

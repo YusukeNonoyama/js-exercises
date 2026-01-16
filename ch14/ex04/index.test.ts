@@ -39,7 +39,9 @@ describe("Hiragana()", () => {
       new Hiragana("び"),
     ];
     // ソートしてから ひらがな にする
-    const sorted = letters.sort((a, b) => (a < b ? -1 : 1)).map((unicode) => `${unicode}`);
+    const sorted = letters
+      .sort((a, b) => (a < b ? -1 : 1))
+      .map((unicode) => `${unicode}`);
     expect(sorted).toEqual(["い", "う", "す", "び", "よ"]);
   });
 });

@@ -26,9 +26,8 @@ async function getMessageFromServer() {
 
   // サーバーからの送信を受け取る
   // * ２秒後に「こんにちは」、５秒後に「さようなら」が送られてくる
-  // * 「さようなら」を受け取ったときにresponseのdoneがtrueになる 
+  // * 「さようなら」を受け取ったときにresponseのdoneがtrueになる
   message.addEventListener("message", (event) => {
-
     // 内容を表示
     const response = JSON.parse(event.data);
     messageElement.textContent = response.value;
@@ -38,5 +37,5 @@ async function getMessageFromServer() {
       message.close();
       button.disabled = null;
     }
-  })
+  });
 }

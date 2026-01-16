@@ -48,7 +48,9 @@ test("ToDoアイテムを追加", async ({ page }) => {
   // DOMへの追加確認
   const items = page.locator("#todo-list li");
   await expect(items).toHaveCount(1);
-  await expect(items.first().locator("label")).toHaveText("研修の予習範囲を読む");
+  await expect(items.first().locator("label")).toHaveText(
+    "研修の予習範囲を読む",
+  );
 
   // IndexedDBへの追加確認
   const stored = await readIndexedDB(page);
@@ -138,4 +140,3 @@ test("変更内容を他のタブへ自動反映する", async ({ browser }) => 
   const itemInB = pageB.locator("#todo-list li label");
   await expect(itemInB).toHaveText("アンケートを書く");
 });
-
