@@ -25,9 +25,7 @@ function sample() {
 // Braces are used for all control structures
 if (someVeryLongCondition()) doSomething();
 
-for (let i = 0; i < foo.length; i++) {
-  bar(foo[i]);
-}
+for (let i = 0; i < foo.length; i++) bar(foo[i]); // これは手動で{}を加える必要ある
 
 //  Nonempty blocks: K&R style
 class InnerClass {
@@ -83,8 +81,8 @@ const a = {
   b: 1,
 };
 
-const b = {a: 0, b: 1};
-const c = {a: 0, b: 1};
+const b = { a: 0, b: 1 };
+const c = { a: 0, b: 1 };
 
 someMethod(
   foo,
