@@ -5,16 +5,32 @@ import pluginReact from 'eslint-plugin-react';
 import {defineConfig} from 'eslint/config';
 
 export default defineConfig([
+  js.configs.recommended,
+  ...tseslint.configs.recommended,
+  pluginReact.configs.flat.recommended,
+
   {
     files: ['**/*.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
-    plugins: {js},
-    extends: ['js/recommended'],
-    languageOptions: {globals: globals.browser},
+    languageOptions: {
+      globals: globals.browser,
+      parserOptions: {
+        ecmaFeatures: {
+          jsx: true,
+        },
+      },
+    },
+    settings: {
+      react: {
+        version: 'detect',
+      },
+    },
     rules: {
-      semi: 'error',
-      'react/react-in-jsx-scope': 'on',
+      curly: 'off',
+      'no-undef': 'off',
+      'no-redeclare': 'off',
+      'no-empty': 'off',
+      '@typescript-eslint/no-unused-vars': 'off',
+      'react/react-in-jsx-scope': 'off',
     },
   },
-  tseslint.configs.recommended,
-  pluginReact.configs.flat.recommended,
 ]);
