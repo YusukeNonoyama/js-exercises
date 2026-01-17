@@ -1,16 +1,11 @@
 {
-  "bracketSpacing": true,
+  "bracketSpacing": false,
   "bracketSameLine": false,
   "tabWidth": 2,
   "semi": true,
-
-  "printWidth": 80,
-
   "singleQuote": true,
-  "quoteProps": "as-needed",
+  "printWidth": 80,
+  "quoteProps": "consistent",
   "trailingComma": "es5",
-  "arrowParens": "always",
-  "requirePragma": false,
-  "insertPragma": false,
-  "endOfLine": "auto"
+  "arrowParens": "always"
 }

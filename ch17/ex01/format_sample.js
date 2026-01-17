@@ -1,7 +1,7 @@
 // フォーマットが効いているかの動作確認用のファイル
 
 function sample() {
-  var a = `sample string`;
+  var a = 'sample string';
   const spaces = 'illegal spaces';
   let disallowedObj = {
     width: 42, // struct-style unquoted key
@@ -25,7 +25,7 @@ function sample() {
 // Braces are used for all control structures
 if (someVeryLongCondition()) doSomething();
 
-for (let i = 0; i < foo.length; i++) bar(foo[i]); // これは手動で{}を加える必要ある
+for (let i = 0; i < foo.length; i++) bar(foo[i]);
 
 //  Nonempty blocks: K&R style
 class InnerClass {
@@ -60,7 +60,7 @@ try {
 
 // Block indentation: +2 spaces
 
-class InnerClass {
+class InnerClass2 {
   constructor() {}
 
   method(foo) {}
@@ -76,13 +76,13 @@ const c = [0, 1, 2];
 someMethod(foo, [0, 1, 2], bar);
 
 // Object literals: optionally block-like (allowed example)
-const a = {
+const a2 = {
   a: 0,
   b: 1,
 };
 
-const b = { a: 0, b: 1 };
-const c = { a: 0, b: 1 };
+const b2 = {a: 0, b: 1};
+const c2 = {a: 0, b: 1};
 
 someMethod(
   foo,

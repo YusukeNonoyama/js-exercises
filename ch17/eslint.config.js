@@ -1,36 +1,37 @@
-import js from '@eslint/js';
-import globals from 'globals';
-import tseslint from 'typescript-eslint';
-import pluginReact from 'eslint-plugin-react';
-import {defineConfig} from 'eslint/config';
+import globals from "globals";
+import { defineConfig } from "eslint/config";
+import js from "@eslint/js"; // ← 推奨ルール（40個の警告の正体）を復活させるために必要
 
 export default defineConfig([
+  // 1. 推奨ルールセットを読み込む（これを入れないと警告は増えません）
   js.configs.recommended,
-  ...tseslint.configs.recommended,
-  pluginReact.configs.flat.recommended,
 
-  {
-    files: ['**/*.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
-    languageOptions: {
+  // 2. カスタム設定
+  { 
+    files: ["**/*.{js,mjs,cjs}"], 
+    
+    languageOptions: { 
       globals: globals.browser,
+      // ▼ ここが重要：これを "script" にすると、重複定義などのチェックが少し緩くなる可能性があります
+      sourceType: "script", 
+      
       parserOptions: {
         ecmaFeatures: {
           jsx: true,
         },
       },
     },
+
     settings: {
       react: {
         version: 'detect',
       },
     },
+
     rules: {
-      curly: 'off',
       'no-undef': 'off',
-      'no-redeclare': 'off',
+      'no-unused-vars': 'off',
       'no-empty': 'off',
-      '@typescript-eslint/no-unused-vars': 'off',
-      'react/react-in-jsx-scope': 'off',
     },
   },
 ]);
