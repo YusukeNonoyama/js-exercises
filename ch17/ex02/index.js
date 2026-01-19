@@ -1,4 +1,4 @@
-import {listIssues, createIssue, closeIssue} from './githubOperation.js';
+import {assertToken, listIssues, createIssue, closeIssue} from './github-operation.js';
 
 // オプション、コマンド、コマンド引数の配列に分割
 function parseArgs(argv) {
@@ -46,6 +46,14 @@ function parseCommandOptions(args) {
 }
 
 //// 実行開始
+// GITHUB_TOKENの環境設定を確認
+const TOKEN = process.env.GITHUB_TOKEN;
+
+if (!TOKEN) {
+  console.log('GITHUB_TOKEN is not set');
+  process.exit(1);
+}
+
 // 標準入力の引数をパース
 const {command, args, options} = parseArgs(process.argv);
 

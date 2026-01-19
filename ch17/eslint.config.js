@@ -13,7 +13,7 @@ export default defineConfig([
     languageOptions: { 
       globals: globals.browser,
       // ▼ ここが重要：これを "script" にすると、重複定義などのチェックが少し緩くなる可能性があります
-      sourceType: "script", 
+      sourceType: "module", 
       
       parserOptions: {
         ecmaFeatures: {

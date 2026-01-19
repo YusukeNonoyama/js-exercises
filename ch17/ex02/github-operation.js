@@ -2,12 +2,6 @@ import https from 'https';
 
 const GITHUB_API_HOST = 'api.github.com';
 const BASE_PATH = '/repos/YusukeNonoyama/js-exercises/issues';
-const TOKEN = process.env.GITHUB_TOKEN;
-
-if (!TOKEN) {
-  console.log('GITHUB_TOKEN is not set');
-  process.exit(1);
-}
 
 // httpsモジュールでリクエストを送る関数
 function request(method, path, body, verbose) {
@@ -21,8 +15,8 @@ function request(method, path, body, verbose) {
       host: GITHUB_API_HOST,
       path,
       headers: {
-        Authorization: `Bearer ${TOKEN}`,
-        Accept: 'application/vnd.github+json',
+        'Authorization': `Bearer ${process.env.GITHUB_TOKEN}`,
+        'Accept': 'application/vnd.github+json',
         'User-Agent': 'gh-issue-cli',
       },
     };
@@ -113,11 +107,6 @@ export async function closeIssue(options) {
     throw new Error('--number is required');
   }
   const path = `${BASE_PATH}/${options.number}`;
-  const issue = await request(
-    'PATCH',
-    path,
-    {state: 'closed'},
-    options.verbose
-  );
+  const issue = await request('PATCH', path, {state: 'closed'}, options.verbose);
   console.log(`Closed issue #${issue.number}: ${issue.title}`);
 }
