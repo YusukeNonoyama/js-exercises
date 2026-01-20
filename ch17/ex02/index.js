@@ -1,4 +1,4 @@
-import {assertToken, listIssues, createIssue, closeIssue} from './github-operation.js';
+import {listIssues, createIssue, closeIssue} from './github-operation.js';
 
 // オプション、コマンド、コマンド引数の配列に分割
 function parseArgs(argv) {
