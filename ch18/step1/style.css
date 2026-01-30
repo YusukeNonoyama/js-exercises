@@ -1,0 +1,42 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 20px;
+  background-color: #f0f0f0;
+
+  /* 全体を中央寄せ */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* 時計 */
+#clock {
+  font-size: 98px;
+  font-family: sans-serif;
+  text-align: center;
+  margin: 0 0 20px 0;
+}
+
+#sub {
+  font-size: 48px;
+}
+
+/* saitama + 画像のコンテナ */
+body > div:nth-of-type(2) {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#saitama {
+  font-size: 28px;
+  width: 1000px; /* ← ここで幅を狭くする */
+  text-align: center; /* 文字を中央寄せ */
+  margin-bottom: 10px;
+}
+
+/* 画像 */
+#image {
+  display: block;
+}
