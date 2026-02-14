@@ -6,7 +6,6 @@
         const n = e[c][t];
         (l.beginPath(), l.rect(t * o, c * o, o, o), (l.fillStyle = n ? 'black' : 'white'), l.fill(), l.stroke());
       }
-    return [e, l];
   }
   const t = document.querySelector('#screen'),
     n = t.getContext('2d'),

@@ -1,9 +1,7 @@
 import {renderGrid, updateGrid} from './util.js';
 
-// 50 x 50 の盤面とする
 const ROWS = 50;
 const COLS = 50;
-// 1セルのサイズ
 const RESOLUTION = 10;
 
 const canvas = document.querySelector('#screen');
@@ -54,7 +52,6 @@ function update(timestamp) {
 }
 
 startButton.addEventListener('click', () => {
-  // 既にアニメーションが動いている場合は何もしない
   if (animationId) {
     return;
   }
@@ -62,7 +59,6 @@ startButton.addEventListener('click', () => {
 });
 
 pauseButton.addEventListener('click', () => {
-  // アニメーションが停止している場合は何もしない
   if (!animationId) {
     return;
   }

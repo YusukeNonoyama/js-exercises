@@ -9,7 +9,6 @@ export function renderGrid(grid, ROWS, COLS, ctx, RESOLUTION) {
       ctx.stroke();
     }
   }
-  return [grid, ctx];
 }
 
 export function updateGrid(grid, ROWS, COLS) {
