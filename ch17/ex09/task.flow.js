@@ -23,9 +23,9 @@ export class TaskManager {
   // 文字列を指定した場合は、そのタイトルのタスクを全て完了にする
   completeTask(target) {
     if (isUserObject(target)) {
-      this._tasks.filter((t) => t.user === target).forEach((t) => (t.completed = true));
+      this._tasks.filter(t => t.user === target).forEach(t => t.completed = true);
     } else {
-      this._tasks.filter((t) => t.title === target).forEach((t) => (t.completed = true));
+      this._tasks.filter(t => t.title === target).forEach(t => t.completed = true);
     }
   }
 
@@ -40,13 +40,14 @@ export class TaskManager {
   }
 }
 
-//// returnタイプのアノテーションとして関数型を付与
+//// returnタイプのアノテーションが必須
 // priority="low"または完了済のタスクを判定する
 export function isLowOrCompletedTask(priorityTask) {
   return priorityTask.priority === 'low' || priorityTask.completed;
 }
 
+//// returnタイプのアノテーションとして関数型を付与
 // 判定関数の否定結果を返す関数を生成する
 export function not(f) {
-  return (arg) => !f(arg);
+  return arg => !f(arg);
 }

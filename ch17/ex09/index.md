@@ -1,9 +1,11 @@
 ## Flowの実行について
 
-- そのままではJavaScript構文として無効なので、型表現を剥がす
+- ファイルの先頭に `@flow` を付けて確認対象にする
+- FLOWの構文を確認するコマンド `npx flow`
+- そのままではJavaScript構文として無効で実行できないため型表現を剥がす
   - `npm install --save-dev   @babel/core   @babel/cli   @babel/preset-flow`
   - `npx babel ex09/src --out-dir ex09`
-- 剥がした後のファイルを参照して実行する
+- 型表現を剥がした後のファイルを参照して実行する
 
 ## 実行結果
 
