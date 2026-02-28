@@ -1,16 +1,27 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 type StartButtonProps = {
-  isOnGame: boolean;
   setIsOnGame: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const StartButton: React.FC<StartButtonProps> = ({ isOnGame, setIsOnGame }) => {
+const StartButton: React.FC<StartButtonProps> = ({ setIsOnGame }) => {
   const handleClick = (): void => {
     setIsOnGame(true);
   };
 
-  if (isOnGame) return null;
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Enter") {
+        setIsOnGame(true);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [setIsOnGame]);
 
   return (
     <button

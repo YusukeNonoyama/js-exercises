@@ -10,7 +10,7 @@ type Priority = 'low' | 'middle' | 'high';
 export type PriorityTask = Task & {priority: Priority};
 
 // Userオブジェクトであることを判定する
-function isUserObject(obj: any) {
+function isUserObject(obj: any): boolean {
   return typeof obj === 'object' && typeof obj['id'] === 'number' && typeof obj['name'] === 'string';
 }
 
