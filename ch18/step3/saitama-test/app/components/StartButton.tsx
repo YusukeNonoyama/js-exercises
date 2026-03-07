@@ -2,10 +2,15 @@ import React, { useEffect } from "react";
 
 type StartButtonProps = {
   setIsOnGame: React.Dispatch<React.SetStateAction<boolean>>;
+  startTimeRef: React.RefObject<number | null>;
 };
 
-const StartButton: React.FC<StartButtonProps> = ({ setIsOnGame }) => {
+const StartButton: React.FC<StartButtonProps> = ({
+  setIsOnGame,
+  startTimeRef,
+}) => {
   const handleClick = (): void => {
+    startTimeRef.current = Date.now();
     setIsOnGame(true);
   };
 
