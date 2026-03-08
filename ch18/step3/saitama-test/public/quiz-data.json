@@ -1,0 +1,634 @@
+{
+  "test": [
+    { "kanji": "加須市", "yomi": "kazo-shi", "hard-to-read": true },
+    { "kanji": "松伏町", "yomi": "matsubushi-machi", "hard-to-read": true },
+    { "kanji": "飯能市", "yomi": "hanno-shi", "hard-to-read": true }
+  ],
+  "1983": [
+    {
+      "kanji": "浦和市",
+      "yomi": "urawa-shi",
+      "hard-to-read": false,
+      "merged": true
+    },
+    {
+      "kanji": "大宮市",
+      "yomi": "omiya-shi",
+      "hard-to-read": false,
+      "merged": true
+    },
+    {
+      "kanji": "与野市",
+      "yomi": "yono-shi",
+      "hard-to-read": false,
+      "merged": true
+    },
+    {
+      "kanji": "川越市",
+      "yomi": "kawagoe-shi",
+      "hard-to-read": false,
+      "merged": false
+    },
+    {
+      "kanji": "熊谷市",
+      "yomi": "kumagaya-shi",
+      "hard-to-read": false,
+      "merged": false
+    },
+    {
+      "kanji": "川口市",
+      "yomi": "kawaguchi-shi",
+      "hard-to-read": false,
+      "merged": false
+    },
+    {
+      "kanji": "行田市",
+      "yomi": "gyoda-shi",
+      "hard-to-read": true,
+      "merged": false
+    },
+    {
+      "kanji": "秩父市",
+      "yomi": "chichibu-shi",
+      "hard-to-read": false,
+      "merged": false
+    },
+    {
+      "kanji": "所沢市",
+      "yomi": "tokorozawa-shi",
+      "hard-to-read": false,
+      "merged": false
+    },
+    {
+      "kanji": "飯能市",
+      "yomi": "hanno-shi",
+      "hard-to-read": true,
+      "merged": false
+    },
+    {
+      "kanji": "加須市",
+      "yomi": "kazo-shi",
+      "hard-to-read": true,
+      "merged": false
+    },
+    {
+      "kanji": "本庄市",
+      "yomi": "honjo-shi",
+      "hard-to-read": false,
+      "merged": false
+    },
+    {
+      "kanji": "東松山市",
+      "yomi": "higashimatsuyama-shi",
+      "hard-to-read": false,
+      "merged": false
+    },
+    {
+      "kanji": "春日部市",
+      "yomi": "kasukabe-shi",
+      "hard-to-read": false,
+      "merged": false
+    },
+    {
+      "kanji": "狭山市",
+      "yomi": "sayama-shi",
+      "hard-to-read": true,
+      "merged": false
+    },
+    {
+      "kanji": "羽生市",
+      "yomi": "hanyu-shi",
+      "hard-to-read": false,
+      "merged": false
+    },
+    {
+      "kanji": "鴻巣市",
+      "yomi": "konosu-shi",
+      "hard-to-read": false,
+      "merged": false
+    },
+    {
+      "kanji": "深谷市",
+      "yomi": "fukaya-shi",
+      "hard-to-read": false,
+      "merged": false
+    },
+    {
+      "kanji": "上尾市",
+      "yomi": "ageo-shi",
+      "hard-to-read": false,
+      "merged": false
+    },
+    {
+      "kanji": "草加市",
+      "yomi": "soka-shi",
+      "hard-to-read": false,
+      "merged": false
+    },
+    {
+      "kanji": "越谷市",
+      "yomi": "koshigaya-shi",
+      "hard-to-read": false,
+      "merged": false
+    },
+    {
+      "kanji": "蕨市",
+      "yomi": "warabi-shi",
+      "hard-to-read": true,
+      "merged": false
+    },
+    {
+      "kanji": "戸田市",
+      "yomi": "toda-shi",
+      "hard-to-read": false,
+      "merged": false
+    },
+    {
+      "kanji": "入間市",
+      "yomi": "iruma-shi",
+      "hard-to-read": false,
+      "merged": false
+    },
+    {
+      "kanji": "鳩ヶ谷市",
+      "yomi": "hatogaya-shi",
+      "hard-to-read": false,
+      "merged": true
+    },
+    {
+      "kanji": "朝霞市",
+      "yomi": "asaka-shi",
+      "hard-to-read": false,
+      "merged": false
+    },
+    {
+      "kanji": "志木市",
+      "yomi": "shiki-shi",
+      "hard-to-read": false,
+      "merged": false
+    },
+    {
+      "kanji": "和光市",
+      "yomi": "wako-shi",
+      "hard-to-read": false,
+      "merged": false
+    },
+    {
+      "kanji": "新座市",
+      "yomi": "niiza-shi",
+      "hard-to-read": false,
+      "merged": false
+    },
+    {
+      "kanji": "桶川市",
+      "yomi": "okegawa-shi",
+      "hard-to-read": false,
+      "merged": false
+    },
+    {
+      "kanji": "久喜市",
+      "yomi": "kuki-shi",
+      "hard-to-read": false,
+      "merged": false
+    },
+    {
+      "kanji": "北本市",
+      "yomi": "kitamoto-shi",
+      "hard-to-read": false,
+      "merged": false
+    },
+    {
+      "kanji": "八潮市",
+      "yomi": "yashio-shi",
+      "hard-to-read": false,
+      "merged": false
+    },
+    {
+      "kanji": "富士見市",
+      "yomi": "fujimi-shi",
+      "hard-to-read": false,
+      "merged": false
+    },
+    {
+      "kanji": "上福岡市",
+      "yomi": "kamifukuoka-shi",
+      "hard-to-read": false,
+      "merged": true
+    },
+    {
+      "kanji": "三郷市",
+      "yomi": "misato-shi",
+      "hard-to-read": false,
+      "merged": false
+    },
+    {
+      "kanji": "蓮田市",
+      "yomi": "hasuda-shi",
+      "hard-to-read": false,
+      "merged": false
+    },
+    {
+      "kanji": "坂戸市",
+      "yomi": "sakado-shi",
+      "hard-to-read": false,
+      "merged": false
+    },
+    {
+      "kanji": "幸手市",
+      "yomi": "satte-shi",
+      "hard-to-read": true,
+      "merged": false
+    },
+    {
+      "kanji": "鶴ヶ島市",
+      "yomi": "tsurugashima-shi",
+      "hard-to-read": false,
+      "merged": false
+    },
+    {
+      "kanji": "日高市",
+      "yomi": "hidaka-shi",
+      "hard-to-read": false,
+      "merged": false
+    },
+    {
+      "kanji": "吉川町",
+      "yomi": "yoshikawa-machi",
+      "hard-to-read": false,
+      "merged": false
+    },
+    {
+      "kanji": "伊奈町",
+      "yomi": "ina-machi",
+      "hard-to-read": false,
+      "merged": false
+    },
+    {
+      "kanji": "吹上町",
+      "yomi": "fukiage-machi",
+      "hard-to-read": false,
+      "merged": true
+    },
+    {
+      "kanji": "川里町",
+      "yomi": "kawasato-machi",
+      "hard-to-read": false,
+      "merged": true
+    },
+    {
+      "kanji": "大井町",
+      "yomi": "oi-machi",
+      "hard-to-read": false,
+      "merged": true
+    },
+    {
+      "kanji": "三芳町",
+      "yomi": "miyoshi-machi",
+      "hard-to-read": false,
+      "merged": false
+    },
+    {
+      "kanji": "毛呂山町",
+      "yomi": "moroyama-machi",
+      "hard-to-read": true,
+      "merged": false
+    },
+    {
+      "kanji": "越生町",
+      "yomi": "ogose-machi",
+      "hard-to-read": true,
+      "merged": false
+    },
+    {
+      "kanji": "名栗村",
+      "yomi": "naguri-mura",
+      "hard-to-read": true,
+      "merged": true
+    },
+    {
+      "kanji": "滑川町",
+      "yomi": "namegawa-machi",
+      "hard-to-read": true,
+      "merged": false
+    },
+    {
+      "kanji": "嵐山町",
+      "yomi": "ranzan-machi",
+      "hard-to-read": true,
+      "merged": false
+    },
+    {
+      "kanji": "小川町",
+      "yomi": "ogawa-machi",
+      "hard-to-read": false,
+      "merged": false
+    },
+    {
+      "kanji": "都幾川村",
+      "yomi": "tokigawa-mura",
+      "hard-to-read": true,
+      "merged": true
+    },
+    {
+      "kanji": "玉川村",
+      "yomi": "tamagawa-mura",
+      "hard-to-read": false,
+      "merged": true
+    },
+    {
+      "kanji": "川島町",
+      "yomi": "kawajima-machi",
+      "hard-to-read": false,
+      "merged": false
+    },
+    {
+      "kanji": "吉見町",
+      "yomi": "yoshimi-machi",
+      "hard-to-read": true,
+      "merged": false
+    },
+    {
+      "kanji": "鳩山町",
+      "yomi": "hatoyama-machi",
+      "hard-to-read": false,
+      "merged": false
+    },
+    {
+      "kanji": "吉田町",
+      "yomi": "yoshida-machi",
+      "hard-to-read": false,
+      "merged": true
+    },
+    {
+      "kanji": "小鹿野町",
+      "yomi": "ogano-machi",
+      "hard-to-read": true,
+      "merged": false
+    },
+    {
+      "kanji": "両神村",
+      "yomi": "ryokami-mura",
+      "hard-to-read": true,
+      "merged": true
+    },
+    {
+      "kanji": "大滝村",
+      "yomi": "otaki-mura",
+      "hard-to-read": false,
+      "merged": true
+    },
+    {
+      "kanji": "荒川村",
+      "yomi": "arakawa-mura",
+      "hard-to-read": false,
+      "merged": true
+    },
+    {
+      "kanji": "横瀬町",
+      "yomi": "yokoze-machi",
+      "hard-to-read": true,
+      "merged": false
+    },
+    {
+      "kanji": "皆野町",
+      "yomi": "minano-machi",
+      "hard-to-read": true,
+      "merged": false
+    },
+    {
+      "kanji": "長瀞町",
+      "yomi": "nagatoro-machi",
+      "hard-to-read": true,
+      "merged": false
+    },
+    {
+      "kanji": "東秩父村",
+      "yomi": "higashichichibu-mura",
+      "hard-to-read": true,
+      "merged": false
+    },
+    {
+      "kanji": "美里町",
+      "yomi": "misato-machi",
+      "hard-to-read": false,
+      "merged": false
+    },
+    {
+      "kanji": "児玉町",
+      "yomi": "kodama-machi",
+      "hard-to-read": true,
+      "merged": true
+    },
+    {
+      "kanji": "神川町",
+      "yomi": "kamikawa-machi",
+      "hard-to-read": false,
+      "merged": false
+    },
+    {
+      "kanji": "神泉村",
+      "yomi": "kamizumi-mura",
+      "hard-to-read": true,
+      "merged": true
+    },
+    {
+      "kanji": "上里町",
+      "yomi": "kamisato-machi",
+      "hard-to-read": false,
+      "merged": false
+    },
+    {
+      "kanji": "大里町",
+      "yomi": "osato-machi",
+      "hard-to-read": false,
+      "merged": true
+    },
+    {
+      "kanji": "妻沼町",
+      "yomi": "menuma-machi",
+      "hard-to-read": true,
+      "merged": true
+    },
+    {
+      "kanji": "江南町",
+      "yomi": "konan-machi",
+      "hard-to-read": false,
+      "merged": true
+    },
+    {
+      "kanji": "岡部町",
+      "yomi": "okabe-machi",
+      "hard-to-read": false,
+      "merged": true
+    },
+    {
+      "kanji": "川本町",
+      "yomi": "kawamoto-machi",
+      "hard-to-read": false,
+      "merged": true
+    },
+    {
+      "kanji": "花園町",
+      "yomi": "hanazono-machi",
+      "hard-to-read": false,
+      "merged": true
+    },
+    {
+      "kanji": "寄居町",
+      "yomi": "yorii-machi",
+      "hard-to-read": false,
+      "merged": false
+    },
+    {
+      "kanji": "南河原村",
+      "yomi": "minamikawara-mura",
+      "hard-to-read": true,
+      "merged": true
+    },
+    {
+      "kanji": "騎西町",
+      "yomi": "kisai-machi",
+      "hard-to-read": true,
+      "merged": true
+    },
+    {
+      "kanji": "北川辺町",
+      "yomi": "kitakawabe-machi",
+      "hard-to-read": false,
+      "merged": true
+    },
+    {
+      "kanji": "大利根町",
+      "yomi": "otone-machi",
+      "hard-to-read": false,
+      "merged": true
+    },
+    {
+      "kanji": "宮代町",
+      "yomi": "miyashiro-machi",
+      "hard-to-read": false,
+      "merged": false
+    },
+    {
+      "kanji": "白岡町",
+      "yomi": "shiraoka-machi",
+      "hard-to-read": false,
+      "merged": false
+    },
+    {
+      "kanji": "菖蒲町",
+      "yomi": "shobu-machi",
+      "hard-to-read": true,
+      "merged": true
+    },
+    {
+      "kanji": "栗橋町",
+      "yomi": "kurihashi-machi",
+      "hard-to-read": false,
+      "merged": true
+    },
+    {
+      "kanji": "鷲宮町",
+      "yomi": "washimiya-machi",
+      "hard-to-read": true,
+      "merged": true
+    },
+    {
+      "kanji": "杉戸町",
+      "yomi": "sugito-machi",
+      "hard-to-read": false,
+      "merged": false
+    },
+    {
+      "kanji": "松伏町",
+      "yomi": "matsubushi-machi",
+      "hard-to-read": true,
+      "merged": false
+    },
+    {
+      "kanji": "庄和町",
+      "yomi": "showa-machi",
+      "hard-to-read": false,
+      "merged": true
+    },
+    {
+      "kanji": "岩槻市",
+      "yomi": "iwatsuki-shi",
+      "hard-to-read": false,
+      "merged": true
+    }
+  ],
+  "2026": [
+    { "kanji": "さいたま市", "yomi": "saitama-shi", "hard-to-read": false },
+    { "kanji": "川越市", "yomi": "kawagoe-shi", "hard-to-read": false },
+    { "kanji": "熊谷市", "yomi": "kumagaya-shi", "hard-to-read": false },
+    { "kanji": "川口市", "yomi": "kawaguchi-shi", "hard-to-read": false },
+    { "kanji": "行田市", "yomi": "gyoda-shi", "hard-to-read": false },
+    { "kanji": "秩父市", "yomi": "chichibu-shi", "hard-to-read": false },
+    { "kanji": "所沢市", "yomi": "tokorozawa-shi", "hard-to-read": false },
+    { "kanji": "飯能市", "yomi": "hanno-shi", "hard-to-read": true },
+    { "kanji": "加須市", "yomi": "kazo-shi", "hard-to-read": true },
+    { "kanji": "本庄市", "yomi": "honjo-shi", "hard-to-read": false },
+    {
+      "kanji": "東松山市",
+      "yomi": "higashimatsuyama-shi",
+      "hard-to-read": false
+    },
+    { "kanji": "春日部市", "yomi": "kasukabe-shi", "hard-to-read": false },
+    { "kanji": "狭山市", "yomi": "sayama-shi", "hard-to-read": true },
+    { "kanji": "羽生市", "yomi": "hanyu-shi", "hard-to-read": false },
+    { "kanji": "鴻巣市", "yomi": "konosu-shi", "hard-to-read": false },
+    { "kanji": "深谷市", "yomi": "fukaya-shi", "hard-to-read": false },
+    { "kanji": "上尾市", "yomi": "ageo-shi", "hard-to-read": false },
+    { "kanji": "草加市", "yomi": "soka-shi", "hard-to-read": false },
+    { "kanji": "越谷市", "yomi": "koshigaya-shi", "hard-to-read": false },
+    { "kanji": "蕨市", "yomi": "warabi-shi", "hard-to-read": false },
+    { "kanji": "戸田市", "yomi": "toda-shi", "hard-to-read": false },
+    { "kanji": "入間市", "yomi": "iruma-shi", "hard-to-read": false },
+    { "kanji": "朝霞市", "yomi": "asaka-shi", "hard-to-read": false },
+    { "kanji": "志木市", "yomi": "shiki-shi", "hard-to-read": false },
+    { "kanji": "和光市", "yomi": "wako-shi", "hard-to-read": false },
+    { "kanji": "新座市", "yomi": "niiza-shi", "hard-to-read": false },
+    { "kanji": "桶川市", "yomi": "okegawa-shi", "hard-to-read": false },
+    { "kanji": "久喜市", "yomi": "kuki-shi", "hard-to-read": false },
+    { "kanji": "北本市", "yomi": "kitamoto-shi", "hard-to-read": false },
+    { "kanji": "八潮市", "yomi": "yashio-shi", "hard-to-read": false },
+    { "kanji": "富士見市", "yomi": "fujimi-shi", "hard-to-read": false },
+    { "kanji": "三郷市", "yomi": "misato-shi", "hard-to-read": false },
+    { "kanji": "蓮田市", "yomi": "hasuda-shi", "hard-to-read": false },
+    { "kanji": "坂戸市", "yomi": "sakado-shi", "hard-to-read": false },
+    { "kanji": "幸手市", "yomi": "satte-shi", "hard-to-read": true },
+    { "kanji": "鶴ヶ島市", "yomi": "tsurugashima-shi", "hard-to-read": true },
+    { "kanji": "日高市", "yomi": "hidaka-shi", "hard-to-read": false },
+    { "kanji": "吉川市", "yomi": "yoshikawa-shi", "hard-to-read": false },
+    { "kanji": "ふじみ野市", "yomi": "fujimino-shi", "hard-to-read": false },
+    { "kanji": "白岡市", "yomi": "shiraoka-shi", "hard-to-read": false },
+    { "kanji": "伊奈町", "yomi": "ina-machi", "hard-to-read": false },
+    { "kanji": "三芳町", "yomi": "miyoshi-machi", "hard-to-read": false },
+    { "kanji": "毛呂山町", "yomi": "moroyama-machi", "hard-to-read": true },
+    { "kanji": "越生町", "yomi": "ogose-machi", "hard-to-read": true },
+    { "kanji": "滑川町", "yomi": "namegawa-machi", "hard-to-read": true },
+    { "kanji": "嵐山町", "yomi": "ranzan-machi", "hard-to-read": true },
+    { "kanji": "小川町", "yomi": "ogawa-machi", "hard-to-read": false },
+    { "kanji": "川島町", "yomi": "kawajima-machi", "hard-to-read": false },
+    { "kanji": "吉見町", "yomi": "yoshimi-machi", "hard-to-read": true },
+    { "kanji": "鳩山町", "yomi": "hatoyama-machi", "hard-to-read": false },
+    { "kanji": "ときがわ町", "yomi": "tokigawa-machi", "hard-to-read": false },
+    { "kanji": "横瀬町", "yomi": "yokoze-machi", "hard-to-read": true },
+    { "kanji": "皆野町", "yomi": "minano-machi", "hard-to-read": true },
+    { "kanji": "長瀞町", "yomi": "nagatoro-machi", "hard-to-read": true },
+    { "kanji": "小鹿野町", "yomi": "ogano-machi", "hard-to-read": true },
+    { "kanji": "美里町", "yomi": "misato-machi", "hard-to-read": false },
+    { "kanji": "神川町", "yomi": "kamikawa-machi", "hard-to-read": false },
+    { "kanji": "上里町", "yomi": "kamisato-machi", "hard-to-read": false },
+    { "kanji": "寄居町", "yomi": "yorii-machi", "hard-to-read": true },
+    { "kanji": "宮代町", "yomi": "miyashiro-machi", "hard-to-read": false },
+    { "kanji": "杉戸町", "yomi": "sugito-machi", "hard-to-read": false },
+    { "kanji": "松伏町", "yomi": "matsubushi-machi", "hard-to-read": true },
+    {
+      "kanji": "東秩父村",
+      "yomi": "higashichichibu-mura",
+      "hard-to-read": false
+    }
+  ]
+}

@@ -3,55 +3,46 @@
 import { useState, useEffect, useRef } from "react";
 import Clock from "./components/Clock";
 import KeyboardDisplay from "./components/KeyboardDisplay";
+import ValueSelection from "./components/ValueSelection";
 import StartButton from "./components/StartButton";
-import { formatTime, loadQuizData, loadRankData } from "./utils";
-import { CityData, RankData } from "./type";
+import {
+  formatTime,
+  loadQuizData,
+  loadRankData,
+  saveRankData,
+  selectQUizData,
+} from "./utils";
+import { CityData, RankData, DataSelection } from "./type";
 
 export default function Home() {
-  const [isOnGame, setIsOnGame] = useState<boolean>(false);
-
   const [quizData, setQuizData] = useState<CityData[]>([]);
   const [quizDataIndex, setQuizDataIndex] = useState<number>(0);
-
   const [rankData, setRankData] = useState<RankData>([]);
+
+  const [isOnGame, setIsOnGame] = useState<boolean>(false);
 
   const startTimeRef = useRef<number | null>(null);
   const [elapsedTime, setElapsedTime] = useState(0);
   const [gameTimeResult, setGameTimeResult] = useState<string | null>(null);
 
+  const [dataSelection, setDataSelection] = useState<DataSelection>("current");
+
   // コンポネントマウント時の実行
   useEffect(() => {
     const loadData = async () => {
-      setQuizData(await loadQuizData()); // quizDataを読込み
+      const loadedQuizDataJson = await loadQuizData(); // quizDataを読込み
+      // クイズデータをフィルター
+      selectQUizData(dataSelection, loadedQuizDataJson, setQuizData);
       setRankData(await loadRankData()); // rankDataを読込み
     };
     loadData();
-  }, []);
+  }, [dataSelection]);
 
   // rankDataを書き込み
   useEffect(() => {
-    if (!isOnGame) {
-      return;
-    }
-    const saveData = async () => {
-      if (!rankData) return; // rankDataが未定義なら保存しない
-
-      try {
-        await fetch("/api/rank-data", {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ ranking: rankData }),
-        });
-        console.log("Data saved successfully!");
-      } catch (e) {
-        console.error("Failed to save data", e);
-      }
-    };
-
-    saveData();
-  }, [isOnGame, rankData]); // rankDataが変更されるたびに発火
+    if (!isOnGame) return;
+    saveRankData(rankData);
+  }, [isOnGame, rankData]);
 
   // キーボード操作
   useEffect(() => {
@@ -112,8 +103,8 @@ export default function Home() {
   return (
     <main className="relative min-h-screen bg-slate-950 text-slate-100 overflow-hidden font-sans selection:bg-blue-500/30">
       {/* Background Glow Decorations */}
-      <div className="absolute top-[-10%] left-[-10%] w-72 h-72 bg-blue-600/20 blur-[120px] rounded-full" />
-      <div className="absolute bottom-[-10%] right-[-10%] w-96 h-96 bg-indigo-600/10 blur-[150px] rounded-full" />
+      <div className="pointer-events-none absolute top-[-10%] left-[-10%] w-72 h-72 bg-blue-600/20 blur-[120px] rounded-full" />
+      <div className="pointer-events-none absolute bottom-[-10%] right-[-10%] w-96 h-96 bg-indigo-600/10 blur-[150px] rounded-full" />
 
       {/* Header Info */}
       <nav className="flex justify-between items-center p-8 backdrop-blur-md bg-slate-900/40 border-b border-slate-800">
@@ -131,6 +122,9 @@ export default function Home() {
                 埼玉タイピング
               </h2>
             </div>
+            <div>
+              <ValueSelection setDataSelection={setDataSelection} />
+            </div>
             <StartButton
               setIsOnGame={setIsOnGame}
               startTimeRef={startTimeRef}
@@ -145,6 +139,23 @@ export default function Home() {
                 <p key={i}>{i + 1}. no data</p>
               ),
             )}
+            <p>
+              <a
+                href="https://mapfan.com/pref/11"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                2026年時点の地図
+              </a>
+              <br />
+              <a
+                href="https://www.kokudo.or.jp/marge/tdfk.php?tdfk_cd=11"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                1990年時点の地図
+              </a>
+            </p>
           </div>
         ) : (
           <div className="w-full max-w-4xl space-y-12">
@@ -155,14 +166,12 @@ export default function Home() {
                 style={{ width: `${progress}%` }}
               />
             </div>
-
             {/* Kanji Display */}
             <div className="text-center space-y-4">
               <div className="text-8xl font-bold animate-in slide-in-from-bottom-4 duration-300">
                 {quizData.length ? quizData[quizDataIndex].kanji : "Loading..."}
               </div>
             </div>
-
             {/* Input Component */}
             <div className="bg-slate-900/50 p-10 rounded-3xl border border-slate-800 shadow-2xl backdrop-blur-xl">
               <KeyboardDisplay
@@ -170,9 +179,7 @@ export default function Home() {
                 targetData={quizData[quizDataIndex].yomi}
               />
             </div>
-
             <p>{formatTime(elapsedTime)}</p>
-
             <p className="text-center text-slate-500 font-mono text-sm">
               ESC to Quit • {quizDataIndex + 1} / {quizData.length} Cities
             </p>
