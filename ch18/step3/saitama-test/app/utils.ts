@@ -1,4 +1,10 @@
-import { CityData, JsonQuizData, JsonRankData, RankData } from "./type";
+import {
+  CityData,
+  JsonQuizData,
+  JsonRankData,
+  RankAllData,
+  DataSelection,
+} from "./type";
 
 export function formatTime(ms: number): string {
   const totalSeconds = Math.floor(ms / 1000);
@@ -25,7 +31,7 @@ export const loadQuizData = async () => {
 };
 
 export const selectQUizData = (
-  dataSelection: string,
+  dataSelection: DataSelection,
   loadedQuizDataJson: JsonQuizData,
   setQuizData: React.Dispatch<React.SetStateAction<CityData[]>>,
 ) => {
@@ -59,27 +65,6 @@ export const selectQUizData = (
   }
 };
 
-export const loadRankData = async () => {
-  const res = await fetch("/api/rank-data");
-  const json: JsonRankData = await res.json();
-  return json["ranking"];
-};
-
-export const saveRankData = async (rankData: RankData) => {
-  try {
-    await fetch("/api/rank-data", {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ ranking: rankData }),
-    });
-    console.log("Data saved successfully!");
-  } catch (e) {
-    console.error("Failed to save data", e);
-  }
-};
-
 export function shuffleArray<T>(array: T[]) {
   for (let i = array.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1)); // random index from 0..i
@@ -87,3 +72,24 @@ export function shuffleArray<T>(array: T[]) {
   }
   return array;
 }
+
+export const loadAllRankData = async () => {
+  const res = await fetch("/api/rank-data");
+  const json: JsonRankData = await res.json();
+  return json["ranking"];
+};
+
+export const saveRankAllData = async (rankAllData: RankAllData) => {
+  try {
+    await fetch("/api/rank-data", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ ranking: rankAllData }),
+    });
+    console.log("Data saved successfully!");
+  } catch (e) {
+    console.error("Failed to save data", e);
+  }
+};

@@ -2,17 +2,19 @@ import { DataSelection } from "../type";
 
 type ValueSelectionProps = {
   setDataSelection: React.Dispatch<React.SetStateAction<DataSelection>>;
+  dataSelection: DataSelection;
 };
 
 const ValueSelection: React.FC<ValueSelectionProps> = ({
   setDataSelection,
+  dataSelection,
 }) => {
   //   const [valueSelected, setValueSelected] = useState("");
   return (
     <label>
       市町村セット：
       <select
-        defaultValue="current"
+        value={dataSelection}
         onChange={(e) => setDataSelection(e.target.value as DataSelection)}
       >
         <option value="current">現在の市町村（63）</option>

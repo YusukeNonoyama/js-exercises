@@ -5,14 +5,16 @@ export type CityData = {
   merged?: string;
 };
 
-export type RankData = number[];
-
 export type JsonQuizData = {
   [year: string]: CityData[];
 };
 
+export type RankAllData = { [category: string]: number[] };
+
+export type RankData = number[];
+
 export type JsonRankData = {
-  ranking: RankData;
+  ranking: RankAllData;
 };
 
 export type DataSelection =

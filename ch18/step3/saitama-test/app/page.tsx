@@ -8,8 +8,8 @@ import StartButton from "./components/StartButton";
 import {
   formatTime,
   loadQuizData,
-  loadRankData,
-  saveRankData,
+  loadAllRankData,
+  saveRankAllData,
   selectQUizData,
 } from "./utils";
 import { CityData, RankData, DataSelection } from "./type";
@@ -27,22 +27,28 @@ export default function Home() {
 
   const [dataSelection, setDataSelection] = useState<DataSelection>("current");
 
-  // コンポネントマウント時の実行
+  // コンポネントマウント時にデータ
   useEffect(() => {
     const loadData = async () => {
-      const loadedQuizDataJson = await loadQuizData(); // quizDataを読込み
-      // クイズデータをフィルター
+      const loadedQuizDataJson = await loadQuizData();
       selectQUizData(dataSelection, loadedQuizDataJson, setQuizData);
-      setRankData(await loadRankData()); // rankDataを読込み
+      const loadedRankData = await loadAllRankData();
+      setRankData(loadedRankData[dataSelection]);
     };
     loadData();
   }, [dataSelection]);
 
   // rankDataを書き込み
   useEffect(() => {
-    if (!isOnGame) return;
-    saveRankData(rankData);
-  }, [isOnGame, rankData]);
+    const saveData = async () => {
+      if (!isOnGame) return;
+      const loadedRankAllData = await loadAllRankData();
+      const newRankAllData = { ...loadedRankAllData };
+      newRankAllData[dataSelection] = rankData;
+      saveRankAllData(newRankAllData);
+    };
+    saveData();
+  }, [dataSelection, isOnGame, rankData]);
 
   // キーボード操作
   useEffect(() => {
@@ -123,7 +129,10 @@ export default function Home() {
               </h2>
             </div>
             <div>
-              <ValueSelection setDataSelection={setDataSelection} />
+              <ValueSelection
+                setDataSelection={setDataSelection}
+                dataSelection={dataSelection}
+              />
             </div>
             <StartButton
               setIsOnGame={setIsOnGame}
