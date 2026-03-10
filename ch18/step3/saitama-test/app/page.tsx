@@ -27,55 +27,23 @@ export default function Home() {
 
   const [dataSelection, setDataSelection] = useState<DataSelection>("current");
 
-  // コンポネントマウント時にデータ
+  // データ選択の度に実行
   useEffect(() => {
     const loadData = async () => {
+      // クイズデータの読み込み
       const loadedQuizDataJson = await loadQuizData();
       selectQUizData(dataSelection, loadedQuizDataJson, setQuizData);
+      // ランクデータの読み込み
       const loadedRankData = await loadAllRankData();
       setRankData(loadedRankData[dataSelection]);
     };
     loadData();
   }, [dataSelection]);
 
-  // rankDataを書き込み
-  useEffect(() => {
-    const saveData = async () => {
-      if (!isOnGame) return;
-      const loadedRankAllData = await loadAllRankData();
-      const newRankAllData = { ...loadedRankAllData };
-      newRankAllData[dataSelection] = rankData;
-      saveRankAllData(newRankAllData);
-    };
-    saveData();
-  }, [dataSelection, isOnGame, rankData]);
-
   // キーボード操作
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Enter" && isOnGame) {
-        setQuizDataIndex((prev) => {
-          const next = prev + 1;
-          const newRankData = [...rankData];
-          if (next >= quizData.length) {
-            setIsOnGame(false);
-            // gameResultはelapsedTimeから計算できるから不要か？
-            setGameTimeResult(formatTime(elapsedTime));
-            setElapsedTime(elapsedTime);
-            // ここにランキングが変更されるかの判定を入れる
-            newRankData.push(elapsedTime);
-            newRankData.sort((x, y) => {
-              if (x === null) return 1; // x が null → 後ろへ
-              if (y === null) return -1; // y が null → 後ろへ
-              return x - y; // 数値は昇順
-            });
-            newRankData.splice(3);
-            setRankData([...newRankData]);
-            return 0;
-          }
-          return next;
-        });
-      } else if (event.key === "Escape") {
+      if (event.key === "Escape") {
         setQuizDataIndex(0);
         setElapsedTime(0);
         setIsOnGame(false);
@@ -85,6 +53,37 @@ export default function Home() {
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [rankData, elapsedTime, quizData, isOnGame]);
+
+  useEffect(() => {
+    const judgeOver = async () => {
+      const newRankData = [...rankData];
+
+      if (quizData.length === quizDataIndex) {
+        setIsOnGame(false);
+        // gameResultはelapsedTimeから計算できるから不要か？
+        setGameTimeResult(formatTime(elapsedTime));
+        setElapsedTime(elapsedTime);
+        // ランキング変更
+        newRankData.push(elapsedTime);
+        newRankData.sort((x, y) => {
+          if (x === null) return 1; // x が null → 後ろへ
+          if (y === null) return -1; // y が null → 後ろへ
+          return x - y; // 数値は昇順
+        });
+        newRankData.splice(3);
+        setRankData([...newRankData]);
+
+        const loadedRankAllData = await loadAllRankData();
+        const newRankAllData = { ...loadedRankAllData };
+        newRankAllData[dataSelection] = newRankData;
+
+        await saveRankAllData(newRankAllData);
+
+        setQuizDataIndex(0);
+      }
+    };
+    judgeOver();
+  }, [quizDataIndex]);
 
   // タイピング中のタイマー表示
   useEffect(() => {
@@ -178,14 +177,17 @@ export default function Home() {
             {/* Kanji Display */}
             <div className="text-center space-y-4">
               <div className="text-8xl font-bold animate-in slide-in-from-bottom-4 duration-300">
-                {quizData.length ? quizData[quizDataIndex].kanji : "Loading..."}
+                {quizData.length
+                  ? quizData[quizDataIndex]?.kanji
+                  : "Loading..."}
               </div>
             </div>
             {/* Input Component */}
             <div className="bg-slate-900/50 p-10 rounded-3xl border border-slate-800 shadow-2xl backdrop-blur-xl">
               <KeyboardDisplay
                 key={quizDataIndex}
-                targetData={quizData[quizDataIndex].yomi}
+                targetData={quizData[quizDataIndex]?.yomi}
+                setQuizDataIndex={setQuizDataIndex}
               />
             </div>
             <p>{formatTime(elapsedTime)}</p>

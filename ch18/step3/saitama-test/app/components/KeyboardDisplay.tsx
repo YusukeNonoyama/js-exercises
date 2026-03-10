@@ -3,9 +3,13 @@ import { checkChar } from "../domain/check-char";
 
 type KeyboardDisplayProps = {
   targetData: string;
+  setQuizDataIndex: React.Dispatch<React.SetStateAction<number>>;
 };
 
-const KeyboardDisplay: React.FC<KeyboardDisplayProps> = ({ targetData }) => {
+const KeyboardDisplay: React.FC<KeyboardDisplayProps> = ({
+  targetData,
+  setQuizDataIndex,
+}) => {
   const [typed, setTyped] = useState<string>("");
   const [remaining, setRemaining] = useState<string>(targetData);
 
@@ -16,7 +20,6 @@ const KeyboardDisplay: React.FC<KeyboardDisplayProps> = ({ targetData }) => {
 
       // 文字キーのみ追加（制御キーは無視）
       if (key.length === 1) {
-        console.log("target: ", remaining);
         if (checkChar(remaining, key)) {
           setTyped((prev) => prev + key);
           setRemaining((prev) => prev.slice(1));
@@ -36,7 +39,13 @@ const KeyboardDisplay: React.FC<KeyboardDisplayProps> = ({ targetData }) => {
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [remaining]);
+  }, [setQuizDataIndex, remaining]);
+
+  useEffect(() => {
+    if (remaining?.length === 0) {
+      setQuizDataIndex((prev) => prev + 1);
+    }
+  }, [setQuizDataIndex, remaining]);
 
   return (
     <div
